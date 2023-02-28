@@ -4,7 +4,7 @@
 
 - [Introduction](#introduction)
 - [Overview](#overview)
-- [Design \& Convention](#design--convention)
+- [Page layout](#page-layout)
 	- [Home Page](#home-page)
 	- [Article Page](#article-page)
 - [Contribution](#contribution)
@@ -20,16 +20,16 @@ The news are fetched from the [Reuters Business and Financial News API](https://
 ## Overview
 
 - The website consists of 2 pages:
-  - The [**home page**](homepage.html), which is the landing page of the website. It contains a form to select the parameters to filter the news and a list of matching news headlines.
+  - The [**home page**](homepage.html), which contains a form to select the parameters to filter the news and the list of matching news headlines.
   - The [**article page**](pages/article.html), which displays the full article of the selected news headline.
 - The content of the website will be generated dynamically using **JavaScript**.
 - The website's UI is built with [Bootstrap](https://getbootstrap.com/), a CSS framework that provides a responsive grid system and pre-built components.
 
-## Design & Convention
+## Page layout
 
 ### Home Page
 
-- :hourglass: WIP
+![homepage-layout](docs/img/homepage-layout.jpg).
 
 ### Article Page
 
