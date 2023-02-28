@@ -4,9 +4,8 @@
 
 - [Introduction](#introduction)
 - [Overview](#overview)
-- [Design](#design)
+- [Design \& Convention](#design--convention)
 	- [Home Page](#home-page)
-	- [Query Page](#query-page)
 	- [Article Page](#article-page)
 - [Contribution](#contribution)
 	- [Folder Structure](#folder-structure)
@@ -20,20 +19,15 @@ The news are fetched from the [Reuters Business and Financial News API](https://
 
 ## Overview
 
-- The website consists of 3 pages:
-  - The [**home page**](homepage.html), which is the landing page of the website. It contains a form to choose the desired date and category of the news.
-  - The [**query page**](pages/query.html), which displays the list of news headlines matched with the provided conditions.
+- The website consists of 2 pages:
+  - The [**home page**](homepage.html), which is the landing page of the website. It contains a form to select the parameters to filter the news and a list of matching news headlines.
   - The [**article page**](pages/article.html), which displays the full article of the selected news headline.
 - The content of the website will be generated dynamically using **JavaScript**.
 - The website's UI is built with [Bootstrap](https://getbootstrap.com/), a CSS framework that provides a responsive grid system and pre-built components.
 
-## Design
+## Design & Convention
 
 ### Home Page
-
-- :hourglass: WIP
-
-### Query Page
 
 - :hourglass: WIP
 
