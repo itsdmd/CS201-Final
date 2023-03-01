@@ -33,7 +33,7 @@ A website that fetches a list of news based on **date, category and keywords** p
 
 ### :handshake: Contribute
 
-1. :mag_right: **Check the [issues]()** to see if there is any that you would like to work on and assign yourself to it.
+1. :mag_right: **Check the [issues](https://github.com/itsdmd/CS201-Final/issues)** to see if there is any that you would like to work on and assign yourself to it.
 2. :herb: **Create a new branch** with the issue's number as the name.
 	- _Example:_ 
 		- If you want to work on issue #5, create a new branch named `5`.
