@@ -38,9 +38,9 @@ A website that fetches a list of news based on **date, category and keywords** p
 ### :handshake: Contribute
 
 1. :mag_right: **Check the [issues](https://github.com/itsdmd/CS201-Final/issues)** to see if there is any that you would like to work on and assign yourself to it.
-2. :herb: **Create a new branch** with the issue's number as the name.
+2. :herb: **Create a new branch** from the _Development_ section of issue's sidebar, with the issue's number as the name and select "Open branch with GitHub Desktop".
 	- _Example:_
-		- If you want to work on issue #5, create a new branch named `5`.
+		- If you want to work on issue #5, go to the _Development_ section of issue 5 and create a new branch named `5`.
 		- If issue #5 have multiple sub-issues and you want to only work on one of them, create a new branch named `5-1`, `5-2`, etc.
 3. :memo: **Make your changes, commit and push** them to the newly created branch.
 	- :one: Each commit should focus on solving **one problem at a time**.
