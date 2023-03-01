@@ -43,3 +43,32 @@ function getApiConfigs(key) {
 		},
 	};
 }
+
+function constructFetchUrl(ctgID, day, month, year) {
+	let url = "https://${API_HOST}/";
+	let ctgUrl_1 = "";
+	let ctgUrl_2 = "";
+	let dateUrl_1 = "";
+	let dateUrl_2 = "";
+
+	if (ctgID !== "" && ctgID !== null) {
+		ctgUrl_1 = `category-id/${ctgID}/`;
+		ctgUrl_2 = `category-id=${ctgID}`;
+	}
+
+	if (day === "" || day === null || month === "" || month === null || year === "" || year === null) {
+		console.log("Date is required");
+		return;
+	} else {
+		dateUrl_1 = `article-date/${day}-${month}-${year}/`;
+		dateUrl_2 = `ArticleDate=${day}-${month}-${year}`;
+	}
+
+	if (ctgUrl_1 !== "" && ctgUrl_1 !== null) {
+		url = `${url}${ctgUrl_1}${dateUrl_1}?${ctgUrl_2}&${dateUrl_2}`;
+	} else {
+		url = `${url}${dateUrl_1}`;
+	}
+
+	return url;
+}
