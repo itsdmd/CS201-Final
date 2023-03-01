@@ -1,39 +1,25 @@
 # WhatHappenedOnThatDay
 
+A website that fetches a list of news based on **date, category and keywords** provided by user, which they can then click to read the full article.
+
 ## Table of Contents
 
-- [:sparkles: Introduction](#sparkles-introduction)
 - [:information\_source: Overview](#information_source-overview)
-- [:triangular\_ruler: Page layout](#triangular_ruler-page-layout)
-	- [Home Page](#home-page)
-	- [Article Page](#article-page)
 - [:technologist: Development](#technologist-development)
 	- [:card\_index\_dividers: Folder Structure](#card_index_dividers-folder-structure)
-	- [:busts\_in\_silhouette: Contribute](#busts_in_silhouette-contribute)
-
-## :sparkles: Introduction
-
-This website will fetch a list of news based on user-defined **date, category and keywords**, which they can then click to read the full article.
-
-The news are fetched using [Reuters Business and Financial News API](https://rapidapi.com/makingdatameaningful/api/reuters-business-and-financial-news).
+	- [:handshake: Contribute](#handshake-contribute)
+	- [:triangular\_ruler: Naming convention](#triangular_ruler-naming-convention)
+		- [Home Page](#home-page)
+		- [Article Page](#article-page)
 
 ## :information_source: Overview
 
 - The website consists of 2 pages:
-  - The [**home page**](homepage.html), which contains a form to select the parameters to filter the news and the list of matching news headlines.
-  - The [**article page**](pages/article.html), which displays the full article of the selected news headline.
+  - [**Home page**](homepage.html), which contains a form to select the parameters to filter the news and the list of matching news headlines.
+  - [**Article page**](pages/article.html), which displays the full article of the selected news headline.
 - The content of the website will be generated dynamically using **JavaScript**.
-- The website's UI is built with [Bootstrap](https://getbootstrap.com/), a CSS framework that provides a responsive grid system and pre-built components.
-
-## :triangular_ruler: Page layout
-
-### Home Page
-
-![homepage-layout](docs/img/homepage-layout.jpg).
-
-### Article Page
-
-- :hourglass: WIP
+- News are fetched using [Reuters Business and Financial News API](https://rapidapi.com/makingdatameaningful/api/reuters-business-and-financial-news).
+- Website's UI is built with [Bootstrap](https://getbootstrap.com/), a CSS framework that provides a responsive grid system and pre-built components.
 
 ## :technologist: Development
 
@@ -43,7 +29,7 @@ The news are fetched using [Reuters Business and Financial News API](https://rap
 - `docs/`: contains the assets for documentation.
 - `pages/`: contains all the HTML pages (except the home page).
 
-### :busts_in_silhouette: Contribute
+### :handshake: Contribute
 
 1. :mag_right: **Check the [issues]()** to see if there is any that you would like to work on and assign yourself to it.
 2. :herb: **Create a new branch** with the issue's number as the name.
@@ -59,3 +45,13 @@ The news are fetched using [Reuters Business and Financial News API](https://rap
 		- _Example:_ `#5: add subtitle for query results`
 4. :postbox: After you are done, **create a pull request** (PR) to the `main` branch.
 	- If the issue wasn't solved completely, additional notes should be provided in the PR's description.
+
+### :triangular_ruler: Naming convention
+
+#### Home Page
+
+![homepage-layout](docs/img/homepage-layout.jpg).
+
+#### Article Page
+
+- :hourglass: WIP
