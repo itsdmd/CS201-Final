@@ -16,6 +16,7 @@ let e_dateMonth = document.querySelector(".param-date-month");
 let e_dateYear = document.querySelector(".param-date-year");
 let e_ctgID = document.querySelector(".param-ctg-id");
 let e_submitBtn = document.querySelector(".param-submit");
+let e_rpp = document.querySelector(".param-rpp");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -36,6 +37,48 @@ e_submitBtn.addEventListener("click", async (e) => {
 /* ---------------------------------- */
 
 /* ------------- Normal ------------- */
+
+
+DateSelectorSetter();
+
+function DateSelectorSetter(){
+    //day
+    let output = '<option value="" selected>Day</option>';
+    for(let i=1 ; i<= 31; i++){
+        output += `<option name="day" value="${i}">${i}</option>`
+        
+    }
+    e_dateDay.innerHTML = output;
+
+    //month
+    output = `<option value="" selected>Month</option>`;
+    for(let i=1 ; i<= 12; i++){
+        output += `<option name="month" value="${i}">${i}</option>`
+        
+    }
+    e_dateMonth.innerHTML = output;
+
+
+    //year
+    output = `<option value="" selected>Year</option>`;
+    for(let i = 1900; i<= 2023; i++){
+        output += `<option name="year" value="${i}">${i}</option>`
+        
+    }
+    e_dateYear.innerHTML = output;
+
+
+    //results per page
+    output = `<option value="" selected>Select</option>`;
+    for(let i=1 ; i<= 10; i++){
+        output += `<option name="day" value="${i}">${i}</option>`
+        
+    }
+    e_rpp.innerHTML = output;
+}
+
+
+
 function constructApiConfigs(key) {
 	if (key === "" || key === null) {
 		// TODO: Show pop-up

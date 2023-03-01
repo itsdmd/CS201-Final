@@ -42,6 +42,62 @@
 		<!-- ------------------------------- -->
 		<!--              param              -->
 		<!-- ------------------------------- -->
+		<div class="param-container">
+			<div class="row">
+				<div class="col-md-6  ">
+					<h2>Parameters</h2>
+					<form style="width: 350px;" action="homepage.html" method="post" enctype="multipart/form-data" >
+						<div class="selector-container">
+							<label for="date">Date</label>
+							<div class="param-date-container">	
+								<select name="day" id="day" class="param-date-day">
+									
+								</select>
+
+								<select name="month" id="month" class="param-date-month">
+				
+								</select>
+
+								<select name="month" id="month" class="param-date-year">
+				
+								</select>
+							</div>
+						</div>
+
+						<div class="selector-container">
+								<label for="category">Category</label>
+								<select name="category" id="" class="param-ctg">
+									<option value="" selected>Select</option>
+								</select>
+							
+						</div>
+
+						<div class="selector-container">
+							<label for="keyword">Keyword</label>
+							<input type="text" name="keyword" id="keyword" class="param-keyword form-control" placeholder="option">
+
+						</div>
+
+						<div class="selector-container">
+							<label for="rpp">Results per page</label>
+							<select name="rpp" id="rpp" class="param-rpp">
+
+							</select>
+						</div>
+
+						<div class="selector-container">
+							<label for="api">API Key</label>
+							<input type="password" name="api" id="api" class="param-api">
+						</div>
+
+						<div class="col mt-4 text-center">
+							<button class="btn btn-success param-submit" type="submit">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
 
 		<!-- ... -->
 

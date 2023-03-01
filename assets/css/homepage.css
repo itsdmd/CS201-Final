@@ -71,3 +71,30 @@ ul {
 	margin: auto;
 	width: 90%;
 }
+
+
+.param-container {
+    margin-top: 120px;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+}
+
+.selector-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0px;
+}
+
+.selector-container label {
+    margin-right: 10px;
+}
+
+.param-date-container {
+    display: flex;
+}
+
+.param-date-container select {
+    margin-right: 8px;
+}
