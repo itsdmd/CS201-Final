@@ -1,0 +1,593 @@
+[
+	{
+	  "articlesName": "French lawmakers approve a ban on short domestic flights",
+	  "articlesShortDescription": "French lawmakers voted late on Saturday to abolish domestic flights on routes than can be covered by train in under two-and-a-half hours, as the government seeks to lower carbon emissions even as the air travel industry reels from the global pandemic.",
+	  "articlesDescription": "[{\"type\":\"paragraph\",\"content\":\"French lawmakers voted late on Saturday to abolish domestic flights on routes than can be covered by train in under two-and-a-half hours, as the government seeks to lower carbon emissions even as the air travel industry reels from the global pandemic.\"},{\"type\":\"paragraph\",\"content\":\"The measure is part of a broader climate bill that aims to cut French carbon emissions by 40% in 2030 from 1990 levels, though activists accuse President Emmanuel Macron of watering down earlier promises in the draft legislation.\"},{\"type\":\"paragraph\",\"content\":\"The vote came days after the state said it would contribute to a 4 billion euro ($4.76 billion) recapitalisation of Air France <a href=\\\"https:\\/\\/www.reuters.com\\/companies\\/AIRF.PA\\\" target=\\\"_blank\\\">(AIRF.PA), more than doubling its stake in the flagcarrier, to shore up its finances after over a year of COVID-19 travel curbs.\"},{\"type\":\"paragraph\",\"content\":\"Industry Minister Agnes Pannier-Runacher dismissed criticism from the aviation industry that a pandemic recovery was not the time to ban some domestic flights, and said there was no contradiction between the bailout and the climate bill.\"},{\"type\":\"paragraph\",\"content\":\"\\\"We know that aviation is a contributor of carbon dioxide and that because of climate change we must reduce emissions,\\\" she told Europe 1 radio. \\\"Equally, we must support our companies and not let them fall by the wayside.\\\"\"},{\"type\":\"paragraph\",\"content\":\"Air traffic may not return to pre-crisis levels before 2024, McKinsey analysts forecast.\"},{\"type\":\"paragraph\",\"content\":\"Some environmental campaigners have said the bill does not go far enough. A citizens' climate forum established by Macron to help shape climate policy had called for the scrapping of flights on routes where the train journey is less than 4 hours.\"},{\"type\":\"paragraph\",\"content\":\"Saturday night's vote in the National Assembly was the first. The bill goes to the Senate before a third and final vote in the lower house, where Macron's ruling party and allies dominate.\"},{\"type\":\"paragraph\",\"content\":\"($1 = 0.8406 euros)\"}]",
+	  "minutesToRead": 2,
+	  "primaryAssetType": 0,
+	  "wordCount": null,
+	  "urlSupplier": "https://www.reuters.com/article/us-climate-change-france-flights/french-lawmakers-approve-a-ban-on-short-domestic-flights-idUSKBN2BY0AO",
+	  "canonicalSupplier": "/business/environment/french-lawmakers-approve-ban-short-domestic-flights-2021-04-11/",
+	  "publishedAt": {
+		"date": "2021-04-11 10:06:42.000000",
+		"timezone_type": 3,
+		"timezone": "UTC"
+	  },
+	  "dateModified": {
+		"date": "2021-04-11 10:07:11.000000",
+		"timezone_type": 3,
+		"timezone": "UTC"
+	  },
+	  "files": [
+		{
+		  "filesName": null,
+		  "filesTitle": "An Air France airplane lands at the Charles-de-Gaulle airport in Roissy",
+		  "filesDescription": "An Air France Airbus A350 airplane lands at the Charles-de-Gaulle airport in Roissy, near Paris, France April 2, 2021.  REUTERS/Christian Hartmann//File Photo",
+		  "contentType": "image",
+		  "urlCdn": "https://cloudfront-us-east-2.images.arcpublishing.com/reuters/3LVW2UARWRMLVME6E6B7SXK73M.jpg"
+		}
+	  ],
+	  "videos": [],
+	  "tags": [
+		{
+		  "name": "GEN",
+		  "slug": "gen"
+		},
+		{
+		  "name": "POL",
+		  "slug": "pol"
+		},
+		{
+		  "name": "WEU",
+		  "slug": "weu"
+		},
+		{
+		  "name": "EUROP",
+		  "slug": "europ"
+		},
+		{
+		  "name": "EZC",
+		  "slug": "ezc"
+		},
+		{
+		  "name": "CMPNY",
+		  "slug": "cmpny"
+		},
+		{
+		  "name": "PXP",
+		  "slug": "pxp"
+		},
+		{
+		  "name": "ENV",
+		  "slug": "env"
+		},
+		{
+		  "name": "FR",
+		  "slug": "fr"
+		},
+		{
+		  "name": "INDS",
+		  "slug": "inds"
+		},
+		{
+		  "name": "INDS08",
+		  "slug": "inds08"
+		},
+		{
+		  "name": "CLJ",
+		  "slug": "clj"
+		},
+		{
+		  "name": "TPT",
+		  "slug": "tpt"
+		},
+		{
+		  "name": "TRAN",
+		  "slug": "tran"
+		},
+		{
+		  "name": "CO2",
+		  "slug": "co2"
+		},
+		{
+		  "name": "COM",
+		  "slug": "com"
+		},
+		{
+		  "name": "ENG",
+		  "slug": "eng"
+		},
+		{
+		  "name": "ENR",
+		  "slug": "enr"
+		},
+		{
+		  "name": "NRG",
+		  "slug": "nrg"
+		},
+		{
+		  "name": "CLC",
+		  "slug": "clc"
+		},
+		{
+		  "name": "LAW",
+		  "slug": "law"
+		},
+		{
+		  "name": "PSSNGR",
+		  "slug": "pssngr"
+		},
+		{
+		  "name": "TNSI",
+		  "slug": "tnsi"
+		},
+		{
+		  "name": "BLUX",
+		  "slug": "blux"
+		},
+		{
+		  "name": "AIRL",
+		  "slug": "airl"
+		},
+		{
+		  "name": "AIRL1",
+		  "slug": "airl1"
+		},
+		{
+		  "name": "AIRP",
+		  "slug": "airp"
+		},
+		{
+		  "name": "AIRS08",
+		  "slug": "airs08"
+		},
+		{
+		  "name": "NL",
+		  "slug": "nl"
+		},
+		{
+		  "name": "WRM",
+		  "slug": "wrm"
+		}
+	  ],
+	  "keywords": [
+		{
+		  "keywordName": "Company News",
+		  "keywordSlug": "company-news"
+		},
+		{
+		  "keywordName": "Europe",
+		  "keywordSlug": "europe"
+		},
+		{
+		  "keywordName": "Western Europe",
+		  "keywordSlug": "western-europe"
+		},
+		{
+		  "keywordName": "Industrials (TRBC level 1)",
+		  "keywordSlug": "industrials-trbc-level-1"
+		},
+		{
+		  "keywordName": "Benelux",
+		  "keywordSlug": "benelux"
+		},
+		{
+		  "keywordName": "Commodities Markets",
+		  "keywordSlug": "commodities-markets"
+		},
+		{
+		  "keywordName": "Euro Zone",
+		  "keywordSlug": "euro-zone"
+		},
+		{
+		  "keywordName": "Energy Markets",
+		  "keywordSlug": "energy-markets"
+		},
+		{
+		  "keywordName": "General News",
+		  "keywordSlug": "general-news"
+		},
+		{
+		  "keywordName": "Government / Politics",
+		  "keywordSlug": "government-politics"
+		},
+		{
+		  "keywordName": "Picture Available",
+		  "keywordSlug": "picture-available"
+		},
+		{
+		  "keywordName": "Crime / Law / Justice",
+		  "keywordSlug": "crime-law-justice"
+		},
+		{
+		  "keywordName": "Pictures",
+		  "keywordSlug": "pictures"
+		},
+		{
+		  "keywordName": "Transportation (TRBC level 2)",
+		  "keywordSlug": "transportation-trbc-level-2"
+		},
+		{
+		  "keywordName": "France",
+		  "keywordSlug": "france"
+		},
+		{
+		  "keywordName": "Lawmaking",
+		  "keywordSlug": "lawmaking"
+		},
+		{
+		  "keywordName": "Transport Infrastructure (TRBC level 3)",
+		  "keywordSlug": "transport-infrastructure-trbc-level-3"
+		},
+		{
+		  "keywordName": "Airport Operators & Services (TRBC level 4)",
+		  "keywordSlug": "airport-operators-services-trbc-level-4"
+		},
+		{
+		  "keywordName": "Netherlands",
+		  "keywordSlug": "netherlands"
+		},
+		{
+		  "keywordName": "Airlines (TRBC level 4)",
+		  "keywordSlug": "airlines-trbc-level-4"
+		},
+		{
+		  "keywordName": "Environment",
+		  "keywordSlug": "environment"
+		},
+		{
+		  "keywordName": "Carbon / Emissions Markets",
+		  "keywordSlug": "carbon-emissions-markets"
+		},
+		{
+		  "keywordName": "Passenger Transportation Services (TRBC level 3)",
+		  "keywordSlug": "passenger-transportation-services-trbc-level-3"
+		},
+		{
+		  "keywordName": "Airlines (NEC) (TRBC level 5)",
+		  "keywordSlug": "airlines-nec-trbc-level-5"
+		},
+		{
+		  "keywordName": "Climate Politics",
+		  "keywordSlug": "climate-politics"
+		},
+		{
+		  "keywordName": "CLIMATE",
+		  "keywordSlug": "climate"
+		},
+		{
+		  "keywordName": "Climate Change",
+		  "keywordSlug": "climate-change"
+		},
+		{
+		  "keywordName": "Reuters News",
+		  "keywordSlug": "reuters-news"
+		},
+		{
+		  "keywordName": "LEGACY: Industrials (TRBC)",
+		  "keywordSlug": "legacy-industrials-trbc"
+		},
+		{
+		  "keywordName": "LEGACY: Airline Services (TRBC)",
+		  "keywordSlug": "legacy-airline-services-trbc"
+		},
+		{
+		  "keywordName": "Air France KLM SA",
+		  "keywordSlug": "air-france-klm-sa"
+		},
+		{
+		  "keywordName": "CHANGE/FRANCE",
+		  "keywordSlug": "change-france"
+		},
+		{
+		  "keywordName": "FLIGHTS (PIX)",
+		  "keywordSlug": "flights-pix"
+		}
+	  ],
+	  "n2": [
+		{
+		  "code": "GEN",
+		  "name": "General News"
+		},
+		{
+		  "code": "POL",
+		  "name": "Government / Politics"
+		},
+		{
+		  "code": "WEU",
+		  "name": "Western Europe"
+		},
+		{
+		  "code": "EUROP",
+		  "name": "Europe"
+		},
+		{
+		  "code": "EZC",
+		  "name": "Euro Zone"
+		},
+		{
+		  "code": "CMPNY",
+		  "name": null
+		},
+		{
+		  "code": "PXP",
+		  "name": "Picture Available"
+		},
+		{
+		  "code": "ENV",
+		  "name": "Environment"
+		},
+		{
+		  "code": "FR",
+		  "name": "France"
+		},
+		{
+		  "code": "INDS",
+		  "name": null
+		},
+		{
+		  "code": "INDS08",
+		  "name": null
+		},
+		{
+		  "code": "CLJ",
+		  "name": "Crime / Law / Justice"
+		},
+		{
+		  "code": "TPT",
+		  "name": null
+		},
+		{
+		  "code": "TRAN",
+		  "name": "Transportation (TRBC level 2)"
+		},
+		{
+		  "code": "CO2",
+		  "name": null
+		},
+		{
+		  "code": "COM",
+		  "name": null
+		},
+		{
+		  "code": "ENG",
+		  "name": null
+		},
+		{
+		  "code": "ENR",
+		  "name": null
+		},
+		{
+		  "code": "NRG",
+		  "name": null
+		},
+		{
+		  "code": "CLC",
+		  "name": "Climate Change"
+		},
+		{
+		  "code": "LAW",
+		  "name": "Lawmaking"
+		},
+		{
+		  "code": "PSSNGR",
+		  "name": "Passenger Transportation Services (TRBC level 3)"
+		},
+		{
+		  "code": "TNSI",
+		  "name": "Transport Infrastructure (TRBC level 3)"
+		},
+		{
+		  "code": "BLUX",
+		  "name": null
+		},
+		{
+		  "code": "AIRL",
+		  "name": "Airlines (TRBC level 4)"
+		},
+		{
+		  "code": "AIRL1",
+		  "name": "Airlines (NEC) (TRBC level 5)"
+		},
+		{
+		  "code": "AIRP",
+		  "name": "Airport Operators & Services (TRBC level 4)"
+		},
+		{
+		  "code": "AIRS08",
+		  "name": "LEGACY: Airline Services (TRBC)"
+		},
+		{
+		  "code": "NL",
+		  "name": "Netherlands"
+		},
+		{
+		  "code": "WRM",
+		  "name": "Climate Politics"
+		}
+	  ],
+	  "authors": [
+		{
+		  "authorName": "Reuters"
+		}
+	  ]
+	},
+	{
+	  "articlesName": "Evacuation centres open as cyclone intensifies off Western Australia",
+	  "articlesShortDescription": "Tropical cyclone Seroja strengthened off Western Australia on Sunday, with emergency services broadening a warning to immediately take shelter to several towns given high winds and the prospect of coastal flooding.",
+	  "articlesDescription": "[{\"type\":\"paragraph\",\"content\":\"Tropical cyclone Seroja strengthened off Western Australia on Sunday, with emergency services broadening a warning to immediately take shelter to several towns given high winds and the prospect of coastal flooding.\"},{\"type\":\"paragraph\",\"content\":\"Five coastal towns were put on red alert by Sunday afternoon, including residents in Denham, Shark Bay, 500 kilometres (311 miles) north of Perth, while sandbags were made available to those in Geraldton, further down the coast, due to potential storm surge.\"},{\"type\":\"paragraph\",\"content\":\"\\\"There is a threat to lives and homes. You are in danger and need to act immediately,\\\" the Department of Fire and Emergency Services (DFES) said in a bulletin.\"},{\"type\":\"paragraph\",\"content\":\"The cyclone, which was upgraded in severity to category 3 on Sunday, was rapidly moving south east but was likely to weaken to category 2 in severity prior to making landfall later in the evening, the Bureau of Meteorology said. Wind gusts of 150 kilometres an hour were expected.\"},{\"type\":\"paragraph\",\"content\":\"\\\"Yes I'm worried for the town. There's heritage buildings here in Geraldton and I'm not sure how well they will survive,\\\" said Tash Gibson, manager of the Ocean Centre Hotel.\"},{\"type\":\"paragraph\",\"content\":\"Officials were braced for a high degree of damage to towns along the coast, the state emergency services minister said on Saturday, given buildings were not constructed to withstand such strong winds in a region that is typically too far south to fall into the path of cyclones. <a href=\\\"\\/business\\/environment\\/western-australia-braces-worst-case-scenario-cyclone-seroja-nears-2021-04-10\\/\\\"> read more \"}]",
+	  "minutesToRead": 2,
+	  "primaryAssetType": 1,
+	  "wordCount": null,
+	  "urlSupplier": "https://www.reuters.com/article/us-australia-cyclone/evacuation-centres-open-as-cyclone-intensifies-off-western-australia-idUSKBN2BY033",
+	  "canonicalSupplier": "/business/environment/evacuation-centres-open-cyclone-intensifies-off-western-australia-2021-04-11/",
+	  "publishedAt": {
+		"date": "2021-04-11 03:50:06.000000",
+		"timezone_type": 3,
+		"timezone": "UTC"
+	  },
+	  "dateModified": {
+		"date": "2021-04-11 08:52:45.000000",
+		"timezone_type": 3,
+		"timezone": "UTC"
+	  },
+	  "files": [],
+	  "videos": [
+		{
+		  "filesName": null,
+		  "header": "Cyclone intensifies off Western Australia",
+		  "description": "Tropical cyclone Seroja strengthened off Western Australia on Sunday (April 11), with emergency services opening shelters in preparation for high winds and coastal flooding later in the evening.",
+		  "duration": 59,
+		  "url": "https://vm.reuters.tv/7855f/rnlmnbb11dg-1404k.mp4",
+		  "contentType": "mp4"
+		}
+	  ],
+	  "tags": [
+		{
+		  "name": "Asia",
+		  "slug": "asia"
+		},
+		{
+		  "name": "GEN",
+		  "slug": "gen"
+		},
+		{
+		  "name": "ENV",
+		  "slug": "env"
+		},
+		{
+		  "name": "COM",
+		  "slug": "com"
+		},
+		{
+		  "name": "AU",
+		  "slug": "au"
+		},
+		{
+		  "name": "AUNZ",
+		  "slug": "aunz"
+		},
+		{
+		  "name": "CLC",
+		  "slug": "clc"
+		},
+		{
+		  "name": "DIS",
+		  "slug": "dis"
+		},
+		{
+		  "name": "WEA",
+		  "slug": "wea"
+		},
+		{
+		  "name": "WND",
+		  "slug": "wnd"
+		},
+		{
+		  "name": "PRCP",
+		  "slug": "prcp"
+		}
+	  ],
+	  "keywords": [
+		{
+		  "keywordName": "Asia / Pacific",
+		  "keywordSlug": "asia-pacific"
+		},
+		{
+		  "keywordName": "Commodities Markets",
+		  "keywordSlug": "commodities-markets"
+		},
+		{
+		  "keywordName": "Australia / New Zealand",
+		  "keywordSlug": "australia-new-zealand"
+		},
+		{
+		  "keywordName": "General News",
+		  "keywordSlug": "general-news"
+		},
+		{
+		  "keywordName": "Australia",
+		  "keywordSlug": "australia"
+		},
+		{
+		  "keywordName": "Environment",
+		  "keywordSlug": "environment"
+		},
+		{
+		  "keywordName": "Disasters / Accidents",
+		  "keywordSlug": "disasters-accidents"
+		},
+		{
+		  "keywordName": "Precipitation",
+		  "keywordSlug": "precipitation"
+		},
+		{
+		  "keywordName": "Weather Markets / Weather",
+		  "keywordSlug": "weather-markets-weather"
+		},
+		{
+		  "keywordName": "Wind / Hurricanes / Typhoons / Tornadoes",
+		  "keywordSlug": "wind-hurricanes-typhoons-tornadoes"
+		},
+		{
+		  "keywordName": "Climate Change",
+		  "keywordSlug": "climate-change"
+		},
+		{
+		  "keywordName": "CYCLONE/ (UPDATE 1, TV)",
+		  "keywordSlug": "cyclone-update-1-tv"
+		}
+	  ],
+	  "n2": [
+		{
+		  "code": "GEN",
+		  "name": "General News"
+		},
+		{
+		  "code": "ASIA",
+		  "name": "Asia / Pacific"
+		},
+		{
+		  "code": "ENV",
+		  "name": "Environment"
+		},
+		{
+		  "code": "COM",
+		  "name": null
+		},
+		{
+		  "code": "AU",
+		  "name": "Australia"
+		},
+		{
+		  "code": "AUNZ",
+		  "name": "Australia / New Zealand"
+		},
+		{
+		  "code": "CLC",
+		  "name": "Climate Change"
+		},
+		{
+		  "code": "DIS",
+		  "name": "Disasters / Accidents"
+		},
+		{
+		  "code": "WEA",
+		  "name": "Weather Markets / Weather"
+		},
+		{
+		  "code": "WND",
+		  "name": "Wind / Hurricanes / Typhoons / Tornadoes"
+		},
+		{
+		  "code": "PRCP",
+		  "name": "Precipitation"
+		}
+	  ],
+	  "authors": [
+		{
+		  "authorName": "Reuters"
+		}
+	  ]
+	}
+  ]
