@@ -22,3 +22,24 @@ submitBtn.addEventListener("click", (e) => {
 	apiKey = document.querySelector(".param-api").value;
 	console.log("API Key: ", apiKey);
 });
+
+/* ---------------------------------- */
+/*              Functions             */
+/* ---------------------------------- */
+
+/* ------------- Normal ------------- */
+function getApiConfigs(key) {
+	if (key === "" || key === null) {
+		// TODO: Show pop-up
+		console.log("API Key is empty");
+		return;
+	}
+
+	return {
+		method: "GET",
+		headers: {
+			"X-RapidAPI-Key": key,
+			"X-RapidAPI-Host": API_HOST,
+		},
+	};
+}
