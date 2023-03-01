@@ -25,7 +25,6 @@ footer {
 	bottom: 0;
 	height: var(--footer-height);
 	left: 0;
-	position: fixed;
 	width: 100%;
 }
 
@@ -62,9 +61,17 @@ img.logo {
 	height: 89px;
 }
 
+label {
+	font-weight: bold;
+}
+
 ul {
 	display: flex;
 	list-style: none;
+}
+
+.blankspace {
+	height: 500px;
 }
 
 .container {
@@ -72,29 +79,32 @@ ul {
 	width: 90%;
 }
 
-
 .param-container {
-    margin-top: 120px;
-    display: flex;
-    justify-content: center;
-    text-align: left;
-}
-
-.selector-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px 0px;
-}
-
-.selector-container label {
-    margin-right: 10px;
+	display: flex;
+	justify-content: center;
+	margin-top: calc(var(--header-height) + 20px);
+	text-align: left;
 }
 
 .param-date-container {
-    display: flex;
+	display: flex;
 }
 
 .param-date-container select {
-    margin-right: 8px;
+	margin-left: 8px;
+}
+
+.row {
+	width: 50%;
+}
+
+.selector-container {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	margin: 5px 0px;
+}
+
+.selector-container label {
+	margin-right: 10px;
 }
