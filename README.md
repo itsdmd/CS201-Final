@@ -10,14 +10,14 @@ A website that fetches a list of news based on **date, category and keywords** p
 	- [:handshake: Contribute](#handshake-contribute)
 	- [:triangular\_ruler: Naming convention](#triangular_ruler-naming-convention)
 		- [HTML](#html)
-			- [Home Page](#home-page)
+			- [Homepage](#homepage)
 			- [Article Page](#article-page)
 		- [JavaScript](#javascript)
 
 ## :information_source: Overview
 
 - The website consists of 2 pages:
-	- [**Home page**](homepage.html), which contains a form to select the parameters to filter the news and the list of matching news headlines.
+	- [**Homepage**](homepage.html), which contains a form to select the parameters to filter the news and the list of matching news headlines.
 	- [**Article page**](pages/article.html), which displays the full article of the selected news headline.
 - The content of the website will be generated dynamically using **JavaScript**.
 - News are fetched using [Reuters Business and Financial News API](https://rapidapi.com/makingdatameaningful/api/reuters-business-and-financial-news).
@@ -33,7 +33,7 @@ A website that fetches a list of news based on **date, category and keywords** p
 - `docs/`: contains the assets for documentation.
 	- `drawio/`: contains the source files for the diagrams.
 	- `img/`: contains the images used in the documentation.
-- `pages/`: contains all the HTML pages (except the home page).
+- `pages/`: contains all the HTML pages (except the homepage).
 
 ### :handshake: Contribute
 
@@ -45,10 +45,12 @@ A website that fetches a list of news based on **date, category and keywords** p
 3. :memo: **Make your changes, commit and push** them to the newly created branch.
 	- :one: Each commit should focus on solving **one problem at a time**.
 		- A few hundreds of commits won't hurt, so don't be afraid to commit often.
-	- :warning: **Don't use GitHub's suggested commit message!** Instead, write the CM in the following format: `#<issue number>: <what have been fixed>`
+	- :warning: **Don't use GitHub's suggested commit message!** Instead, write the CM in the following format: `#<(sub-)issue number>: <what have been fixed>`
 		- Use lowercase.
 		- Be as concise as possible with the CM. If you need to explain more, use the CM body.
-		- _Example:_ `#5: add subtitle for query results`
+		- _Example:_
+			- `#5: add subtitle for query results`
+			- `#10-2: adjust article's title's width`
 4. :postbox: After you are done, **create a pull request** (PR) to the `main` branch.
 	- If the issue wasn't solved completely, additional notes should be provided in the PR's description.
 
@@ -56,7 +58,7 @@ A website that fetches a list of news based on **date, category and keywords** p
 
 #### HTML
 
-##### Home Page
+##### Homepage
 
 ![homepage-layout](docs/img/homepage-layout.jpg).
 
