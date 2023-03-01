@@ -9,8 +9,10 @@ A website that fetches a list of news based on **date, category and keywords** p
 	- [:card\_index\_dividers: Folder Structure](#card_index_dividers-folder-structure)
 	- [:handshake: Contribute](#handshake-contribute)
 	- [:triangular\_ruler: Naming convention](#triangular_ruler-naming-convention)
-		- [Home Page](#home-page)
-		- [Article Page](#article-page)
+		- [HTML](#html)
+			- [Home Page](#home-page)
+			- [Article Page](#article-page)
+		- [JavaScript](#javascript)
 
 ## :information_source: Overview
 
@@ -48,10 +50,16 @@ A website that fetches a list of news based on **date, category and keywords** p
 
 ### :triangular_ruler: Naming convention
 
-#### Home Page
+#### HTML
+
+##### Home Page
 
 ![homepage-layout](docs/img/homepage-layout.jpg).
 
-#### Article Page
+##### Article Page
+
+- :hourglass: WIP
+
+#### JavaScript
 
 - :hourglass: WIP
