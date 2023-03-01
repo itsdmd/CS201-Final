@@ -17,8 +17,8 @@ A website that fetches a list of news based on **date, category and keywords** p
 ## :information_source: Overview
 
 - The website consists of 2 pages:
-  - [**Home page**](homepage.html), which contains a form to select the parameters to filter the news and the list of matching news headlines.
-  - [**Article page**](pages/article.html), which displays the full article of the selected news headline.
+	- [**Home page**](homepage.html), which contains a form to select the parameters to filter the news and the list of matching news headlines.
+	- [**Article page**](pages/article.html), which displays the full article of the selected news headline.
 - The content of the website will be generated dynamically using **JavaScript**.
 - News are fetched using [Reuters Business and Financial News API](https://rapidapi.com/makingdatameaningful/api/reuters-business-and-financial-news).
 - Website's UI is built with [Bootstrap](https://getbootstrap.com/), a CSS framework that provides a responsive grid system and pre-built components.
@@ -35,7 +35,7 @@ A website that fetches a list of news based on **date, category and keywords** p
 
 1. :mag_right: **Check the [issues](https://github.com/itsdmd/CS201-Final/issues)** to see if there is any that you would like to work on and assign yourself to it.
 2. :herb: **Create a new branch** with the issue's number as the name.
-	- _Example:_ 
+	- _Example:_
 		- If you want to work on issue #5, create a new branch named `5`.
 		- If issue #5 have multiple sub-issues and you want to only work on one of them, create a new branch named `5-1`, `5-2`, etc.
 3. :memo: **Make your changes, commit and push** them to the newly created branch.
