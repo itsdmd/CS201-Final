@@ -26,7 +26,7 @@
 		<!-- ------------------------------- -->
 		<header>
 			<div class="container">
-				<img src="docs/img/logo.png" alt="" class="logo" />
+				<img src="assets/img/logo.png" alt="" class="logo" />
 				<nav class="navbar navbar-light">
 					<ul>
 						<li><a class="nav-item nav-link" href="#">Home</a></li>
@@ -44,60 +44,49 @@
 		<!-- ------------------------------- -->
 		<div class="param-container">
 			<div class="row">
-				<div class="col-md-6  ">
+				<div class="col-md-12">
 					<h2>Parameters</h2>
-					<form style="width: 350px;" action="homepage.html" method="post" enctype="multipart/form-data" >
+					<form action="homepage.html" method="post" enctype="multipart/form-data">
 						<div class="selector-container">
 							<label for="date">Date</label>
-							<div class="param-date-container">	
-								<select name="day" id="day" class="param-date-day">
-									
-								</select>
+							<div class="param-date-container col-md-6">
+								<select name="day" id="day" class="param-date-day form-control"></select>
 
-								<select name="month" id="month" class="param-date-month">
-				
-								</select>
+								<select name="month" id="month" class="param-date-month form-control"></select>
 
-								<select name="month" id="month" class="param-date-year">
-				
-								</select>
+								<select name="month" id="month" class="param-date-year form-control"></select>
 							</div>
 						</div>
 
 						<div class="selector-container">
-								<label for="category">Category</label>
-								<select name="category" id="" class="param-ctg">
-									<option value="" selected>Select</option>
-								</select>
-							
-						</div>
-
-						<div class="selector-container">
-							<label for="keyword">Keyword</label>
-							<input type="text" name="keyword" id="keyword" class="param-keyword form-control" placeholder="option">
-
-						</div>
-
-						<div class="selector-container">
-							<label for="rpp">Results per page</label>
-							<select name="rpp" id="rpp" class="param-rpp">
-
+							<label for="category">Category</label>
+							<select name="category" id="" class="param-ctg form-control col-md-6">
+								<option value="" selected>Select</option>
 							</select>
 						</div>
 
 						<div class="selector-container">
+							<label for="keyword">Keyword</label>
+							<input type="text" name="keyword" id="keyword" class="param-keyword form-control col-md-6" placeholder="Optional" />
+						</div>
+
+						<div class="selector-container">
+							<label for="rpp">Results per page</label>
+							<select name="rpp" id="rpp" class="param-rpp form-control col-md-2"></select>
+						</div>
+
+						<div class="selector-container">
 							<label for="api">API Key</label>
-							<input type="password" name="api" id="api" class="param-api">
+							<input type="password" name="api" id="api" class="param-api form-control col-md-6" />
 						</div>
 
 						<div class="col mt-4 text-center">
-							<button class="btn btn-success param-submit" type="submit">Submit</button>
+							<button class="btn btn-success param-submit" type="submit"><i class="fas fa-search"></i> Submit</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-
 
 		<!-- ... -->
 
@@ -110,9 +99,10 @@
 		<!-- ------------------------------- -->
 		<!--             footer              -->
 		<!-- ------------------------------- -->
+		<div class="blankspace"></div>
 		<footer>
-			<div class="container">
-				<img src="docs/img/logo.png" alt="" class="footer-logo" />
+			<div class="container mt-4">
+				<img src="assets/img/logo.png" alt="" class="footer-logo" />
 				<div class="social-media-icons">
 					<!-- Facebook -->
 					<a class="btn text-white btn-floating m-1" style="background-color: #3b5998" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
