@@ -28,7 +28,11 @@ A website that fetches a list of news based on **date, category and keywords** p
 ### :card_index_dividers: Folder Structure
 
 - `assets/`: contains all the stylesheets and scripts.
+	- `css/`
+	- `js/`
 - `docs/`: contains the assets for documentation.
+	- `drawio/`: contains the source files for the diagrams.
+	- `img/`: contains the images used in the documentation.
 - `pages/`: contains all the HTML pages (except the home page).
 
 ### :handshake: Contribute
