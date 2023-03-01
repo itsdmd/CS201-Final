@@ -28,7 +28,7 @@ submitBtn.addEventListener("click", (e) => {
 /* ---------------------------------- */
 
 /* ------------- Normal ------------- */
-function getApiConfigs(key) {
+function constructApiConfigs(key) {
 	if (key === "" || key === null) {
 		// TODO: Show pop-up
 		console.log("API Key is empty");
