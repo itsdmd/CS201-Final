@@ -1,3 +1,10 @@
+:root {
+	--color-primary: #01393a;
+	--color-secondary: #f0a082;
+	--footer-height: 150px;
+	--header-height: 100px;
+}
+
 a.nav-item.nav-link {
 	color: white;
 	font-family: prata;
@@ -6,17 +13,17 @@ a.nav-item.nav-link {
 }
 
 a.nav-item.nav-link:hover {
-	background: #f0a082e3;
+	background: var(--color-secondary);
 	border-radius: 28px;
-	color: #003638;
+	color: var(--color-primary);
 	cursor: pointer;
 	font-weight: bold;
 }
 
 footer {
-	background: #003638;
+	background: var(--color-primary);
 	bottom: 0;
-	height: 16vh;
+	height: var(--footer-height);
 	left: 0;
 	position: fixed;
 	width: 100%;
@@ -30,9 +37,9 @@ footer .container {
 }
 
 header {
-	background: #003638;
+	background: var(--color-primary);
 	box-shadow: 0px 0px 3px grey;
-	height: 13vh;
+	height: var(--header-height);
 	left: 0;
 	position: absolute;
 	top: 0;
