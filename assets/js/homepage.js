@@ -3,6 +3,23 @@ console.log("homepage.js loaded");
 /* ---------------------------------- */
 /*              Variables             */
 /* ---------------------------------- */
+/* ------------- Object ------------- */
+let article = {
+	// Core
+	url: "", // URL to official article | urlSupplier
+	title: "", // Title of article | articlesName
+	summary: "", // Summary of article, acts as subtitle | articlesShortDescription
+	content: "", // Content of article | articlesDescription	//* This is a stringified JSON object, need to be parsed
+
+	// Media
+	imgUrl: "", // URL to article's image | files[x].urlCdn
+	imgDesc: "", // Description of image | files[x].fileDescription
+
+	// Meta
+	authors: [""], // Authors of article | authors
+	pubDate: "", // Date of publication | publishedAt
+	minutesToRead: 0, // Minutes to read article | minutesToRead
+};
 
 /* -------------- Const ------------- */
 const API_HOST = "reuters-business-and-financial-news.p.rapidapi.com";
