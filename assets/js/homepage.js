@@ -5,24 +5,6 @@ import { CATEGORIES } from "./data/all_categories.js";
 /* ---------------------------------- */
 /*              Variables             */
 /* ---------------------------------- */
-/* ------------- Object ------------- */
-let article = {
-	// Core
-	url: "", // URL to official article | urlSupplier
-	title: "", // Title of article | articlesName
-	summary: "", // Summary of article, acts as subtitle | articlesShortDescription
-	content: "", // Content of article | articlesDescription	//* This is a stringified JSON object, need to be parsed
-
-	// Media
-	imgUrl: "", // URL to article's image | files[x].urlCdn
-	imgDesc: "", // Description of image | files[x].fileDescription
-
-	// Meta
-	authors: [""], // Authors of article | authors
-	pubDate: "", // Date of publication | publishedAt
-	minutesToRead: 0, // Minutes to read article | minutesToRead
-};
-
 /* -------------- Const ------------- */
 const API_HOST = "reuters-business-and-financial-news.p.rapidapi.com";
 
@@ -54,9 +36,12 @@ e_submitBtn.addEventListener("click", async (e) => {
 });
 
 e_dateContainer.addEventListener("focusout", () => {
+	console.log("Date container focusout");
+
 	let day = e_dateDay.value;
 	let month = e_dateMonth.value;
 	let year = e_dateYear.value;
+
 	populateDateInvalidError(day, month, year);
 });
 
@@ -108,14 +93,14 @@ function populateDropdownSelectors() {
 }
 
 function populateDateInvalidError(day, month, year) {
-	if (validateDate(day, month, year) == true) {
+	let stringifiedDate = String(day + "-" + month + "-" + year);
+
+	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
 		e_dateError.classList.remove("error");
-		console.log(day + month + year);
-		console.log(validateDate(day, month, year));
+		console.log("Valid date:", stringifiedDate);
 	} else {
 		e_dateError.classList.add("error");
-		console.log(day + month + year);
-		console.log(validateDate(day, month, year));
+		console.log("Invalid date:", stringifiedDate);
 	}
 }
 
@@ -174,19 +159,19 @@ function parseFetchedArticles(data) {
 	// console.log("_test_:", data[0]);
 
 	// Template data structure: /{root}/docs/api_example_article_resp.json
-	data.forEach((article) => {
+	data.forEach((a) => {
 		let parsedArticle = {
-			url: article.urlSupplier,
-			title: article.articlesName,
-			summary: article.articlesShortDescription,
-			content: article.articlesDescription,
+			url: a.urlSupplier,
+			title: a.articlesName,
+			summary: a.articlesShortDescription,
+			content: a.articlesDescription,
 
-			imgUrl: article.files[0].urlCdn,
-			imgDesc: article.files[0].fileDescription,
+			imgUrl: a.files[0].urlCdn,
+			imgDesc: a.files[0].fileDescription,
 
-			authors: article.authors,
-			pubDate: article.publishedAt,
-			minutesToRead: article.minutesToRead,
+			authors: a.authors,
+			pubDate: a.publishedAt,
+			minutesToRead: a.minutesToRead,
 		};
 
 		parsedArray.push(parsedArticle);
@@ -207,30 +192,4 @@ async function fetchData(url, config) {
 		.catch((err) => console.error(err));
 
 	return result;
-}
-
-/* ------------ Generic ----------- */
-function validateDate(day, month, year) {
-	let ListOfDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-	if ((month === 1 || month > 2) && day > ListOfDays[month - 1]) {
-		return false;
-	} else if (month == 2) {
-		let leapYear = false;
-
-		if ((!(year % 4) && year % 100) || !(year % 400)) {
-			leapYear = true;
-		}
-
-		if (leapYear == false && day >= 29) {
-			return false;
-		} else if (leapYear == true && day > 29) {
-			console.log("Invalid date format!");
-			return false;
-		}
-	} else {
-		return false;
-	}
-
-	return true;
 }
