@@ -1,5 +1,7 @@
 console.log("homepage.js loaded");
 
+import { CATEGORIES } from "./data/all_categories.js";
+
 /* ---------------------------------- */
 /*              Variables             */
 /* ---------------------------------- */
@@ -23,7 +25,6 @@ let article = {
 
 /* -------------- Const ------------- */
 const API_HOST = "reuters-business-and-financial-news.p.rapidapi.com";
-const CTG_JSON_PATH = "./data/all_categories.json";
 
 /* -------------- Value ------------- */
 let g_apiKey = "";
@@ -80,6 +81,13 @@ function populateDropdownSelectors() {
 		output += `<option name="year" value="${i}">${i}</option>`;
 	}
 	e_dateYear.innerHTML = output;
+
+	// Category
+	output = `<option value="" selected>Select</option>`;
+	CATEGORIES.forEach((ctg) => {
+		output += `<option name="ctg" value="${ctg.id}">${ctg.name}</option>`;
+	});
+	e_ctg.innerHTML = output;
 
 	// Results per page
 	let rpp_options = [5, 10, 15, 20, 50, 100];
