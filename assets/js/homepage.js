@@ -17,8 +17,8 @@ let e_dateYear = document.querySelector(".param-date-year");
 let e_ctgID = document.querySelector(".param-ctg-id");
 let e_submitBtn = document.querySelector(".param-submit");
 let e_rpp = document.querySelector(".param-rpp");
-let e_dateError = document.querySelector(".date-error");
 let e_dateContainer = document.querySelector(".date-container");
+let e_dateError = document.querySelector(".date-error");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -39,8 +39,7 @@ e_dateContainer.addEventListener("focusout", () => {
 	let month = e_dateMonth.value;
 	let year = e_dateYear.value;
 	populateDateInvalidError(day, month, year);
-})
-
+});
 
 /* ---------------------------------- */
 /*              Functions             */
@@ -81,46 +80,40 @@ function populateDropdownSelectors() {
 	e_rpp.innerHTML = output;
 }
 
-
-function checkDate(day, month, year){
-
+function validateDate(day, month, year) {
 	let ListOfDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-	if (month === 1 || month > 2){
-		if(day > ListOfDays[month -1])
+
+	if ((month === 1 || month > 2) && day > ListOfDays[month - 1]) {
 		return false;
-	}
-	else if (month == 2) {
+	} else if (month == 2) {
 		let leapYear = false;
-		if ((!(year % 4) && year % 100) || !(year % 400)) 
-			{
-				leapYear = true;
-			}
-		if ((leapYear == false) && (day >= 29)) 
-			{
-				return false;
-			}
-		else
-			if ((leapYear == true) && (day > 29)) {
-				console.log('Invalid date format!');
-				return false;
-			}
-	}else{
-		
+
+		if ((!(year % 4) && year % 100) || !(year % 400)) {
+			leapYear = true;
+		}
+
+		if (leapYear == false && day >= 29) {
+			return false;
+		} else if (leapYear == true && day > 29) {
+			console.log("Invalid date format!");
+			return false;
+		}
+	} else {
 		return false;
 	}
+
 	return true;
 }
 
-function populateDateInvalidError(day, month, year){
-	if(checkDate(day, month, year) == true){
+function populateDateInvalidError(day, month, year) {
+	if (validateDate(day, month, year) == true) {
 		e_dateError.classList.remove("error");
 		console.log(day + month + year);
-		console.log(checkDate(day, month, year));
-	}
-	else{
+		console.log(validateDate(day, month, year));
+	} else {
 		e_dateError.classList.add("error");
 		console.log(day + month + year);
-		console.log(checkDate(day, month, year));
+		console.log(validateDate(day, month, year));
 	}
 }
 
