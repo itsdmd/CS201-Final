@@ -8,11 +8,14 @@ A website that fetches a list of news based on **date, category and keywords** p
 - [:technologist: Development](#technologist-development)
 	- [:card\_index\_dividers: Folder Structure](#card_index_dividers-folder-structure)
 	- [:handshake: Contribute](#handshake-contribute)
-	- [:triangular\_ruler: Naming convention](#triangular_ruler-naming-convention)
+	- [:triangular\_ruler: Convention](#triangular_ruler-convention)
 		- [HTML](#html)
 			- [Homepage](#homepage)
-			- [Article Page](#article-page)
-		- [JavaScript](#javascript)
+			- [Article page](#article-page)
+		- [Source code](#source-code)
+			- [Variable](#variable)
+			- [Function](#function)
+			- [Formatting](#formatting)
 
 ## :information_source: Overview
 
@@ -54,7 +57,7 @@ A website that fetches a list of news based on **date, category and keywords** p
 4. :postbox: After you are done, **create a pull request** (PR) to the `main` branch.
 	- If the issue wasn't solved completely, additional notes should be provided in the PR's description.
 
-### :triangular_ruler: Naming convention
+### :triangular_ruler: Convention
 
 #### HTML
 
@@ -62,10 +65,34 @@ A website that fetches a list of news based on **date, category and keywords** p
 
 ![homepage-layout](docs/img/homepage-layout.jpg).
 
-##### Article Page
+##### Article page
 
 - :hourglass: WIP
 
-#### JavaScript
+#### Source code
 
-- :hourglass: WIP
+##### Variable
+
+- Constant: `UPPER_SNAKE_CASE`
+- Global: `g_camelCase`
+- Assigned with HTML element: `e_camelCase`
+- Local: `camelCase`
+
+##### Function
+
+- All functions should be named using `camelCase`.
+- Functions that generate **HTML element**(s) should use **`generate`** prefix.
+	- _Example:_ `generateResultCard()` will generate a `div` element with the class `result-card`.
+- Functions that generate HTML elements' **content** should use **`populate`** prefix.
+	- _Example:_ `populateResultCard()` will generate the content of a `div.result-card`, which can be its title and subtitle.
+- Functions that return a value by combining multiple values/arguments should use **`construct`** prefix.
+
+##### Formatting
+
+- Use explicit comparison (`===` and `!==`). If value need to be converted, use `parseInt()` or `toString()`.
+- Put a space after
+	- `if`, `for`, `while`, etc.
+	- Comment symbol (`//`)
+	- Commas (`,`)
+- Put spaces around operators (`=`, `+`, `&&`, etc.)
+- Sort CSS elements' attributes alphabetically (use `Tyriar.sort-lines` VS Code extensions).
