@@ -31,7 +31,7 @@ let g_apiKey = "";
 let e_dateDay = document.querySelector(".param-date-day");
 let e_dateMonth = document.querySelector(".param-date-month");
 let e_dateYear = document.querySelector(".param-date-year");
-let e_ctgID = document.querySelector(".param-ctg-id");
+let e_ctg = document.querySelector(".param-ctg");
 let e_submitBtn = document.querySelector(".param-submit");
 let e_rpp = document.querySelector(".param-rpp");
 
@@ -44,9 +44,9 @@ e_submitBtn.addEventListener("click", async (e) => {
 	console.log("API Key: ", g_apiKey);
 
 	console.log("Fetching...");
-	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(g_apiKey));	// Test
-	let query = await fetchArticles(constructFetchUrl(e_ctgID.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value), constructApiConfigs(g_apiKey));
-	console.log("Fetch result:", query);
+	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(g_apiKey)); // Test
+	let query = await fetchArticles(constructFetchUrl("", e_dateDay.value, e_dateMonth.value, e_dateYear.value), constructApiConfigs(g_apiKey));
+	console.log("Fetch result:", parseFetchedArticles(query));
 });
 
 /* ---------------------------------- */
@@ -56,7 +56,7 @@ e_submitBtn.addEventListener("click", async (e) => {
 /* ---------- Initializing ---------- */
 populateDropdownSelectors();
 
-/* ------------- Generic ------------ */
+/* ------------ Populate ------------ */
 function populateDropdownSelectors() {
 	// Day
 	let output = '<option value="" selected>Day</option>';
@@ -88,6 +88,7 @@ function populateDropdownSelectors() {
 	e_rpp.innerHTML = output;
 }
 
+/* ------------- Construct ---------- */
 function constructApiConfigs(key) {
 	if (key === "" || key === null) {
 		// TODO: Show pop-up
@@ -132,6 +133,35 @@ function constructFetchUrl(ctgID, day, month, year) {
 
 	console.log("Fetch URL: ", url);
 	return url;
+}
+
+/* -------------- Parse ------------- */
+function parseFetchedArticles(data) {
+	let parsedArray = [];
+
+	console.log("Data: ", data);
+	// console.log("_test_:", data[0]);
+
+	// Template data structure: /{root}/docs/api_example_article_resp.json
+	data.forEach((article) => {
+		let parsedArticle = {
+			url: article.urlSupplier,
+			title: article.articlesName,
+			summary: article.articlesShortDescription,
+			content: article.articlesDescription,
+
+			imgUrl: article.files[0].urlCdn,
+			imgDesc: article.files[0].fileDescription,
+
+			authors: article.authors,
+			pubDate: article.publishedAt,
+			minutesToRead: article.minutesToRead,
+		};
+
+		parsedArray.push(parsedArticle);
+	});
+
+	return parsedArray;
 }
 
 /* ------------- Async ------------- */
