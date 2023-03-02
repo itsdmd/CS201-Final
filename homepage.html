@@ -47,7 +47,7 @@
 				<div class="col-md-12">
 					<h2>Parameters</h2>
 					<form action="homepage.html" method="post" enctype="multipart/form-data">
-						<div class="selector-container">
+						<div class="selector-container date-container">
 							<label for="date">Date</label>
 							<div class="param-date-container col-md-6">
 								<select name="day" id="day" class="param-date-day form-control"></select>
@@ -55,8 +55,10 @@
 								<select name="month" id="month" class="param-date-month form-control"></select>
 
 								<select name="month" id="month" class="param-date-year form-control"></select>
+								
 							</div>
 						</div>
+						<small id="dateHelp" class="form-text text-danger date-error">Please enter a valid date!</small>
 
 						<div class="selector-container">
 							<label for="category">Category</label>

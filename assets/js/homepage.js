@@ -17,6 +17,8 @@ let e_dateYear = document.querySelector(".param-date-year");
 let e_ctgID = document.querySelector(".param-ctg-id");
 let e_submitBtn = document.querySelector(".param-submit");
 let e_rpp = document.querySelector(".param-rpp");
+let e_dateError = document.querySelector(".date-error");
+let e_dateContainer = document.querySelector(".date-container");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -31,6 +33,14 @@ e_submitBtn.addEventListener("click", async (e) => {
 	let query = await fetchArticles(constructFetchUrl(e_ctgID.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value), constructApiConfigs(g_apiKey));
 	console.log("Fetch result:", query);
 });
+
+e_dateContainer.addEventListener("focusout", () => {
+	let day = e_dateDay.value;
+	let month = e_dateMonth.value;
+	let year = e_dateYear.value;
+	populateDateInvalidError(day, month, year);
+})
+
 
 /* ---------------------------------- */
 /*              Functions             */
@@ -69,6 +79,49 @@ function populateDropdownSelectors() {
 		output += `<option name="rpp" value="${value}">${value}</option>`;
 	});
 	e_rpp.innerHTML = output;
+}
+
+
+function checkDate(day, month, year){
+
+	let ListOfDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	if (month === 1 || month > 2){
+		if(day > ListOfDays[month -1])
+		return false;
+	}
+	else if (month == 2) {
+		let leapYear = false;
+		if ((!(year % 4) && year % 100) || !(year % 400)) 
+			{
+				leapYear = true;
+			}
+		if ((leapYear == false) && (day >= 29)) 
+			{
+				return false;
+			}
+		else
+			if ((leapYear == true) && (day > 29)) {
+				console.log('Invalid date format!');
+				return false;
+			}
+	}else{
+		
+		return false;
+	}
+	return true;
+}
+
+function populateDateInvalidError(day, month, year){
+	if(checkDate(day, month, year) == true){
+		e_dateError.classList.remove("error");
+		console.log(day + month + year);
+		console.log(checkDate(day, month, year));
+	}
+	else{
+		e_dateError.classList.add("error");
+		console.log(day + month + year);
+		console.log(checkDate(day, month, year));
+	}
 }
 
 function constructApiConfigs(key) {

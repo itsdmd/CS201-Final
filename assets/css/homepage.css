@@ -1,5 +1,5 @@
 :root {
-	--color-primary: #01393a;
+	--color-primary: #003637;
 	--color-secondary: #f0a082;
 	--footer-height: 150px;
 	--header-height: 100px;
@@ -112,4 +112,18 @@ ul {
 
 .selector-container label {
 	margin-right: 10px;
+}
+
+
+
+.error{
+	opacity: 1 !important;
+}
+
+small#dateHelp {
+	display: flex;
+	justify-content: right;
+	margin-right: 18px;
+	opacity: 0;
+	transition: opacity 300ms;
 }
