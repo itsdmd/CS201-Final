@@ -23,6 +23,7 @@ let article = {
 
 /* -------------- Const ------------- */
 const API_HOST = "reuters-business-and-financial-news.p.rapidapi.com";
+const CTG_JSON_PATH = "./data/all_categories.json";
 
 /* -------------- Value ------------- */
 let g_apiKey = "";
@@ -45,7 +46,7 @@ e_submitBtn.addEventListener("click", async (e) => {
 
 	console.log("Fetching...");
 	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(g_apiKey)); // Test
-	let query = await fetchArticles(constructFetchUrl("", e_dateDay.value, e_dateMonth.value, e_dateYear.value), constructApiConfigs(g_apiKey));
+	let query = await fetchData(constructArticleFetchUrl("", e_dateDay.value, e_dateMonth.value, e_dateYear.value), constructApiConfigs(g_apiKey));
 	console.log("Fetch result:", parseFetchedArticles(query));
 });
 
@@ -59,29 +60,30 @@ populateDropdownSelectors();
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
 	// Day
-	let output = '<option value="" selected>Day</option>';
+	let output = '<option value="1" selected>Day</option>';
 	for (let i = 1; i <= 31; i++) {
 		output += `<option name="day" value="${i}">${i}</option>`;
 	}
 	e_dateDay.innerHTML = output;
 
 	// Month
-	output = `<option value="" selected>Month</option>`;
+	output = `<option value="1" selected>Month</option>`;
 	for (let i = 1; i <= 12; i++) {
 		output += `<option name="month" value="${i}">${i}</option>`;
 	}
 	e_dateMonth.innerHTML = output;
 
 	// Year
-	output = `<option value="" selected>Year</option>`;
-	for (let i = 1900; i <= 2023; i++) {
+	let currentYear = new Date().getFullYear();
+	output = `<option value="2014" selected>Year</option>`;
+	for (let i = 2014; i <= currentYear; i++) {
 		output += `<option name="year" value="${i}">${i}</option>`;
 	}
 	e_dateYear.innerHTML = output;
 
 	// Results per page
-	output = `<option value="" selected>Select</option>`;
 	let rpp_options = [5, 10, 15, 20, 50, 100];
+	output = `<option value="${rpp_options[0]}" selected>Select</option>`;
 	rpp_options.forEach((value) => {
 		output += `<option name="rpp" value="${value}">${value}</option>`;
 	});
@@ -105,7 +107,7 @@ function constructApiConfigs(key) {
 	};
 }
 
-function constructFetchUrl(ctgID, day, month, year) {
+function constructArticleFetchUrl(ctgID, day, month, year) {
 	let url = `https://${API_HOST}/`;
 	let ctgUrl_1 = "";
 	let ctgUrl_2 = "";
@@ -165,7 +167,7 @@ function parseFetchedArticles(data) {
 }
 
 /* ------------- Async ------------- */
-async function fetchArticles(url, config) {
+async function fetchData(url, config) {
 	let result = null;
 
 	await fetch(url, config)
