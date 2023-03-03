@@ -11,6 +11,8 @@ const API_HOST = "reuters-business-and-financial-news.p.rapidapi.com";
 /* -------------- Value ------------- */
 let g_apiKey = "";
 
+
+
 /* ------------- Element ------------ */
 let e_dateDay = document.querySelector(".param-date-day");
 let e_dateMonth = document.querySelector(".param-date-month");
@@ -21,6 +23,7 @@ let e_rpp = document.querySelector(".param-rpp");
 let e_dateContainer = document.querySelector(".date-container");
 let e_dateError = document.querySelector(".date-error");
 let e_randomBtn = document.querySelector(".param-date-rand");
+let e_cardContainer = document.querySelector(".param-card-container");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -140,6 +143,44 @@ function populateRandomDate(){
 
 
 
+function populateResultCards(num, arr){
+
+	let day = e_dateDay.value;
+	let month = e_dateMonth.value;
+	let year = e_dateYear.value;
+
+	let stringifiedDate = String(year + "-" + month + "-" + day);
+
+
+	let filteredArticles = arr.filter(article => {
+        if(article.pubDate.date.includes(stringifiedDate) == true) {
+            return article;
+        }
+		
+    });
+
+	
+	console.log(filteredArticles);
+	
+	let output = "";
+	for (let i = 0 ; i <= num ; i++){
+		output += 
+				`<div class="col-md-6 mb-3">
+					<div class="card p-3">
+						<a href="#">
+							<h4> ${filteredArticles[i].title}</h4>
+						</a>
+						<p> ${filteredArticles[i].summary} </p>
+					</div>
+				</div>`
+			
+	}
+	console.log("Cards printed");
+	e_cardContainer.innerHTML = output;
+}
+
+
+
 /* ------------- Construct ---------- */
 function constructApiConfigs(key) {
 	if (key === "" || key === null) {
@@ -229,3 +270,4 @@ async function fetchData(url, config) {
 
 	return result;
 }
+
