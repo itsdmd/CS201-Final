@@ -20,6 +20,7 @@ let e_submitBtn = document.querySelector(".param-submit");
 let e_rpp = document.querySelector(".param-rpp");
 let e_dateContainer = document.querySelector(".date-container");
 let e_dateError = document.querySelector(".date-error");
+let e_randomBtn = document.querySelector(".param-date-rand");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -45,6 +46,12 @@ e_dateContainer.addEventListener("focusout", () => {
 	populateDateInvalidError(day, month, year);
 });
 
+e_randomBtn.addEventListener("click", () => {
+
+	console.log("Random button clicked");
+	populateRandomDate();
+})
+
 /* ---------------------------------- */
 /*              Functions             */
 /* ---------------------------------- */
@@ -55,14 +62,14 @@ populateDropdownSelectors();
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
 	// Day
-	let output = '<option value="1" selected>Day</option>';
+	let output = '<option value="" selected>Day</option>';
 	for (let i = 1; i <= 31; i++) {
 		output += `<option name="day" value="${i}">${i}</option>`;
 	}
 	e_dateDay.innerHTML = output;
 
 	// Month
-	output = `<option value="1" selected>Month</option>`;
+	output = `<option value="" selected>Month</option>`;
 	for (let i = 1; i <= 12; i++) {
 		output += `<option name="month" value="${i}">${i}</option>`;
 	}
@@ -70,7 +77,7 @@ function populateDropdownSelectors() {
 
 	// Year
 	let currentYear = new Date().getFullYear();
-	output = `<option value="2014" selected>Year</option>`;
+	output = `<option value="" selected>Year</option>`;
 	for (let i = 2014; i <= currentYear; i++) {
 		output += `<option name="year" value="${i}">${i}</option>`;
 	}
@@ -103,6 +110,35 @@ function populateDateInvalidError(day, month, year) {
 		console.log("Invalid date:", stringifiedDate);
 	}
 }
+
+
+function randomNumberGenerator(min, max){
+	 return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function populateRandomDate(){
+	let date = new Date();
+	let currentYear = date.getFullYear()
+	
+	let day = randomNumberGenerator(1, 31);
+	let month = randomNumberGenerator(1, 12);
+	let year = randomNumberGenerator(2014, currentYear);
+
+	let stringifiedDate = String(day + "-" + month + "-" + year);
+
+	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
+		e_dateDay.value = day;
+		e_dateMonth.value = month;
+		e_dateYear.value = year;
+	} else {
+		populateRandomDate();
+		console.log("Invalid date:", stringifiedDate);
+	}
+	
+
+}
+
+
 
 /* ------------- Construct ---------- */
 function constructApiConfigs(key) {
