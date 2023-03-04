@@ -133,7 +133,7 @@ e_api.addEventListener("focusout", () => {
 populateDropdownSelectors();
 disableSubmitBtn(true);
 
-window.onload = (event) => {
+window.onload = () => {
 	if (localStorage.length > 0) {
 		e_dateDay.value = localStorage.getItem("day");
 		e_dateMonth.value = localStorage.getItem("month");
@@ -444,6 +444,8 @@ function disableSubmitBtn(state = true) {
 
 function validateParams() {
 	console.log("validateParams() called");
+
+	storeParams();
 
 	let valid = true;
 
