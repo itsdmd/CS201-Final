@@ -1250,5 +1250,6 @@ const CATEGORIES = [
 ];
 
 CATEGORIES.sort((a, b) => a.name.localeCompare(b.name));
+CATEGORIES.unshift({ id: "", name: "All" });
 
 export { CATEGORIES };
