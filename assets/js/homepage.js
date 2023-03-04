@@ -145,32 +145,15 @@ function populateRandomDate(){
 
 function populateResultCards(num, arr){
 
-	let day = e_dateDay.value;
-	let month = e_dateMonth.value;
-	let year = e_dateYear.value;
-
-	let stringifiedDate = String(year + "-" + month + "-" + day);
-
-
-	let filteredArticles = arr.filter(article => {
-        if(article.pubDate.date.includes(stringifiedDate) == true) {
-            return article;
-        }
-		
-    });
-
-	
-	console.log(filteredArticles);
-	
 	let output = "";
 	for (let i = 0 ; i <= num ; i++){
 		output += 
 				`<div class="col-md-6 mb-3">
 					<div class="card p-3">
 						<a href="#">
-							<h4> ${filteredArticles[i].title}</h4>
+							<h4> ${arr[i].title}</h4>
 						</a>
-						<p> ${filteredArticles[i].summary} </p>
+						<p> ${arr[i].summary} </p>
 					</div>
 				</div>`
 			
@@ -178,7 +161,6 @@ function populateResultCards(num, arr){
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
 }
-
 
 
 /* ------------- Construct ---------- */
@@ -243,8 +225,8 @@ function parseFetchedArticles(data) {
 			summary: a.articlesShortDescription,
 			content: a.articlesDescription,
 
-			imgUrl: a.files[0].urlCdn,
-			imgDesc: a.files[0].fileDescription,
+			//imgUrl: a.files[0].urlCdn,
+			//imgDesc: a.files[0].fileDescription,
 
 			authors: a.authors,
 			pubDate: a.publishedAt,
