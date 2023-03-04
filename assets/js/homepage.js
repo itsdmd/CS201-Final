@@ -16,6 +16,7 @@ let e_dateDay = document.querySelector(".param-date-day");
 let e_dateMonth = document.querySelector(".param-date-month");
 let e_dateYear = document.querySelector(".param-date-year");
 let e_ctg = document.querySelector(".param-ctg");
+let e_keywords = document.querySelector(".param-keyword");
 let e_submitBtn = document.querySelector(".param-submit");
 let e_rpp = document.querySelector(".param-rpp");
 let e_dateContainer = document.querySelector(".date-container");
@@ -34,6 +35,8 @@ e_submitBtn.addEventListener("click", async (e) => {
 	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(g_apiKey)); // Test
 	let query = await fetchData(constructArticleFetchUrl("", e_dateDay.value, e_dateMonth.value, e_dateYear.value), constructApiConfigs(g_apiKey));
 	console.log("Fetch result:", parseFetchedArticles(query));
+
+	storeParams();
 });
 
 e_dateContainer.addEventListener("focusout", () => {
@@ -58,6 +61,17 @@ e_randomBtn.addEventListener("click", () => {
 
 /* ---------- Initializing ---------- */
 populateDropdownSelectors();
+
+window.onload = (event) => {
+	if(localStorage.length > 0){
+		e_dateDay.value = localStorage.getItem("day");
+		e_dateMonth.value = localStorage.getItem("month");
+		e_dateYear.value = localStorage.getItem("year");
+		e_ctg.value = localStorage.getItem("category");
+		e_keywords.value = localStorage.getItem("keyword");
+		e_rpp.value = localStorage.getItem("rpp");
+	}
+}
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
@@ -139,6 +153,17 @@ function populateRandomDate(){
 }
 
 
+function storeParams(){
+	localStorage.setItem("day",e_dateDay.value);
+	localStorage.setItem("month", e_dateMonth.value);
+	localStorage.setItem("year",e_dateYear.value);
+	localStorage.setItem("category",e_ctg.value);
+	localStorage.setItem("keyword",e_keywords.value);
+	localStorage.setItem("rpp",e_rpp.value);
+	console.log("store success");
+}
+
+
 
 /* ------------- Construct ---------- */
 function constructApiConfigs(key) {
@@ -202,8 +227,8 @@ function parseFetchedArticles(data) {
 			summary: a.articlesShortDescription,
 			content: a.articlesDescription,
 
-			imgUrl: a.files[0].urlCdn,
-			imgDesc: a.files[0].fileDescription,
+			//imgUrl: a.files[0].urlCdn,
+			//imgDesc: a.files[0].fileDescription,
 
 			authors: a.authors,
 			pubDate: a.publishedAt,
