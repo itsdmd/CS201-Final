@@ -23,6 +23,7 @@ const FETCH_SOURCES = {
 		fetchingUrlFn: constructReutersFetchUrl,
 		parsingFn: parseReutersData,
 		categories: REUTERS_CTG,
+		startYear: 2014,
 	},
 	Wikimedia: {
 		headersEntries: [
@@ -39,6 +40,7 @@ const FETCH_SOURCES = {
 		fetchingUrlFn: constructWikimediaFetchUrl,
 		parsingFn: parseWikimediaData,
 		categories: WIKIMEDIA_CTG,
+		startYear: 0,
 	},
 };
 const START_YEAR = 2014;
@@ -102,6 +104,7 @@ e_randomBtn.addEventListener("click", () => {
 e_src.addEventListener("change", () => {
 	console.log("param-src changed to", e_src.value);
 	populateCategorySelector(e_src.value);
+	populateDateYear();
 });
 
 e_ctg.addEventListener("change", () => {
@@ -130,6 +133,8 @@ disableSubmitBtn(true);
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
+	console.log("populateDropdownSelectors() called");
+
 	// Day
 	let output = '<option value="1" selected>Day</option>';
 	for (let i = 1; i <= 31; i++) {
@@ -145,12 +150,7 @@ function populateDropdownSelectors() {
 	e_dateMonth.innerHTML = output;
 
 	// Year
-	let currentYear = new Date().getFullYear();
-	output = `<option value="${START_YEAR}" selected>Year</option>`;
-	for (let i = START_YEAR; i <= currentYear; i++) {
-		output += `<option name="year" value="${i}">${i}</option>`;
-	}
-	e_dateYear.innerHTML = output;
+	populateDateYear();
 
 	// Source
 	output = "";
@@ -171,7 +171,21 @@ function populateDropdownSelectors() {
 	e_rpp.innerHTML = output;
 }
 
+function populateDateYear() {
+	console.log("populateDateYear() called");
+
+	let currentYear = new Date().getFullYear();
+	let output = `<option value="${currentYear}" selected>Year</option>`;
+
+	for (let i = currentYear; i >= FETCH_SOURCES[e_src.value].startYear; i--) {
+		output += `<option name="year" value="${i}">${i}</option>`;
+	}
+	e_dateYear.innerHTML = output;
+}
+
 function populateCategorySelector() {
+	console.log("populateCategorySelector() called");
+
 	let output = "";
 
 	FETCH_SOURCES[e_src.value].categories.forEach((entry) => {
@@ -182,6 +196,8 @@ function populateCategorySelector() {
 }
 
 function populateRandomDate() {
+	console.log("populateRandomDate() called");
+
 	let date = new Date();
 	let currentYear = date.getFullYear();
 
@@ -270,6 +286,8 @@ function constructWikimediaFetchUrl(ctgID, day, month, year) {
 
 /* -------------- Parse ------------- */
 function parseReutersData(data) {
+	console.log("parseReutersData() called");
+
 	let parsedArray = [];
 
 	// console.log("Data:", data);
@@ -303,6 +321,8 @@ function parseReutersData(data) {
 }
 
 function parseWikimediaData(data) {
+	console.log("parseWikimediaData() called");
+
 	let parsedArray = [];
 
 	// console.log("Data:", data);
@@ -345,6 +365,8 @@ function RNG(min, max) {
 
 /* ------------ Behavior ------------ */
 function dateInvalidErrMsg(day, month, year) {
+	console.log("dateInvalidErrMsg() called");
+
 	let stringifiedDate = String(day + "-" + month + "-" + year);
 
 	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
@@ -357,6 +379,8 @@ function dateInvalidErrMsg(day, month, year) {
 }
 
 function apiInvalidErrMsg(show = true, msg = "") {
+	console.log("apiInvalidErrMsg() called");
+
 	if (show) {
 		e_apiError.innerHTML = msg;
 		e_apiError.classList.add("error");
@@ -368,6 +392,8 @@ function apiInvalidErrMsg(show = true, msg = "") {
 }
 
 function disableSubmitBtn(state = true) {
+	console.log("disableSubmitBtn() called");
+
 	if (state) {
 		e_submitBtn.setAttribute("disabled", "");
 		console.log("param-submit disabled");
@@ -378,6 +404,8 @@ function disableSubmitBtn(state = true) {
 }
 
 function validateParams() {
+	console.log("validateParams() called");
+
 	let valid = true;
 
 	e_paramContainer.querySelectorAll("small").forEach((small) => {
@@ -397,6 +425,8 @@ function validateParams() {
 
 /* ------------- Async ------------- */
 async function fetchData(url, config) {
+	console.log("fetchData() called");
+
 	let result = null;
 
 	await fetch(url, config)
