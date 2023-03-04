@@ -47,8 +47,6 @@ const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
 
-
-
 /* ------------- Element ------------ */
 let e_paramContainer = document.querySelector(".param-container");
 let e_dateContainer = document.querySelector(".param-date-container");
@@ -60,7 +58,6 @@ let e_randomBtn = document.querySelector(".param-date-rand");
 let e_src = document.querySelector(".param-src");
 let e_ctg = document.querySelector(".param-ctg");
 let e_keywords = document.querySelector(".param-keyword");
-let e_submitBtn = document.querySelector(".param-submit");
 let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
@@ -82,7 +79,7 @@ e_submitBtn.addEventListener("click", async (e) => {
 
 	console.log("Fetch result:", query);
 	console.log("Parsed result:", FETCH_SOURCES[e_src.value].parsingFn(query));
-  
+
 	storeParams();
 });
 
@@ -137,7 +134,7 @@ populateDropdownSelectors();
 disableSubmitBtn(true);
 
 window.onload = (event) => {
-	if(localStorage.length > 0){
+	if (localStorage.length > 0) {
 		e_dateDay.value = localStorage.getItem("day");
 		e_dateMonth.value = localStorage.getItem("month");
 		e_dateYear.value = localStorage.getItem("year");
@@ -145,7 +142,7 @@ window.onload = (event) => {
 		e_keywords.value = localStorage.getItem("keyword");
 		e_rpp.value = localStorage.getItem("rpp");
 	}
-}
+};
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
@@ -395,13 +392,13 @@ function RNG(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function storeParams(){
-	localStorage.setItem("day",e_dateDay.value);
+function storeParams() {
+	localStorage.setItem("day", e_dateDay.value);
 	localStorage.setItem("month", e_dateMonth.value);
-	localStorage.setItem("year",e_dateYear.value);
-	localStorage.setItem("category",e_ctg.value);
-	localStorage.setItem("keyword",e_keywords.value);
-	localStorage.setItem("rpp",e_rpp.value);
+	localStorage.setItem("year", e_dateYear.value);
+	localStorage.setItem("category", e_ctg.value);
+	localStorage.setItem("keyword", e_keywords.value);
+	localStorage.setItem("rpp", e_rpp.value);
 	console.log("store success");
 }
 
@@ -483,4 +480,3 @@ async function fetchData(url, config) {
 
 	return result;
 }
-
