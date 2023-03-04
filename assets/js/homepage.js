@@ -6,13 +6,15 @@ import { CATEGORIES } from "./data/all_categories.js";
 /*              Variables             */
 /* ---------------------------------- */
 /* -------------- Const ------------- */
-const API_HOST = "reuters-business-and-financial-news.p.rapidapi.com";
+const API_HOST_REUTERS = "reuters-business-and-financial-news.p.rapidapi.com";
 const START_YEAR = 2014;
+const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
 let g_apiKey = "";
 
 /* ------------- Element ------------ */
+let e_paramContainer = document.querySelector(".param-container");
 let e_dateContainer = document.querySelector(".param-date-container");
 let e_dateDay = document.querySelector(".param-date-day");
 let e_dateMonth = document.querySelector(".param-date-month");
@@ -21,6 +23,8 @@ let e_dateError = document.querySelector(".param-date-error");
 let e_randomBtn = document.querySelector(".param-date-rand");
 let e_ctg = document.querySelector(".param-ctg");
 let e_rpp = document.querySelector(".param-rpp");
+let e_api = document.querySelector(".param-api");
+let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
 
 /* ---------- EventListener --------- */
@@ -33,7 +37,10 @@ e_submitBtn.addEventListener("click", async (e) => {
 
 	console.log("Fetching...");
 	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(g_apiKey)); // Test
-	let query = await fetchData(constructArticleFetchUrl("", e_dateDay.value, e_dateMonth.value, e_dateYear.value), constructApiConfigs(g_apiKey));
+	let query = await fetchData(
+		constructReutersFetchUrl("", e_dateDay.value, e_dateMonth.value, e_dateYear.value),
+		constructApiConfigs(API_HOST_REUTERS, g_apiKey)
+	);
 	console.log("Fetch result:", parseFetchedArticles(query));
 });
 
@@ -44,14 +51,29 @@ e_dateContainer.addEventListener("focusout", () => {
 	let month = e_dateMonth.value;
 	let year = e_dateYear.value;
 
-	populateDateInvalidErrorMessage(day, month, year);
+	dateInvalidErrMsg(day, month, year);
+	validateParams();
 });
 
 e_randomBtn.addEventListener("click", () => {
 	console.log("param-date-rand clicked");
 
 	populateRandomDate();
-	populateDateInvalidErrorMessage(e_dateDay.value, e_dateMonth.value, e_dateYear.value); // Avoid dangling error message
+	dateInvalidErrMsg(e_dateDay.value, e_dateMonth.value, e_dateYear.value); // Avoid dangling error message
+
+	validateParams();
+});
+
+e_api.addEventListener("focusout", () => {
+	console.log("param-api focusout");
+
+	if (e_api.value === "" || e_api.value === null) {
+		apiInvalidErrMsg(true, "API Key is empty!");
+	} else {
+		apiInvalidErrMsg(false);
+	}
+
+	validateParams();
 });
 
 /* ---------------------------------- */
@@ -60,57 +82,46 @@ e_randomBtn.addEventListener("click", () => {
 
 /* ---------- Initializing ---------- */
 populateDropdownSelectors();
+disableSubmitBtn(true);
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
 	// Day
-	let output = '<option value="" selected>Day</option>';
+	let output = '<option value="1" selected>Day</option>';
 	for (let i = 1; i <= 31; i++) {
 		output += `<option name="day" value="${i}">${i}</option>`;
 	}
 	e_dateDay.innerHTML = output;
 
 	// Month
-	output = `<option value="" selected>Month</option>`;
-	for (let i = 1; i <= 12; i++) {
+	output = `<option value="1" selected>Month</option>`;
+	for (let i = 2; i <= 12; i++) {
 		output += `<option name="month" value="${i}">${i}</option>`;
 	}
 	e_dateMonth.innerHTML = output;
 
 	// Year
 	let currentYear = new Date().getFullYear();
-	output = `<option value="" selected>Year</option>`;
+	output = `<option value="${START_YEAR}" selected>Year</option>`;
 	for (let i = START_YEAR; i <= currentYear; i++) {
 		output += `<option name="year" value="${i}">${i}</option>`;
 	}
 	e_dateYear.innerHTML = output;
 
 	// Category
-	output = `<option value="" selected>Select</option>`;
+	output = `<option value="" selected>Any</option>`;
 	CATEGORIES.forEach((ctg) => {
 		output += `<option name="ctg" value="${ctg.id}">${ctg.name}</option>`;
 	});
 	e_ctg.innerHTML = output;
 
 	// Results per page
-	let rpp_options = [5, 10, 15, 20, 50, 100];
-	output = `<option value="${rpp_options[0]}" selected>Select</option>`;
-	rpp_options.forEach((value) => {
+	output = `<option value="${RPP_OPTIONS[0]}" selected>${RPP_OPTIONS[0]}</option>`;
+	RPP_OPTIONS.shift();
+	RPP_OPTIONS.forEach((value) => {
 		output += `<option name="rpp" value="${value}">${value}</option>`;
 	});
 	e_rpp.innerHTML = output;
-}
-
-function populateDateInvalidErrorMessage(day, month, year) {
-	let stringifiedDate = String(day + "-" + month + "-" + year);
-
-	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
-		e_dateError.classList.remove("error");
-		console.log("Valid date:", stringifiedDate);
-	} else {
-		e_dateError.classList.add("error");
-		console.log("Invalid date:", stringifiedDate);
-	}
 }
 
 function populateRandomDate() {
@@ -131,10 +142,10 @@ function populateRandomDate() {
 }
 
 /* ------------- Construct ---------- */
-function constructApiConfigs(key) {
+function constructApiConfigs(host, key) {
 	if (key === "" || key === null) {
-		// TODO: Show pop-up
-		console.log("API Key is empty");
+		alert("API Key is empty!");
+		console.log("param-api empty");
 		return;
 	}
 
@@ -142,13 +153,13 @@ function constructApiConfigs(key) {
 		method: "GET",
 		headers: {
 			"X-RapidAPI-Key": key,
-			"X-RapidAPI-Host": API_HOST,
+			"X-RapidAPI-Host": host,
 		},
 	};
 }
 
-function constructArticleFetchUrl(ctgID, day, month, year) {
-	let url = `https://${API_HOST}/`;
+function constructReutersFetchUrl(ctgID, day, month, year) {
+	let url = `https://${API_HOST_REUTERS}/`;
 	let ctgUrl_1 = "";
 	let ctgUrl_2 = "";
 	let dateUrl_1 = "";
@@ -184,6 +195,11 @@ function parseFetchedArticles(data) {
 	console.log("Data: ", data);
 	// console.log("_test_:", data[0]);
 
+	if (data.length === 0) {
+		alert("No articles found!");
+		return;
+	}
+
 	// Template data structure: /{root}/docs/api_example_article_resp.json
 	data.forEach((a) => {
 		let parsedArticle = {
@@ -211,6 +227,58 @@ function RNG(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+/* ------------ Behavior ------------ */
+function dateInvalidErrMsg(day, month, year) {
+	let stringifiedDate = String(day + "-" + month + "-" + year);
+
+	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
+		e_dateError.classList.remove("error");
+		// console.log("Valid date:", stringifiedDate);
+	} else {
+		e_dateError.classList.add("error");
+		// console.log("Invalid date:", stringifiedDate);
+	}
+}
+
+function apiInvalidErrMsg(show = true, msg = "") {
+	if (show) {
+		e_apiError.innerHTML = msg;
+		e_apiError.classList.add("error");
+		console.log("API error:", msg);
+	} else {
+		e_apiError.classList.remove("error");
+		console.log("API error cleared");
+	}
+}
+
+function disableSubmitBtn(state = true) {
+	if (state) {
+		e_submitBtn.setAttribute("disabled", "");
+		console.log("param-submit disabled");
+	} else {
+		e_submitBtn.removeAttribute("disabled");
+		console.log("param-submit enabled");
+	}
+}
+
+function validateParams() {
+	let valid = true;
+
+	e_paramContainer.querySelectorAll("small").forEach((small) => {
+		if (small.classList.contains("error")) {
+			valid = false;
+		}
+	});
+
+	e_paramContainer.querySelectorAll(".required").forEach((input) => {
+		if (input.value === "" || input.value === null) {
+			valid = false;
+		}
+	});
+
+	disableSubmitBtn(!valid);
+}
+
 /* ------------- Async ------------- */
 async function fetchData(url, config) {
 	let result = null;
@@ -220,7 +288,10 @@ async function fetchData(url, config) {
 		.then((data) => {
 			result = data;
 		})
-		.catch((err) => console.error(err));
+		.catch((err) => {
+			console.error(err);
+			apiInvalidErrMsg(true, "Fetching failed. Error message:", err);
+		});
 
 	return result;
 }
