@@ -1,12 +1,7 @@
 const CATEGORIES = [
 	{
-		id: "all",
-		name: "All",
-		desc: "Returns all types",
-	},
-	{
 		id: "selected",
-		name: "Highlighted",
+		name: "Highlights",
 		desc: "Curated set of events that occurred on the given date",
 	},
 	{
@@ -30,5 +25,8 @@ const CATEGORIES = [
 		desc: "Events that occurred on the given date that are not included in another type",
 	},
 ];
+
+CATEGORIES.sort((a, b) => a.name.localeCompare(b.name));
+CATEGORIES.unshift({ id: "all", name: "All" });
 
 export { CATEGORIES };

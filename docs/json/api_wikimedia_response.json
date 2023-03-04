@@ -1,32 +1,32 @@
 {
 	"selected": [
-	  {
+		{
 		"text": "Construction began on a 69-metre statue of the Buddha at Wat Paknam Bhasicharoen in Bangkok.",
 		"pages": [
-		  {
+			{
 			"type": "standard",
 			"title": "The_Buddha",
 			"displaytitle": "<span class=\"mw-page-title-main\">The Buddha</span>",
 			"namespace": {
-			  "id": 0,
-			  "text": ""
+				"id": 0,
+				"text": ""
 			},
 			"wikibase_item": "Q9441",
 			"titles": {
-			  "canonical": "The_Buddha",
-			  "normalized": "The Buddha",
-			  "display": "<span class=\"mw-page-title-main\">The Buddha</span>"
+				"canonical": "The_Buddha",
+				"normalized": "The Buddha",
+				"display": "<span class=\"mw-page-title-main\">The Buddha</span>"
 			},
 			"pageid": 3395,
 			"thumbnail": {
-			  "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Buddha_in_Sarnath_Museum_%28Dhammajak_Mutra%29.jpg/320px-Buddha_in_Sarnath_Museum_%28Dhammajak_Mutra%29.jpg",
-			  "width": 320,
-			  "height": 410
+				"source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Buddha_in_Sarnath_Museum_%28Dhammajak_Mutra%29.jpg/320px-Buddha_in_Sarnath_Museum_%28Dhammajak_Mutra%29.jpg",
+				"width": 320,
+				"height": 410
 			},
 			"originalimage": {
-			  "source": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Buddha_in_Sarnath_Museum_%28Dhammajak_Mutra%29.jpg",
-			  "width": 1188,
-			  "height": 1521
+				"source": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Buddha_in_Sarnath_Museum_%28Dhammajak_Mutra%29.jpg",
+				"width": 1188,
+				"height": 1521
 			},
 			"lang": "en",
 			"dir": "ltr",
@@ -36,47 +36,47 @@
 			"description": "Siddhartha Gautama, founder of Buddhism",
 			"description_source": "local",
 			"content_urls": {
-			  "desktop": {
+				"desktop": {
 				"page": "https://en.wikipedia.org/wiki/The_Buddha",
 				"revisions": "https://en.wikipedia.org/wiki/The_Buddha?action=history",
 				"edit": "https://en.wikipedia.org/wiki/The_Buddha?action=edit",
 				"talk": "https://en.wikipedia.org/wiki/Talk:The_Buddha"
-			  },
-			  "mobile": {
+				},
+				"mobile": {
 				"page": "https://en.m.wikipedia.org/wiki/The_Buddha",
 				"revisions": "https://en.m.wikipedia.org/wiki/Special:History/The_Buddha",
 				"edit": "https://en.m.wikipedia.org/wiki/The_Buddha?action=edit",
 				"talk": "https://en.m.wikipedia.org/wiki/Talk:The_Buddha"
-			  }
+				}
 			},
 			"extract": "Siddhartha Gautama, most commonly referred to as the Buddha, was a wandering ascetic and religious teacher who lived in South Asia during the 6th or 5th century BCE and founded Buddhism.",
 			"extract_html": "<p><b>Siddhartha Gautama</b>, most commonly referred to as <b>the Buddha</b>, was a wandering ascetic and religious teacher who lived in South Asia during the 6th or 5th century BCE and founded Buddhism.</p>",
 			"normalizedtitle": "The Buddha"
-		  },
-		  {
+			},
+			{
 			"type": "standard",
 			"title": "Wat_Paknam_Bhasicharoen",
 			"displaytitle": "<span class=\"mw-page-title-main\">Wat Paknam Bhasicharoen</span>",
 			"namespace": {
-			  "id": 0,
-			  "text": ""
+				"id": 0,
+				"text": ""
 			},
 			"wikibase_item": "Q4921712",
 			"titles": {
-			  "canonical": "Wat_Paknam_Bhasicharoen",
-			  "normalized": "Wat Paknam Bhasicharoen",
-			  "display": "<span class=\"mw-page-title-main\">Wat Paknam Bhasicharoen</span>"
+				"canonical": "Wat_Paknam_Bhasicharoen",
+				"normalized": "Wat Paknam Bhasicharoen",
+				"display": "<span class=\"mw-page-title-main\">Wat Paknam Bhasicharoen</span>"
 			},
 			"pageid": 3048793,
 			"thumbnail": {
-			  "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Chedi_Maha_Rajamongkol_of_Wat_Paknam.jpg/320px-Chedi_Maha_Rajamongkol_of_Wat_Paknam.jpg",
-			  "width": 320,
-			  "height": 213
+				"source": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Chedi_Maha_Rajamongkol_of_Wat_Paknam.jpg/320px-Chedi_Maha_Rajamongkol_of_Wat_Paknam.jpg",
+				"width": 320,
+				"height": 213
 			},
 			"originalimage": {
-			  "source": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Chedi_Maha_Rajamongkol_of_Wat_Paknam.jpg",
-			  "width": 4824,
-			  "height": 3216
+				"source": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Chedi_Maha_Rajamongkol_of_Wat_Paknam.jpg",
+				"width": 4824,
+				"height": 3216
 			},
 			"lang": "en",
 			"dir": "ltr",
@@ -86,51 +86,51 @@
 			"description": "Thai Buddhist temple, origin of Dhammakaya Movement and represented in Supreme Sangha Council",
 			"description_source": "local",
 			"coordinates": {
-			  "lat": 13.72166667,
-			  "lon": 100.47055556
+				"lat": 13.72166667,
+				"lon": 100.47055556
 			},
 			"content_urls": {
-			  "desktop": {
+				"desktop": {
 				"page": "https://en.wikipedia.org/wiki/Wat_Paknam_Bhasicharoen",
 				"revisions": "https://en.wikipedia.org/wiki/Wat_Paknam_Bhasicharoen?action=history",
 				"edit": "https://en.wikipedia.org/wiki/Wat_Paknam_Bhasicharoen?action=edit",
 				"talk": "https://en.wikipedia.org/wiki/Talk:Wat_Paknam_Bhasicharoen"
-			  },
-			  "mobile": {
+				},
+				"mobile": {
 				"page": "https://en.m.wikipedia.org/wiki/Wat_Paknam_Bhasicharoen",
 				"revisions": "https://en.m.wikipedia.org/wiki/Special:History/Wat_Paknam_Bhasicharoen",
 				"edit": "https://en.m.wikipedia.org/wiki/Wat_Paknam_Bhasicharoen?action=edit",
 				"talk": "https://en.m.wikipedia.org/wiki/Talk:Wat_Paknam_Bhasicharoen"
-			  }
+				}
 			},
 			"extract": "Wat Paknam Bhasicharoen is a royal wat ('temple') located in Phasi Charoen district, Bangkok, at the Chao Phraya River. It is part of the Maha Nikaya fraternity and is the origin of the Dhammakaya tradition. It is a large and popular temple, supported by prosperous community members.",
 			"extract_html": "<p><b>Wat Paknam Bhasicharoen</b> is a royal <i>wat</i> ('temple') located in Phasi Charoen district, Bangkok, at the Chao Phraya River. It is part of the Maha Nikaya fraternity and is the origin of the Dhammakaya tradition. It is a large and popular temple, supported by prosperous community members.</p>",
 			"normalizedtitle": "Wat Paknam Bhasicharoen"
-		  },
-		  {
+			},
+			{
 			"type": "standard",
 			"title": "Bangkok",
 			"displaytitle": "<span class=\"mw-page-title-main\">Bangkok</span>",
 			"namespace": {
-			  "id": 0,
-			  "text": ""
+				"id": 0,
+				"text": ""
 			},
 			"wikibase_item": "Q1861",
 			"titles": {
-			  "canonical": "Bangkok",
-			  "normalized": "Bangkok",
-			  "display": "<span class=\"mw-page-title-main\">Bangkok</span>"
+				"canonical": "Bangkok",
+				"normalized": "Bangkok",
+				"display": "<span class=\"mw-page-title-main\">Bangkok</span>"
 			},
 			"pageid": 56615,
 			"thumbnail": {
-			  "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Bangkok_Montage_2021.jpg/320px-Bangkok_Montage_2021.jpg",
-			  "width": 320,
-			  "height": 427
+				"source": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Bangkok_Montage_2021.jpg/320px-Bangkok_Montage_2021.jpg",
+				"width": 320,
+				"height": 427
 			},
 			"originalimage": {
-			  "source": "https://upload.wikimedia.org/wikipedia/commons/a/af/Bangkok_Montage_2021.jpg",
-			  "width": 1920,
-			  "height": 2560
+				"source": "https://upload.wikimedia.org/wikipedia/commons/a/af/Bangkok_Montage_2021.jpg",
+				"width": 1920,
+				"height": 2560
 			},
 			"lang": "en",
 			"dir": "ltr",
@@ -140,59 +140,59 @@
 			"description": "Capital and largest city of Thailand",
 			"description_source": "local",
 			"coordinates": {
-			  "lat": 13.7525,
-			  "lon": 100.49416667
+				"lat": 13.7525,
+				"lon": 100.49416667
 			},
 			"content_urls": {
-			  "desktop": {
+				"desktop": {
 				"page": "https://en.wikipedia.org/wiki/Bangkok",
 				"revisions": "https://en.wikipedia.org/wiki/Bangkok?action=history",
 				"edit": "https://en.wikipedia.org/wiki/Bangkok?action=edit",
 				"talk": "https://en.wikipedia.org/wiki/Talk:Bangkok"
-			  },
-			  "mobile": {
+				},
+				"mobile": {
 				"page": "https://en.m.wikipedia.org/wiki/Bangkok",
 				"revisions": "https://en.m.wikipedia.org/wiki/Special:History/Bangkok",
 				"edit": "https://en.m.wikipedia.org/wiki/Bangkok?action=edit",
 				"talk": "https://en.m.wikipedia.org/wiki/Talk:Bangkok"
-			  }
+				}
 			},
 			"extract": "Bangkok, officially known in Thai as Krung Thep Maha Nakhon and colloquially as Krung Thep, is the capital and most populous city of Thailand. The city occupies 1,568.7 square kilometres (605.7 sq mi) in the Chao Phraya River delta in central Thailand and has an estimated population of 10.539 million as of 2020, 15.3 percent of the country's population. Over 14 million people lived within the surrounding Bangkok Metropolitan Region at the 2010 census, making Bangkok an extreme primate city, dwarfing Thailand's other urban centres in both size and importance to the national economy.",
 			"extract_html": "<p><b>Bangkok</b>, officially known in Thai as <b>Krung Thep Maha Nakhon</b> and colloquially as <b>Krung Thep</b>, is the capital and most populous city of Thailand. The city occupies 1,568.7 square kilometres (605.7 sq mi) in the Chao Phraya River delta in central Thailand and has an estimated population of 10.539 million as of 2020, 15.3 percent of the country's population. Over 14 million people lived within the surrounding Bangkok Metropolitan Region at the 2010 census, making Bangkok an extreme primate city, dwarfing Thailand's other urban centres in both size and importance to the national economy.</p>",
 			"normalizedtitle": "Bangkok"
-		  }
+			}
 		],
 		"year": 2017
-	  }
+		}
 	],
 	"births": [
-	  {
+		{
 		"text": "Miya Cech, American actress",
 		"pages": [
-		  {
+			{
 			"type": "standard",
 			"title": "Miya_Cech",
 			"displaytitle": "<span class=\"mw-page-title-main\">Miya Cech</span>",
 			"namespace": {
-			  "id": 0,
-			  "text": ""
+				"id": 0,
+				"text": ""
 			},
 			"wikibase_item": "Q66425501",
 			"titles": {
-			  "canonical": "Miya_Cech",
-			  "normalized": "Miya Cech",
-			  "display": "<span class=\"mw-page-title-main\">Miya Cech</span>"
+				"canonical": "Miya_Cech",
+				"normalized": "Miya Cech",
+				"display": "<span class=\"mw-page-title-main\">Miya Cech</span>"
 			},
 			"pageid": 69493301,
 			"thumbnail": {
-			  "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Miya_Cech_2021.jpg/320px-Miya_Cech_2021.jpg",
-			  "width": 320,
-			  "height": 344
+				"source": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Miya_Cech_2021.jpg/320px-Miya_Cech_2021.jpg",
+				"width": 320,
+				"height": 344
 			},
 			"originalimage": {
-			  "source": "https://upload.wikimedia.org/wikipedia/commons/9/97/Miya_Cech_2021.jpg",
-			  "width": 837,
-			  "height": 900
+				"source": "https://upload.wikimedia.org/wikipedia/commons/9/97/Miya_Cech_2021.jpg",
+				"width": 837,
+				"height": 900
 			},
 			"lang": "en",
 			"dir": "ltr",
@@ -202,36 +202,36 @@
 			"description": "American actress",
 			"description_source": "local",
 			"content_urls": {
-			  "desktop": {
+				"desktop": {
 				"page": "https://en.wikipedia.org/wiki/Miya_Cech",
 				"revisions": "https://en.wikipedia.org/wiki/Miya_Cech?action=history",
 				"edit": "https://en.wikipedia.org/wiki/Miya_Cech?action=edit",
 				"talk": "https://en.wikipedia.org/wiki/Talk:Miya_Cech"
-			  },
-			  "mobile": {
+				},
+				"mobile": {
 				"page": "https://en.m.wikipedia.org/wiki/Miya_Cech",
 				"revisions": "https://en.m.wikipedia.org/wiki/Special:History/Miya_Cech",
 				"edit": "https://en.m.wikipedia.org/wiki/Miya_Cech?action=edit",
 				"talk": "https://en.m.wikipedia.org/wiki/Talk:Miya_Cech"
-			  }
+				}
 			},
 			"extract": "Miya Cech is an American actress. She made her film debut in The Darkest Minds (2018). She then starred in Rim of the World (2019), the second revival of Are You Afraid of the Dark? (2019), The Astronauts (2020–21) and Marvelous and the Black Hole (2021).",
 			"extract_html": "<p><b>Miya Cech</b> is an American actress. She made her film debut in <i>The Darkest Minds</i> (2018). She then starred in <i>Rim of the World</i> (2019), the second revival of <i>Are You Afraid of the Dark?</i> (2019), <i>The Astronauts</i> (2020–21) and <i>Marvelous and the Black Hole</i> (2021).</p>",
 			"normalizedtitle": "Miya Cech"
-		  },
-		  {
+			},
+			{
 			"type": "standard",
 			"title": "March_4",
 			"displaytitle": "<span class=\"mw-page-title-main\">March 4</span>",
 			"namespace": {
-			  "id": 0,
-			  "text": ""
+				"id": 0,
+				"text": ""
 			},
 			"wikibase_item": "Q2396",
 			"titles": {
-			  "canonical": "March_4",
-			  "normalized": "March 4",
-			  "display": "<span class=\"mw-page-title-main\">March 4</span>"
+				"canonical": "March_4",
+				"normalized": "March 4",
+				"display": "<span class=\"mw-page-title-main\">March 4</span>"
 			},
 			"pageid": 20315,
 			"lang": "en",
@@ -242,25 +242,25 @@
 			"description": "Day of the year",
 			"description_source": "local",
 			"content_urls": {
-			  "desktop": {
+				"desktop": {
 				"page": "https://en.wikipedia.org/wiki/March_4",
 				"revisions": "https://en.wikipedia.org/wiki/March_4?action=history",
 				"edit": "https://en.wikipedia.org/wiki/March_4?action=edit",
 				"talk": "https://en.wikipedia.org/wiki/Talk:March_4"
-			  },
-			  "mobile": {
+				},
+				"mobile": {
 				"page": "https://en.m.wikipedia.org/wiki/March_4",
 				"revisions": "https://en.m.wikipedia.org/wiki/Special:History/March_4",
 				"edit": "https://en.m.wikipedia.org/wiki/March_4?action=edit",
 				"talk": "https://en.m.wikipedia.org/wiki/Talk:March_4"
-			  }
+				}
 			},
 			"extract": "March 4 is the 63rd day of the year in the Gregorian calendar; 302 days remain until the end of the year.",
 			"extract_html": "<p><b>March 4</b> is the 63rd day of the year in the Gregorian calendar; 302 days remain until the end of the year.</p>",
 			"normalizedtitle": "March 4"
-		  }
+			}
 		],
 		"year": 2007
-	  }
+		}
 	]
-  }
+}
