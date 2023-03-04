@@ -48,6 +48,8 @@ const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
 
+
+
 /* ------------- Element ------------ */
 let e_paramContainer = document.querySelector(".param-container");
 let e_dateContainer = document.querySelector(".param-date-container");
@@ -212,6 +214,24 @@ function populateRandomDate() {
 	e_dateDay.value = day;
 	e_dateMonth.value = month;
 	e_dateYear.value = year;
+}
+
+function populateResultCards(num, arr){
+	let output = "";
+	for (let i = 0 ; i <= num ; i++){
+		output += 
+				`<div class="col-md-6 mb-3">
+					<div class="card p-3">
+						<a href="#">
+							<h4> ${arr[i].title}</h4>
+						</a>
+						<p> ${arr[i].summary} </p>
+					</div>
+				</div>`
+			
+	}
+	console.log("Cards printed");
+	e_cardContainer.innerHTML = output;
 }
 
 /* ------------- Construct ---------- */
@@ -441,3 +461,4 @@ async function fetchData(url, config) {
 
 	return result;
 }
+
