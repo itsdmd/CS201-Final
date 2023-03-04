@@ -1,12 +1,18 @@
 console.log("homepage.js loaded");
 
-import { CATEGORIES } from "./data/all_categories.js";
+import { CATEGORIES as REUTERS_CTG } from "./data/reuters_ctg.js";
+import { CATEGORIES as WIKIMEDIA_CTG } from "./data/wikimedia_ctg.js";
 
 /* ---------------------------------- */
 /*              Variables             */
 /* ---------------------------------- */
 /* -------------- Const ------------- */
 const API_HOST_REUTERS = "reuters-business-and-financial-news.p.rapidapi.com";
+const API_HOST_WIKIMEDIA = "api.wikimedia.org";
+const SRC_OPTIONS = {
+	Reuters: REUTERS_CTG,
+	Wikimedia: WIKIMEDIA_CTG,
+};
 const START_YEAR = 2014;
 const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
@@ -21,6 +27,7 @@ let e_dateMonth = document.querySelector(".param-date-month");
 let e_dateYear = document.querySelector(".param-date-year");
 let e_dateError = document.querySelector(".param-date-error");
 let e_randomBtn = document.querySelector(".param-date-rand");
+let e_src = document.querySelector(".param-src");
 let e_ctg = document.querySelector(".param-ctg");
 let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
@@ -62,6 +69,11 @@ e_randomBtn.addEventListener("click", () => {
 	dateInvalidErrMsg(e_dateDay.value, e_dateMonth.value, e_dateYear.value); // Avoid dangling error message
 
 	validateParams();
+});
+
+e_src.addEventListener("change", () => {
+	console.log("param-src changed");
+	populateCategorySelector(e_src.value);
 });
 
 e_api.addEventListener("focusout", () => {
@@ -108,12 +120,15 @@ function populateDropdownSelectors() {
 	}
 	e_dateYear.innerHTML = output;
 
+	// Source
+	output = "";
+	for (const key in SRC_OPTIONS) {
+		output += `<option name="src" value="${key}">${key}</option>`;
+	}
+	e_src.innerHTML = output;
+
 	// Category
-	output = `<option value="" selected>Any</option>`;
-	CATEGORIES.forEach((ctg) => {
-		output += `<option name="ctg" value="${ctg.id}">${ctg.name}</option>`;
-	});
-	e_ctg.innerHTML = output;
+	populateCategorySelector();
 
 	// Results per page
 	output = `<option value="${RPP_OPTIONS[0]}" selected>${RPP_OPTIONS[0]}</option>`;
@@ -122,6 +137,16 @@ function populateDropdownSelectors() {
 		output += `<option name="rpp" value="${value}">${value}</option>`;
 	});
 	e_rpp.innerHTML = output;
+}
+
+function populateCategorySelector() {
+	let output = "";
+
+	SRC_OPTIONS[e_src.value].forEach((ctg) => {
+		output += `<option name="ctg" value="${ctg.id}">${ctg.name}</option>`;
+	});
+
+	e_ctg.innerHTML = output;
 }
 
 function populateRandomDate() {
@@ -193,7 +218,6 @@ function parseFetchedArticles(data) {
 	let parsedArray = [];
 
 	console.log("Data: ", data);
-	// console.log("_test_:", data[0]);
 
 	if (data.length === 0) {
 		alert("No articles found!");
