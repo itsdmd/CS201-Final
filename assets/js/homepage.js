@@ -1,17 +1,52 @@
 console.log("homepage.js loaded");
 
-import { CATEGORIES } from "./data/all_categories.js";
+import { CATEGORIES as REUTERS_CTG } from "./data/reuters_ctg.js";
+import { CATEGORIES as WIKIMEDIA_CTG } from "./data/wikimedia_ctg.js";
 
 /* ---------------------------------- */
 /*              Variables             */
 /* ---------------------------------- */
 /* -------------- Const ------------- */
-const API_HOST_REUTERS = "reuters-business-and-financial-news.p.rapidapi.com";
+const FETCH_SOURCES = {
+	Reuters: {
+		headersEntries: [
+			{
+				name: "X-RapidAPI-Key",
+				value: "",
+			},
+			{
+				name: "X-RapidAPI-Host",
+				value: "reuters-business-and-financial-news.p.rapidapi.com",
+			},
+		],
+		hostUrl: "https://reuters-business-and-financial-news.p.rapidapi.com",
+		fetchingUrlFn: constructReutersFetchUrl,
+		parsingFn: parseReutersData,
+		categories: REUTERS_CTG,
+		startYear: 2014,
+	},
+	Wikimedia: {
+		headersEntries: [
+			{
+				name: "Authorization",
+				value: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMjYyMmM4NDYxZjIzNmNhY2UzYzEzMjFhNGFkODI4MCIsImp0aSI6ImM4ODE5ODk0ZTFlZTA1YmE3MWU5ZWUyMTk5YjQxOTA0ZmNkN2E5ZGU2YjA3Y2JmZjY1Zjc0ZDA4NmRkNDJlMzI1MDk3ZDgwYWIzNDNhZWQ4IiwiaWF0IjoxNjc3OTE2Mzc3LjQ5NDMxOSwibmJmIjoxNjc3OTE2Mzc3LjQ5NDMyMywiZXhwIjozMzIzNDgyNTE3Ny40OTMzOCwic3ViIjoiNzIxNTQ1MjYiLCJpc3MiOiJodHRwczovL21ldGEud2lraW1lZGlhLm9yZyIsInJhdGVsaW1pdCI6eyJyZXF1ZXN0c19wZXJfdW5pdCI6NTAwMCwidW5pdCI6IkhPVVIifSwic2NvcGVzIjpbImJhc2ljIl19.Je-CBqnEKH4P1-b071lD7xw5p1GHvwbrAswCEek9wT-GZe0aPWtwgdSgFqgwbA1xOQehPXqxTK6uYoqtLowszLdLxsEDMjkIgysUjkbOe57ityL0aw4B9wPS89jPfoyd9B6pqO9rSjS-GOYX0Xc62ZmbrTBrp5HO6qg7tHSRoCGNuwHEPSjerwmlb9ZE0_5Kw-CKn8xlnpIQ1aU4VumbgdspnFcUUcuj4Hpzmb3wT7t3-Kf42BueZrfj0GiCT3WM3aYneJJ3SqbrKJlxdtQYrGS7oq5BaIaVGRAIPbSP0j-kd63cUjS7BDVlSwsLUvxX1FvIPTzSTiRdXr6mIKmTcl9m2tGYNF3SzEM-kxtFRLCtGJFTr0lg7Ao0eCA23feKpt-QIk7zkOWs-0KjHYOF_jto8PDkBxqMiAECxQsx5YIbWmdz_QHblLsytIwNY5WhDPzt863Ih5yPUDNBA_GQjr5Gt_fndlVgOLWnbIsGI0CQtUgSurXnn9Cj1-jet33FUx9vMMtAitgIDi1UmXzZkmERRoXhR48hN1AJYGF_-6cB1C0RdAm6X41vx9lFkGiwouMOp0KxnyTOyZMjELNYnNM9Sx2As8h2oJYbzfexBwJzDBGFHnrGAeGP8HTSRAZdQ9VBO15sTXBSMdAhGcRW4QXVozxYf_gmHCEs4fHvQ10",
+			},
+			{
+				name: "Api-User-Agent",
+				value: "CS201",
+			},
+		],
+		hostUrl: "https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday",
+		fetchingUrlFn: constructWikimediaFetchUrl,
+		parsingFn: parseWikimediaData,
+		categories: WIKIMEDIA_CTG,
+		startYear: 0,
+	},
+};
 const START_YEAR = 2014;
 const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
-let g_apiKey = "";
 
 /* ------------- Element ------------ */
 let e_paramContainer = document.querySelector(".param-container");
@@ -21,6 +56,7 @@ let e_dateMonth = document.querySelector(".param-date-month");
 let e_dateYear = document.querySelector(".param-date-year");
 let e_dateError = document.querySelector(".param-date-error");
 let e_randomBtn = document.querySelector(".param-date-rand");
+let e_src = document.querySelector(".param-src");
 let e_ctg = document.querySelector(".param-ctg");
 let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
@@ -32,16 +68,17 @@ e_submitBtn.addEventListener("click", async (e) => {
 	e.preventDefault();
 	console.log("param-submit clicked");
 
-	g_apiKey = document.querySelector(".param-api").value;
-	console.log("API Key: ", g_apiKey);
+	console.log("API Key: ", e_api.value);
 
 	console.log("Fetching...");
-	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(g_apiKey)); // Test
+	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(e_api.value)); // Test
 	let query = await fetchData(
-		constructReutersFetchUrl("", e_dateDay.value, e_dateMonth.value, e_dateYear.value),
-		constructApiConfigs(API_HOST_REUTERS, g_apiKey)
+		FETCH_SOURCES[e_src.value].fetchingUrlFn(e_ctg.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value),
+		constructApiConfigs(e_src.value, e_api.value)
 	);
-	console.log("Fetch result:", parseFetchedArticles(query));
+
+	console.log("Fetch result:", query);
+	console.log("Parsed result:", FETCH_SOURCES[e_src.value].parsingFn(query));
 });
 
 e_dateContainer.addEventListener("focusout", () => {
@@ -62,6 +99,16 @@ e_randomBtn.addEventListener("click", () => {
 	dateInvalidErrMsg(e_dateDay.value, e_dateMonth.value, e_dateYear.value); // Avoid dangling error message
 
 	validateParams();
+});
+
+e_src.addEventListener("change", () => {
+	console.log("param-src changed to", e_src.value);
+	populateCategorySelector(e_src.value);
+	populateDateYear();
+});
+
+e_ctg.addEventListener("change", () => {
+	console.log("param-ctg changed to", e_ctg.value);
 });
 
 e_api.addEventListener("focusout", () => {
@@ -86,6 +133,8 @@ disableSubmitBtn(true);
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
+	console.log("populateDropdownSelectors() called");
+
 	// Day
 	let output = '<option value="1" selected>Day</option>';
 	for (let i = 1; i <= 31; i++) {
@@ -101,19 +150,17 @@ function populateDropdownSelectors() {
 	e_dateMonth.innerHTML = output;
 
 	// Year
-	let currentYear = new Date().getFullYear();
-	output = `<option value="${START_YEAR}" selected>Year</option>`;
-	for (let i = START_YEAR; i <= currentYear; i++) {
-		output += `<option name="year" value="${i}">${i}</option>`;
+	populateDateYear();
+
+	// Source
+	output = "";
+	for (const key in FETCH_SOURCES) {
+		output += `<option name="src" value="${key}">${key}</option>`;
 	}
-	e_dateYear.innerHTML = output;
+	e_src.innerHTML = output;
 
 	// Category
-	output = `<option value="" selected>Any</option>`;
-	CATEGORIES.forEach((ctg) => {
-		output += `<option name="ctg" value="${ctg.id}">${ctg.name}</option>`;
-	});
-	e_ctg.innerHTML = output;
+	populateCategorySelector();
 
 	// Results per page
 	output = `<option value="${RPP_OPTIONS[0]}" selected>${RPP_OPTIONS[0]}</option>`;
@@ -124,7 +171,33 @@ function populateDropdownSelectors() {
 	e_rpp.innerHTML = output;
 }
 
+function populateDateYear() {
+	console.log("populateDateYear() called");
+
+	let currentYear = new Date().getFullYear();
+	let output = `<option value="${currentYear}" selected>Year</option>`;
+
+	for (let i = currentYear; i >= FETCH_SOURCES[e_src.value].startYear; i--) {
+		output += `<option name="year" value="${i}">${i}</option>`;
+	}
+	e_dateYear.innerHTML = output;
+}
+
+function populateCategorySelector() {
+	console.log("populateCategorySelector() called");
+
+	let output = "";
+
+	FETCH_SOURCES[e_src.value].categories.forEach((entry) => {
+		output += `<option name="ctg" value="${entry.id}">${entry.name}</option>`;
+	});
+
+	e_ctg.innerHTML = output;
+}
+
 function populateRandomDate() {
+	console.log("populateRandomDate() called");
+
 	let date = new Date();
 	let currentYear = date.getFullYear();
 
@@ -142,24 +215,32 @@ function populateRandomDate() {
 }
 
 /* ------------- Construct ---------- */
-function constructApiConfigs(host, key) {
+function constructApiConfigs(source = e_src.value, key = e_api.value) {
 	if (key === "" || key === null) {
 		alert("API Key is empty!");
 		console.log("param-api empty");
 		return;
 	}
 
-	return {
+	let keyEntry = FETCH_SOURCES[source].headersEntries[0].name;
+	let hostEntry = FETCH_SOURCES[source].headersEntries[1].name;
+	let hostValue = FETCH_SOURCES[source].headersEntries[1].value;
+
+	let returnObj = {
 		method: "GET",
 		headers: {
-			"X-RapidAPI-Key": key,
-			"X-RapidAPI-Host": host,
+			[keyEntry]: key,
+			[hostEntry]: hostValue,
 		},
 	};
+
+	console.log("Constructed API Configs:", returnObj);
+	return returnObj;
 }
 
 function constructReutersFetchUrl(ctgID, day, month, year) {
-	let url = `https://${API_HOST_REUTERS}/`;
+	let url = `${FETCH_SOURCES["Reuters"].hostUrl}/`;
+
 	let ctgUrl_1 = "";
 	let ctgUrl_2 = "";
 	let dateUrl_1 = "";
@@ -174,8 +255,8 @@ function constructReutersFetchUrl(ctgID, day, month, year) {
 		console.log("Date is required");
 		return;
 	} else {
-		dateUrl_1 = `article-date/${day}-${month}-${year}`;
-		dateUrl_2 = `ArticleDate=${day}-${month}-${year}`;
+		dateUrl_1 = `article-date/${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
+		dateUrl_2 = `ArticleDate=${day.padStart(2, "0")}-${month.padStart(2, "0")}-${year}`;
 	}
 
 	if (ctgUrl_1 !== "" && ctgUrl_1 !== null) {
@@ -184,40 +265,95 @@ function constructReutersFetchUrl(ctgID, day, month, year) {
 		url = `${url}${dateUrl_1}`;
 	}
 
-	console.log("Fetch URL: ", url);
+	console.log("Fetch URL:", url);
+	return url;
+}
+
+// Note: `year` argument is not used and only included for compatibility
+function constructWikimediaFetchUrl(ctgID, day, month, year) {
+	let url = `${FETCH_SOURCES["Wikimedia"].hostUrl}/`;
+
+	if (month === "" || month === null || day === "" || day === null) {
+		console.log("Date is required");
+		return;
+	}
+
+	url = `${url}${ctgID}/${month.padStart(2, "0")}/${day.padStart(2, "0")}`;
+
+	console.log("Fetch URL:", url);
 	return url;
 }
 
 /* -------------- Parse ------------- */
-function parseFetchedArticles(data) {
+function parseReutersData(data) {
+	console.log("parseReutersData() called");
+
 	let parsedArray = [];
 
-	console.log("Data: ", data);
-	// console.log("_test_:", data[0]);
+	// console.log("Data:", data);
 
 	if (data.length === 0) {
-		alert("No articles found!");
+		alert("No article found!");
 		return;
 	}
 
-	// Template data structure: /{root}/docs/api_example_article_resp.json
-	data.forEach((a) => {
+	// Template data structure: /{root}/docs/api_reuters_response.json
+	data.forEach((entry) => {
 		let parsedArticle = {
-			url: a.urlSupplier,
-			title: a.articlesName,
-			summary: a.articlesShortDescription,
-			content: a.articlesDescription,
+			url: entry.urlSupplier,
+			title: entry.articlesName,
+			summary: entry.articlesShortDescription,
+			content: entry.articlesDescription,
 
-			imgUrl: a.files[0].urlCdn,
-			imgDesc: a.files[0].fileDescription,
+			imgUrl: entry.files[0].urlCdn,
+			imgDesc: entry.files[0].fileDescription,
 
-			authors: a.authors,
-			pubDate: a.publishedAt,
-			minutesToRead: a.minutesToRead,
+			type: "artilce",
+			authors: entry.authors,
+			pubDate: entry.publishedAt,
+			minutesToRead: entry.minutesToRead,
 		};
 
 		parsedArray.push(parsedArticle);
 	});
+
+	return parsedArray;
+}
+
+function parseWikimediaData(data) {
+	console.log("parseWikimediaData() called");
+
+	let parsedArray = [];
+
+	// console.log("Data:", data);
+
+	if (data.length === 0) {
+		alert("No event found!");
+		return;
+	}
+
+	// Template data structure: /{root}/docs/api_wikimedia_response.json
+	for (const [, value] of Object.entries(data)) {
+		let related = [];
+
+		value[0].pages.forEach((page) => {
+			related.push({
+				title: page.normalizedtitle,
+				url: page.content_urls.desktop.page,
+				content: page.extract,
+			});
+		});
+
+		let parsedEvent = {
+			title: value[0].text,
+			content: related,
+
+			type: "wiki",
+			authors: ["Wikimedia"],
+		};
+
+		parsedArray.push(parsedEvent);
+	}
 
 	return parsedArray;
 }
@@ -229,6 +365,8 @@ function RNG(min, max) {
 
 /* ------------ Behavior ------------ */
 function dateInvalidErrMsg(day, month, year) {
+	console.log("dateInvalidErrMsg() called");
+
 	let stringifiedDate = String(day + "-" + month + "-" + year);
 
 	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
@@ -241,6 +379,8 @@ function dateInvalidErrMsg(day, month, year) {
 }
 
 function apiInvalidErrMsg(show = true, msg = "") {
+	console.log("apiInvalidErrMsg() called");
+
 	if (show) {
 		e_apiError.innerHTML = msg;
 		e_apiError.classList.add("error");
@@ -252,6 +392,8 @@ function apiInvalidErrMsg(show = true, msg = "") {
 }
 
 function disableSubmitBtn(state = true) {
+	console.log("disableSubmitBtn() called");
+
 	if (state) {
 		e_submitBtn.setAttribute("disabled", "");
 		console.log("param-submit disabled");
@@ -262,6 +404,8 @@ function disableSubmitBtn(state = true) {
 }
 
 function validateParams() {
+	console.log("validateParams() called");
+
 	let valid = true;
 
 	e_paramContainer.querySelectorAll("small").forEach((small) => {
@@ -281,6 +425,8 @@ function validateParams() {
 
 /* ------------- Async ------------- */
 async function fetchData(url, config) {
+	console.log("fetchData() called");
+
 	let result = null;
 
 	await fetch(url, config)
