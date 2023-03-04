@@ -47,6 +47,8 @@ const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
 
+
+
 /* ------------- Element ------------ */
 let e_paramContainer = document.querySelector(".param-container");
 let e_dateContainer = document.querySelector(".param-date-container");
@@ -456,3 +458,4 @@ async function fetchData(url, config) {
 
 	return result;
 }
+
