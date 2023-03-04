@@ -149,14 +149,12 @@ function populateDropdownSelectors() {
 	console.log("populateDropdownSelectors() called");
 
 	// Day
-	let output = '<option value="1" selected>Day</option>';
 	for (let i = 1; i <= 31; i++) {
 		output += `<option name="day" value="${i}">${i}</option>`;
 	}
 	e_dateDay.innerHTML = output;
 
 	// Month
-	output = `<option value="1" selected>Month</option>`;
 	for (let i = 2; i <= 12; i++) {
 		output += `<option name="month" value="${i}">${i}</option>`;
 	}
@@ -188,7 +186,7 @@ function populateDateYear() {
 	console.log("populateDateYear() called");
 
 	let currentYear = new Date().getFullYear();
-	let output = `<option value="${currentYear}" selected>Year</option>`;
+	let output = "";
 
 	for (let i = currentYear; i >= FETCH_SOURCES[e_src.value].startYear; i--) {
 		output += `<option name="year" value="${i}">${i}</option>`;
