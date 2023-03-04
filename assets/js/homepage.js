@@ -7,20 +7,21 @@ import { CATEGORIES } from "./data/all_categories.js";
 /* ---------------------------------- */
 /* -------------- Const ------------- */
 const API_HOST = "reuters-business-and-financial-news.p.rapidapi.com";
+const START_YEAR = 2014;
 
 /* -------------- Value ------------- */
 let g_apiKey = "";
 
 /* ------------- Element ------------ */
+let e_dateContainer = document.querySelector(".param-date-container");
 let e_dateDay = document.querySelector(".param-date-day");
 let e_dateMonth = document.querySelector(".param-date-month");
 let e_dateYear = document.querySelector(".param-date-year");
-let e_ctg = document.querySelector(".param-ctg");
-let e_submitBtn = document.querySelector(".param-submit");
-let e_rpp = document.querySelector(".param-rpp");
-let e_dateContainer = document.querySelector(".date-container");
-let e_dateError = document.querySelector(".date-error");
+let e_dateError = document.querySelector(".param-date-error");
 let e_randomBtn = document.querySelector(".param-date-rand");
+let e_ctg = document.querySelector(".param-ctg");
+let e_rpp = document.querySelector(".param-rpp");
+let e_submitBtn = document.querySelector(".param-submit");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -37,20 +38,21 @@ e_submitBtn.addEventListener("click", async (e) => {
 });
 
 e_dateContainer.addEventListener("focusout", () => {
-	console.log("Date container focusout");
+	console.log("param-date-container focusout");
 
 	let day = e_dateDay.value;
 	let month = e_dateMonth.value;
 	let year = e_dateYear.value;
 
-	populateDateInvalidError(day, month, year);
+	populateDateInvalidErrorMessage(day, month, year);
 });
 
 e_randomBtn.addEventListener("click", () => {
+	console.log("param-date-rand clicked");
 
-	console.log("Random button clicked");
 	populateRandomDate();
-})
+	populateDateInvalidErrorMessage(e_dateDay.value, e_dateMonth.value, e_dateYear.value); // Avoid dangling error message
+});
 
 /* ---------------------------------- */
 /*              Functions             */
@@ -78,7 +80,7 @@ function populateDropdownSelectors() {
 	// Year
 	let currentYear = new Date().getFullYear();
 	output = `<option value="" selected>Year</option>`;
-	for (let i = 2014; i <= currentYear; i++) {
+	for (let i = START_YEAR; i <= currentYear; i++) {
 		output += `<option name="year" value="${i}">${i}</option>`;
 	}
 	e_dateYear.innerHTML = output;
@@ -99,7 +101,7 @@ function populateDropdownSelectors() {
 	e_rpp.innerHTML = output;
 }
 
-function populateDateInvalidError(day, month, year) {
+function populateDateInvalidErrorMessage(day, month, year) {
 	let stringifiedDate = String(day + "-" + month + "-" + year);
 
 	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
@@ -111,34 +113,22 @@ function populateDateInvalidError(day, month, year) {
 	}
 }
 
-
-function randomNumberGenerator(min, max){
-	 return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function populateRandomDate(){
+function populateRandomDate() {
 	let date = new Date();
-	let currentYear = date.getFullYear()
-	
-	let day = randomNumberGenerator(1, 31);
-	let month = randomNumberGenerator(1, 12);
-	let year = randomNumberGenerator(2014, currentYear);
+	let currentYear = date.getFullYear();
 
-	let stringifiedDate = String(day + "-" + month + "-" + year);
+	do {
+		var day = RNG(1, 31);
+		var month = RNG(1, 12);
+		var year = RNG(START_YEAR, currentYear);
 
-	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
-		e_dateDay.value = day;
-		e_dateMonth.value = month;
-		e_dateYear.value = year;
-	} else {
-		populateRandomDate();
-		console.log("Invalid date:", stringifiedDate);
-	}
-	
+		var stringifiedDate = String(day + "-" + month + "-" + year);
+	} while (!moment(stringifiedDate, "DD-MM-YYYY", false).isValid());
 
+	e_dateDay.value = day;
+	e_dateMonth.value = month;
+	e_dateYear.value = year;
 }
-
-
 
 /* ------------- Construct ---------- */
 function constructApiConfigs(key) {
@@ -214,6 +204,11 @@ function parseFetchedArticles(data) {
 	});
 
 	return parsedArray;
+}
+
+/* ------------- Generic ------------ */
+function RNG(min, max) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 /* ------------- Async ------------- */
