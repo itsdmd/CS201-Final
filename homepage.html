@@ -59,7 +59,7 @@
 								<button class="btn btn-primary ml-5 text-center param-date-rand" type="button">Random</button>
 							</div>
 						</div>
-						<small id="dateHelp" class="form-text text-danger param-date-error">Please enter a valid date!</small>
+						<small id="dateHelp" class="form-text text-danger text-right param-date-error">Please enter a valid date!</small>
 
 						<div class="selector-container">
 							<label for="category">Category</label>
@@ -70,7 +70,7 @@
 
 						<div class="selector-container">
 							<label for="keyword">Keyword</label>
-							<input type="text" name="keyword" id="keyword" class="param-keyword form-control col-md-6" placeholder="Optional" />
+							<input type="text" name="keyword" id="keyword" class="param-keyword form-control col-md-6" placeholder="Keyword to search for" />
 						</div>
 
 						<div class="selector-container">
@@ -80,11 +80,12 @@
 
 						<div class="selector-container">
 							<label for="api">API Key</label>
-							<input type="password" name="api" id="api" class="param-api form-control col-md-6" />
+							<input type="password" name="api" id="api" class="param-api required form-control col-md-6" />
 						</div>
+						<small id="apiHelp" class="form-text text-danger text-right param-api-error">Test</small>
 
 						<div class="col mt-4 text-center">
-							<button class="btn btn-success param-submit shadow" type="submit"><i class="fas fa-search"></i> Submit</button>
+							<button class="btn btn-success param-submit shadow" type="submit" disabled><i class="fas fa-search"></i> Submit</button>
 						</div>
 					</form>
 				</div>
