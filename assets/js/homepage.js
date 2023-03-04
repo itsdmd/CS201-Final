@@ -59,6 +59,8 @@ let e_dateError = document.querySelector(".param-date-error");
 let e_randomBtn = document.querySelector(".param-date-rand");
 let e_src = document.querySelector(".param-src");
 let e_ctg = document.querySelector(".param-ctg");
+let e_keywords = document.querySelector(".param-keyword");
+let e_submitBtn = document.querySelector(".param-submit");
 let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
@@ -80,6 +82,8 @@ e_submitBtn.addEventListener("click", async (e) => {
 
 	console.log("Fetch result:", query);
 	console.log("Parsed result:", FETCH_SOURCES[e_src.value].parsingFn(query));
+  
+	storeParams();
 });
 
 e_dateContainer.addEventListener("focusout", () => {
@@ -131,6 +135,17 @@ e_api.addEventListener("focusout", () => {
 /* ---------- Initializing ---------- */
 populateDropdownSelectors();
 disableSubmitBtn(true);
+
+window.onload = (event) => {
+	if(localStorage.length > 0){
+		e_dateDay.value = localStorage.getItem("day");
+		e_dateMonth.value = localStorage.getItem("month");
+		e_dateYear.value = localStorage.getItem("year");
+		e_ctg.value = localStorage.getItem("category");
+		e_keywords.value = localStorage.getItem("keyword");
+		e_rpp.value = localStorage.getItem("rpp");
+	}
+}
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
@@ -378,6 +393,16 @@ function parseWikimediaData(data) {
 /* ------------- Generic ------------ */
 function RNG(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function storeParams(){
+	localStorage.setItem("day",e_dateDay.value);
+	localStorage.setItem("month", e_dateMonth.value);
+	localStorage.setItem("year",e_dateYear.value);
+	localStorage.setItem("category",e_ctg.value);
+	localStorage.setItem("keyword",e_keywords.value);
+	localStorage.setItem("rpp",e_rpp.value);
+	console.log("store success");
 }
 
 /* ------------ Behavior ------------ */
