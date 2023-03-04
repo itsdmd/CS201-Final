@@ -7,11 +7,35 @@ import { CATEGORIES as WIKIMEDIA_CTG } from "./data/wikimedia_ctg.js";
 /*              Variables             */
 /* ---------------------------------- */
 /* -------------- Const ------------- */
-const API_HOST_REUTERS = "reuters-business-and-financial-news.p.rapidapi.com";
-const API_HOST_WIKIMEDIA = "api.wikimedia.org";
 const SRC_OPTIONS = {
-	Reuters: REUTERS_CTG,
-	Wikimedia: WIKIMEDIA_CTG,
+	Reuters: {
+		headersEntries: [
+			{
+				name: "X-RapidAPI-Key",
+				value: "",
+			},
+			{
+				name: "X-RapidAPI-Host",
+				value: "reuters-business-and-financial-news.p.rapidapi.com",
+			},
+		],
+		url: "https://reuters-business-and-financial-news.p.rapidapi.com",
+		categories: REUTERS_CTG,
+	},
+	Wikimedia: {
+		headersEntries: [
+			{
+				name: "Authorization",
+				value: "",
+			},
+			{
+				name: "Api-User-Agent",
+				value: "", // TODO: Get API host
+			},
+		],
+		url: "https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday",
+		categories: WIKIMEDIA_CTG,
+	},
 };
 const START_YEAR = 2014;
 const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
@@ -46,7 +70,7 @@ e_submitBtn.addEventListener("click", async (e) => {
 	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(g_apiKey)); // Test
 	let query = await fetchData(
 		constructReutersFetchUrl("", e_dateDay.value, e_dateMonth.value, e_dateYear.value),
-		constructApiConfigs(API_HOST_REUTERS, g_apiKey)
+		constructApiConfigs(SRC_OPTIONS[e_src.value][0], g_apiKey)
 	);
 	console.log("Fetch result:", parseFetchedArticles(query));
 });
@@ -72,8 +96,12 @@ e_randomBtn.addEventListener("click", () => {
 });
 
 e_src.addEventListener("change", () => {
-	console.log("param-src changed");
+	console.log("param-src changed to", e_src.value);
 	populateCategorySelector(e_src.value);
+});
+
+e_ctg.addEventListener("change", () => {
+	console.log("param-ctg changed to", e_ctg.value);
 });
 
 e_api.addEventListener("focusout", () => {
@@ -142,8 +170,8 @@ function populateDropdownSelectors() {
 function populateCategorySelector() {
 	let output = "";
 
-	SRC_OPTIONS[e_src.value].forEach((ctg) => {
-		output += `<option name="ctg" value="${ctg.id}">${ctg.name}</option>`;
+	SRC_OPTIONS[e_src.value].categories.forEach((entry) => {
+		output += `<option name="ctg" value="${entry.id}">${entry.name}</option>`;
 	});
 
 	e_ctg.innerHTML = output;
@@ -167,24 +195,28 @@ function populateRandomDate() {
 }
 
 /* ------------- Construct ---------- */
-function constructApiConfigs(host, key) {
+function constructApiConfigs(source = e_src.value, key = e_api.value) {
 	if (key === "" || key === null) {
 		alert("API Key is empty!");
 		console.log("param-api empty");
 		return;
 	}
 
+	let keyEntry = SRC_OPTIONS[source][headersEntries][0].name;
+	let hostEntry = SRC_OPTIONS[source][headersEntries][1].name;
+	let hostValue = SRC_OPTIONS[source][headersEntries][1].value;
+
 	return {
 		method: "GET",
 		headers: {
-			"X-RapidAPI-Key": key,
-			"X-RapidAPI-Host": host,
+			[keyEntry]: key,
+			[hostEntry]: hostValue,
 		},
 	};
 }
 
 function constructReutersFetchUrl(ctgID, day, month, year) {
-	let url = `https://${API_HOST_REUTERS}/`;
+	let url = `https://${SRC_OPTIONS[e_src.value].url}/`;
 	let ctgUrl_1 = "";
 	let ctgUrl_2 = "";
 	let dateUrl_1 = "";
