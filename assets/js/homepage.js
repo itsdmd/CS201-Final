@@ -43,7 +43,6 @@ const FETCH_SOURCES = {
 		startYear: 0,
 	},
 };
-const START_YEAR = 2014;
 const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
@@ -204,7 +203,7 @@ function populateRandomDate() {
 	do {
 		var day = RNG(1, 31);
 		var month = RNG(1, 12);
-		var year = RNG(START_YEAR, currentYear);
+		var year = RNG(FETCH_SOURCES[e_src.value].startYear, currentYear);
 
 		var stringifiedDate = String(day + "-" + month + "-" + year);
 	} while (!moment(stringifiedDate, "DD-MM-YYYY", false).isValid());
@@ -212,6 +211,22 @@ function populateRandomDate() {
 	e_dateDay.value = day;
 	e_dateMonth.value = month;
 	e_dateYear.value = year;
+}
+
+function populateResultCards(num, arr) {
+	let output = "";
+	for (let i = 0; i <= num; i++) {
+		output += `<div class="col-md-6 mb-3">
+					<div class="card p-3">
+						<a href="#">
+							<h4> ${arr[i].title}</h4>
+						</a>
+						<p> ${arr[i].summary} </p>
+					</div>
+				</div>`;
+	}
+	console.log("Cards printed");
+	e_cardContainer.innerHTML = output;
 }
 
 /* ------------- Construct ---------- */
