@@ -47,7 +47,6 @@ const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
 
-
 /* ------------- Element ------------ */
 let e_paramContainer = document.querySelector(".param-container");
 let e_dateContainer = document.querySelector(".param-date-container");
@@ -78,10 +77,10 @@ e_submitBtn.addEventListener("click", async (e) => {
 		FETCH_SOURCES[e_src.value].fetchingUrlFn(e_ctg.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value),
 		constructApiConfigs(e_src.value, e_api.value)
 	);
+	populateResultCards(e_rpp.value, query);
 
 	console.log("Fetch result:", query);
 	console.log("Parsed result:", FETCH_SOURCES[e_src.value].parsingFn(query));
-
 	storeParams();
 });
 
@@ -149,8 +148,8 @@ window.onload = () => {
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
 	console.log("populateDropdownSelectors() called");
-
 	let output = "";
+
 	// Day
 	for (let i = 1; i <= 31; i++) {
 		output += `<option name="day" value="${i}">${i}</option>`;
@@ -230,7 +229,7 @@ function populateRandomDate() {
 
 function populateResultCards(num, arr) {
 	let output = "";
-	
+
 	for (let i = 0; i <= num; i++) {
 		output += `<div class="col-md-6 mb-3">
 					<div class="card p-3">
@@ -239,17 +238,14 @@ function populateResultCards(num, arr) {
 						</a>
 						<p> ${arr[i].summary} </p>
 					</div>
-
-					<button type="button" class="btn btn-primary mt-5 readMoreButton" data-toggle="modal-${arr[i].type}"  data-target="#article-${arr[i].type}">
-                        Read more
-                    </button>
 				</div>`;
+		console.log(arr[i].title);
 	}
-
+	
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
+	
 }
-
 
 /* ------------- Construct ---------- */
 function constructApiConfigs(source = e_src.value, key = e_api.value) {
