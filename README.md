@@ -64,11 +64,11 @@ A website that fetches a list of news and events based on **date, category and k
 
 ##### Homepage
 
-![homepage-layout](docs/img/homepage.png).
+![homepage convention](docs/img/homepage.png).
 
 ##### Article page
 
-- :hourglass: WIP
+![article convention](docs/img/article.png).
 
 #### Source code
 
