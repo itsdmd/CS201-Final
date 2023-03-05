@@ -63,6 +63,7 @@ let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
 let e_cardContainer = document.querySelector(".param-card-container");
+let e_readMoreBtn = document.querySelector(".readMoreButton");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -77,7 +78,8 @@ e_submitBtn.addEventListener("click", async (e) => {
 		FETCH_SOURCES[e_src.value].fetchingUrlFn(e_ctg.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value),
 		constructApiConfigs(e_src.value, e_api.value)
 	);
-	populateResultCards(e_rpp.value, query);
+
+	populateResultCards(e_rpp.value, FETCH_SOURCES[e_src.value].parsingFn(query));
 
 	console.log("Fetch result:", query);
 	console.log("Parsed result:", FETCH_SOURCES[e_src.value].parsingFn(query));
@@ -125,6 +127,7 @@ e_api.addEventListener("focusout", () => {
 
 	validateParams();
 });
+
 
 /* ---------------------------------- */
 /*              Functions             */
@@ -237,11 +240,11 @@ function populateResultCards(num, arr) {
 							<h4> ${arr[i].title}</h4>
 						</a>
 						<p> ${arr[i].summary} </p>
+						<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-${arr[i].type}">Read more</button>
 					</div>
 				</div>`;
-		console.log(arr[i].title);
 	}
-	
+	console.log(arr[0].type);
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
 	
