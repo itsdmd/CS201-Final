@@ -147,6 +147,7 @@ window.onload = () => {
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
 	console.log("populateDropdownSelectors() called");
+	let output = "";
 
 	// Day
 	for (let i = 1; i <= 31; i++) {
