@@ -12,6 +12,8 @@ A website that fetches a list of news and events based on **date, category and k
 		- [HTML](#html)
 			- [Homepage](#homepage)
 			- [Article page](#article-page)
+				- [News article](#news-article)
+				- [Historical event](#historical-event)
 		- [Source code](#source-code)
 			- [Variable](#variable)
 			- [Function](#function)
@@ -68,7 +70,13 @@ A website that fetches a list of news and events based on **date, category and k
 
 ##### Article page
 
+###### News article
+
 ![article convention](docs/img/article.png).
+
+###### Historical event
+
+![wiki convention](docs/img/wiki.png).
 
 #### Source code
 
