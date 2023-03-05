@@ -47,6 +47,7 @@ const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
 
+
 /* ------------- Element ------------ */
 let e_paramContainer = document.querySelector(".param-container");
 let e_dateContainer = document.querySelector(".param-date-container");
@@ -62,6 +63,7 @@ let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
+let e_cardContainer = document.querySelector(".param-card-container");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -148,6 +150,7 @@ window.onload = () => {
 function populateDropdownSelectors() {
 	console.log("populateDropdownSelectors() called");
 
+	let output = "";
 	// Day
 	for (let i = 1; i <= 31; i++) {
 		output += `<option name="day" value="${i}">${i}</option>`;
@@ -227,6 +230,7 @@ function populateRandomDate() {
 
 function populateResultCards(num, arr) {
 	let output = "";
+	
 	for (let i = 0; i <= num; i++) {
 		output += `<div class="col-md-6 mb-3">
 					<div class="card p-3">
@@ -235,11 +239,17 @@ function populateResultCards(num, arr) {
 						</a>
 						<p> ${arr[i].summary} </p>
 					</div>
+
+					<button type="button" class="btn btn-primary mt-5 readMoreButton" data-toggle="modal-${arr[i].type}"  data-target="#article-${arr[i].type}">
+                        Read more
+                    </button>
 				</div>`;
 	}
+
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
 }
+
 
 /* ------------- Construct ---------- */
 function constructApiConfigs(source = e_src.value, key = e_api.value) {
@@ -332,8 +342,8 @@ function parseReutersData(data) {
 			summary: entry.articlesShortDescription,
 			content: entry.articlesDescription,
 
-			imgUrl: entry.files[0].urlCdn,
-			imgDesc: entry.files[0].fileDescription,
+			//imgUrl: entry.files[0].urlCdn,
+			//imgDesc: entry.files[0].fileDescription,
 
 			type: "news",
 			authors: entry.authors,
