@@ -1,6 +1,6 @@
 # WhatHappenedOnThatDay
 
-A website that fetches a list of news based on **date, category and keywords** provided by user, which they can then click to read the full article.
+A website that fetches a list of news and events based on **date, category and keywords** provided by user, which they can then click to read about the subject in greater detail.
 
 ## Table of Contents
 
@@ -19,23 +19,24 @@ A website that fetches a list of news based on **date, category and keywords** p
 
 ## :information_source: Overview
 
-- The website consists of 2 pages:
-	- [**Homepage**](homepage.html), which contains a form to select the parameters to filter the news and the list of matching news headlines.
-	- [**Article page**](pages/article.html), which displays the full article of the selected news headline.
 - The content of the website will be generated dynamically using **JavaScript**.
 - News are fetched using [Reuters Business and Financial News API](https://rapidapi.com/makingdatameaningful/api/reuters-business-and-financial-news).
+- Historical events are fetched using Wikimedia's [On this day API](https://api.wikimedia.org/wiki/API_reference/Feed/On_this_day).
 - Website's UI is built with [Bootstrap](https://getbootstrap.com/), a CSS framework that provides a responsive grid system and pre-built components.
 
 ## :technologist: Development
 
 ### :card_index_dividers: Folder Structure
 
-- `assets/`: contains all the stylesheets and scripts.
+- `assets/`: contains components for building/styling the website.
 	- `css/`
+	- `img/`
 	- `js/`
+		- `data/`: pre-defined dataset for JS files.
 - `docs/`: contains the assets for documentation.
 	- `drawio/`: contains the source files for the diagrams.
 	- `img/`: contains the images used in the documentation.
+	- `json/`: example responses from the APIs.
 - `pages/`: contains all the HTML pages (except the homepage).
 
 ### :handshake: Contribute
@@ -63,7 +64,7 @@ A website that fetches a list of news based on **date, category and keywords** p
 
 ##### Homepage
 
-![homepage-layout](docs/img/homepage-layout.jpg).
+![homepage-layout](docs/img/homepage.png).
 
 ##### Article page
 
