@@ -335,7 +335,7 @@ function parseReutersData(data) {
 			imgUrl: entry.files[0].urlCdn,
 			imgDesc: entry.files[0].fileDescription,
 
-			type: "artilce",
+			type: "news",
 			authors: entry.authors,
 			pubDate: entry.publishedAt,
 			minutesToRead: entry.minutesToRead,
