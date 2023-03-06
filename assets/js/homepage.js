@@ -46,6 +46,11 @@ const FETCH_SOURCES = {
 const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
+let g_day = localStorage.getItem("day");
+let g_month = localStorage.getItem("month");
+let g_year = localStorage.getItem("year");
+let g_src = localStorage.getItem("source");
+let g_rpp = localStorage.getItem("rpp");
 
 /* ------------- Element ------------ */
 let e_paramContainer = document.querySelector(".param-container");
@@ -54,7 +59,7 @@ let e_dateDay = document.querySelector(".param-date-day");
 let e_dateMonth = document.querySelector(".param-date-month");
 let e_dateYear = document.querySelector(".param-date-year");
 let e_dateError = document.querySelector(".param-date-error");
-let e_randomBtn = document.querySelector(".param-date-rand");
+let e_randomDateBtn = document.querySelector(".param-date-rand");
 let e_src = document.querySelector(".param-src");
 let e_ctg = document.querySelector(".param-ctg");
 let e_keywords = document.querySelector(".param-keyword");
@@ -64,6 +69,7 @@ let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
 let e_cardContainer = document.querySelector(".param-card-container");
 let e_readMoreBtn = document.querySelector(".readMoreButton");
+let e_wikiPopUp = document.querySelector(".article-content");
 
 /* ---------- EventListener --------- */
 e_dateContainer.addEventListener("focusout", () => {
@@ -77,7 +83,7 @@ e_dateContainer.addEventListener("focusout", () => {
 	validateParams();
 });
 
-e_randomBtn.addEventListener("click", () => {
+e_randomDateBtn.addEventListener("click", () => {
 	console.log("param-date-rand clicked");
 
 	populateRandomDate();
@@ -90,10 +96,12 @@ e_src.addEventListener("change", () => {
 	console.log("param-src changed to", e_src.value);
 	populateCategorySelector(e_src.value);
 	populateDateYear();
+	storeParams();
 });
 
 e_ctg.addEventListener("change", () => {
 	console.log("param-ctg changed to", e_ctg.value);
+	storeParams();
 });
 
 e_api.addEventListener("focusout", () => {
@@ -112,8 +120,6 @@ e_submitBtn.addEventListener("click", async (e) => {
 	e.preventDefault();
 	console.log("param-submit clicked");
 
-	console.log("API Key: ", e_api.value);
-
 	console.log("Fetching...");
 
 	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(e_api.value)); // Test
@@ -124,14 +130,10 @@ e_submitBtn.addEventListener("click", async (e) => {
 
 	storeParams();
 
-	console.log("Fetch data:", query);
+	console.log("Fetched data:", query);
 
-	let parsedQuery = FETCH_SOURCES[e_src.value].parsingFn(query);
-	console.log("Parsed data:", parsedQuery);
-
-	let filteredQuery = filterData(parsedQuery, e_keywords.value);
-	console.log("Filtered data:", filteredQuery);
-	populateResultCards(e_rpp.value, filteredQuery);
+	let processedQuery = processFetchedData(query);
+	populateResultCards(processedQuery);
 });
 
 /* ---------------------------------- */
@@ -139,55 +141,62 @@ e_submitBtn.addEventListener("click", async (e) => {
 /* ---------------------------------- */
 
 /* ---------- Initializing ---------- */
+retrieveParams();
 populateDropdownSelectors();
 disableSubmitBtn(true);
-
-window.onload = () => {
-	if (localStorage.length > 0) {
-		e_dateDay.value = localStorage.getItem("day");
-		e_dateMonth.value = localStorage.getItem("month");
-		e_dateYear.value = localStorage.getItem("year");
-		e_ctg.value = localStorage.getItem("category");
-		e_keywords.value = localStorage.getItem("keyword");
-		e_rpp.value = localStorage.getItem("rpp");
-	}
-};
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
 	console.log("populateDropdownSelectors() called");
-	let output = "";
 
 	// Day
+	let output = "";
 	for (let i = 1; i <= 31; i++) {
-		output += `<option name="day" value="${i}">${i}</option>`;
+		if (i === parseInt(g_day)) {
+			output += `<option name="day" value="${i}" selected>${i}</option>`;
+		} else {
+			output += `<option name="day" value="${i}">${i}</option>`;
+		}
 	}
 	e_dateDay.innerHTML = output;
 
 	// Month
-	for (let i = 2; i <= 12; i++) {
-		output += `<option name="month" value="${i}">${i}</option>`;
+	output = "";
+	for (let i = 1; i <= 12; i++) {
+		if (i === parseInt(g_month)) {
+			output += `<option name="month" value="${i}" selected>${i}</option>`;
+		} else {
+			output += `<option name="month" value="${i}">${i}</option>`;
+		}
 	}
 	e_dateMonth.innerHTML = output;
-
-	// Year
-	populateDateYear();
 
 	// Source
 	output = "";
 	for (const key in FETCH_SOURCES) {
-		output += `<option name="src" value="${key}">${key}</option>`;
+		if (key === g_src) {
+			console.log("key", key);
+			output += `<option name="source" value="${key}" selected>${key}</option>`;
+		} else {
+			output += `<option name="source" value="${key}">${key}</option>`;
+		}
 	}
 	e_src.innerHTML = output;
+
+	// Year
+	populateDateYear();
 
 	// Category
 	populateCategorySelector();
 
 	// Results per page
-	output = `<option value="${RPP_OPTIONS[0]}" selected>${RPP_OPTIONS[0]}</option>`;
-	RPP_OPTIONS.shift();
+	output = "";
 	RPP_OPTIONS.forEach((value) => {
-		output += `<option name="rpp" value="${value}">${value}</option>`;
+		if (value === g_rpp) {
+			output += `<option name="rpp" value="${value}" selected>${value}</option>`;
+		} else {
+			output += `<option name="rpp" value="${value}">${value}</option>`;
+		}
 	});
 	e_rpp.innerHTML = output;
 }
@@ -199,7 +208,11 @@ function populateDateYear() {
 	let output = "";
 
 	for (let i = currentYear; i >= FETCH_SOURCES[e_src.value].startYear; i--) {
-		output += `<option name="year" value="${i}">${i}</option>`;
+		if (i === parseInt(g_year)) {
+			output += `<option name="year" value="${i}" selected>${i}</option>`;
+		} else {
+			output += `<option name="year" value="${i}">${i}</option>`;
+		}
 	}
 	e_dateYear.innerHTML = output;
 }
@@ -235,21 +248,53 @@ function populateRandomDate() {
 	e_dateYear.value = year;
 }
 
-function populateResultCards(num, arr) {
+function populateResultCards(data, numOfCards = e_rpp.value) {
+	console.log("populateResultCards() called");
 	let output = "";
 
-	for (let i = 0; i <= num; i++) {
-		output += `<div class="col-md-6 mb-3">
-					<div class="card p-3">
-						<a href="#">
-							<h4> ${arr[i].title}</h4>
-						</a>
-						<p> ${arr[i].summary} </p>
-						<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-${arr[i].type}">Read more</button>
-					</div>
-				</div>`;
+	console.log("data.length", data.length);
+
+	if (data === null || data === undefined || data.length === 0) {
+		console.log("No data to populate");
+		return;
+	} else if (data.length < numOfCards) {
+		numOfCards = data.length;
 	}
-	console.log(arr[0].type);
+
+	if (e_src.value === "Reuters") {
+		for (let i = 0; i < numOfCards; i++) {
+			output += `<div class="col-md-6 mt-3">
+						<div class="card p-3">
+							<a href="#">
+								<h4> ${data[i].title}</h4>
+							</a>
+							<p> ${data[i].summary} </p>
+	
+							<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-news">Read more</button>
+						</div>
+					</div>`;
+		}
+	} else if (e_src.value === "Wikimedia") {
+		for (let i = 0; i < numOfCards; i++) {
+			console.log("Card #" + i + ":", data[i]);
+
+			let title = data[i].title;
+			let contentTitle = data[i].content[0].title;
+
+			output += `<div class="col-md-6 mt-3">
+				<div class="card p-3">
+					<a href="#">
+						<h4> ${title}</h4>
+					</a>
+
+					<p>${contentTitle}</p>
+					<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-wiki">Read more
+					</button>
+				</div>
+			</div>`;
+		}
+	}
+
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
 }
@@ -404,13 +449,47 @@ function RNG(min, max) {
 }
 
 function storeParams() {
+	console.log("storeParams() called");
+
 	localStorage.setItem("day", e_dateDay.value);
 	localStorage.setItem("month", e_dateMonth.value);
 	localStorage.setItem("year", e_dateYear.value);
-	localStorage.setItem("category", e_ctg.value);
-	localStorage.setItem("keyword", e_keywords.value);
+	localStorage.setItem("source", e_src.value);
 	localStorage.setItem("rpp", e_rpp.value);
-	console.log("store success");
+}
+
+function retrieveParams() {
+	console.log("retrieveParams() called");
+
+	if (localStorage.getItem("day") !== null) {
+		e_dateDay.value = localStorage.getItem("day");
+	} else {
+		e_dateDay.value = 1;
+	}
+
+	if (localStorage.getItem("month") !== null) {
+		e_dateMonth.value = localStorage.getItem("month");
+	} else {
+		e_dateMonth.value = 1;
+	}
+
+	if (localStorage.getItem("year") !== null) {
+		e_dateYear.value = localStorage.getItem("year");
+	} else {
+		e_dateYear.value = 2023;
+	}
+
+	if (localStorage.getItem("source") !== null) {
+		e_src.value = localStorage.getItem("source");
+	} else {
+		e_src.value = "Reuters";
+	}
+
+	if (localStorage.getItem("rpp") !== null) {
+		e_rpp.value = localStorage.getItem("rpp");
+	} else {
+		e_rpp.value = 5;
+	}
 }
 
 function filterData(data, keyword) {
@@ -443,7 +522,19 @@ function filterData(data, keyword) {
 	return filteredData;
 }
 
-/* ------------ Behavior ------------ */
+function processFetchedData(data) {
+	console.log("processFetchedData() called");
+
+	let parsedQuery = FETCH_SOURCES[e_src.value].parsingFn(data);
+	console.log("Parsed data:", parsedQuery);
+
+	let filteredQuery = filterData(parsedQuery, e_keywords.value);
+	console.log("Filtered data:", filteredQuery);
+
+	return filteredQuery;
+}
+
+/* ------------ Validate ------------ */
 function dateInvalidErrMsg(day, month, year) {
 	console.log("dateInvalidErrMsg() called");
 
