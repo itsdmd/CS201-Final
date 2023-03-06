@@ -101,11 +101,11 @@ ul {
 	text-align: left;
 }
 
-.param-param-date-container {
+.param-date-container {
 	display: flex;
 }
 
-.param-param-date-container select {
+.param-date-container select {
 	margin-left: 8px;
 }
 
