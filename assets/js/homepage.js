@@ -66,26 +66,6 @@ let e_cardContainer = document.querySelector(".param-card-container");
 let e_readMoreBtn = document.querySelector(".readMoreButton");
 
 /* ---------- EventListener --------- */
-e_submitBtn.addEventListener("click", async (e) => {
-	e.preventDefault();
-	console.log("param-submit clicked");
-
-	console.log("API Key: ", e_api.value);
-
-	console.log("Fetching...");
-	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(e_api.value)); // Test
-	let query = await fetchData(
-		FETCH_SOURCES[e_src.value].fetchingUrlFn(e_ctg.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value),
-		constructApiConfigs(e_src.value, e_api.value)
-	);
-
-	populateResultCards(e_rpp.value, FETCH_SOURCES[e_src.value].parsingFn(query));
-
-	console.log("Fetch result:", query);
-	console.log("Parsed result:", FETCH_SOURCES[e_src.value].parsingFn(query));
-	storeParams();
-});
-
 e_dateContainer.addEventListener("focusout", () => {
 	console.log("param-date-container focusout");
 
@@ -128,6 +108,29 @@ e_api.addEventListener("focusout", () => {
 	validateParams();
 });
 
+e_submitBtn.addEventListener("click", async (e) => {
+	e.preventDefault();
+	console.log("param-submit clicked");
+
+	console.log("API Key: ", e_api.value);
+
+	console.log("Fetching...");
+
+	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(e_api.value)); // Test
+	let query = await fetchData(
+		FETCH_SOURCES[e_src.value].fetchingUrlFn(e_ctg.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value),
+		constructApiConfigs(e_src.value, e_api.value)
+	);
+
+	storeParams();
+
+	console.log("Fetch data:", query);
+
+	let parsedQuery = FETCH_SOURCES[e_src.value].parsingFn(query);
+	populateResultCards(e_rpp.value, parsedQuery);
+	console.log("Parsed data:", parsedQuery);
+	console.log("Filtered data:", filterData(parsedQuery, e_keywords.value));
+});
 
 /* ---------------------------------- */
 /*              Functions             */
@@ -247,7 +250,6 @@ function populateResultCards(num, arr) {
 	console.log(arr[0].type);
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
-	
 }
 
 /* ------------- Construct ---------- */
@@ -324,14 +326,14 @@ function constructWikimediaFetchUrl(ctgID, day, month, year) {
 function parseReutersData(data) {
 	console.log("parseReutersData() called");
 
-	let parsedArray = [];
-
 	// console.log("Data:", data);
 
-	if (data.length === 0) {
+	if (data.length === 0 || data === null || data === undefined) {
 		alert("No article found!");
 		return;
 	}
+
+	let parsedArray = [];
 
 	// Template data structure: /{root}/docs/api_reuters_response.json
 	data.forEach((entry) => {
@@ -359,14 +361,14 @@ function parseReutersData(data) {
 function parseWikimediaData(data) {
 	console.log("parseWikimediaData() called");
 
-	let parsedArray = [];
-
 	// console.log("Data:", data);
 
-	if (data.length === 0) {
+	if (data.length === 0 || data === null || data === undefined) {
 		alert("No event found!");
 		return;
 	}
+
+	let parsedArray = [];
 
 	// Template data structure: /{root}/docs/api_wikimedia_response.json
 	for (const [, value] of Object.entries(data)) {
@@ -407,6 +409,36 @@ function storeParams() {
 	localStorage.setItem("keyword", e_keywords.value);
 	localStorage.setItem("rpp", e_rpp.value);
 	console.log("store success");
+}
+
+function filterData(data, keyword) {
+	console.log("filterData() called");
+
+	let filteredData = [];
+
+	if (keyword === "" || keyword === null) {
+		return data;
+	}
+
+	data.forEach((entry) => {
+		if (entry.title.toLowerCase().includes(keyword.toLowerCase())) {
+			filteredData.push(entry);
+		} else {
+			if (entry.type === "news") {
+				if (entry.content.toLowerCase().includes(keyword.toLowerCase())) {
+					filteredData.push(entry);
+				}
+			} else if (entry.type === "wiki") {
+				entry.content.forEach((related) => {
+					if (related.content.toLowerCase().includes(keyword.toLowerCase())) {
+						filteredData.push(entry);
+					}
+				});
+			}
+		}
+	});
+
+	return filteredData;
 }
 
 /* ------------ Behavior ------------ */
