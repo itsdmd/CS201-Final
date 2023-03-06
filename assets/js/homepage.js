@@ -62,6 +62,8 @@ let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
+let e_cardContainer = document.querySelector(".param-card-container");
+let e_wikiPopUp = document.querySelector(".article-content");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -77,8 +79,12 @@ e_submitBtn.addEventListener("click", async (e) => {
 		constructApiConfigs(e_src.value, e_api.value)
 	);
 
+	
 	console.log("Fetch result:", query);
 	console.log("Parsed result:", FETCH_SOURCES[e_src.value].parsingFn(query));
+
+	
+	populateResultCards(e_rpp.value, FETCH_SOURCES[e_src.value].parsingFn(query));
 
 	storeParams();
 });
@@ -228,19 +234,67 @@ function populateRandomDate() {
 
 function populateResultCards(num, arr) {
 	let output = "";
-	for (let i = 0; i <= num; i++) {
-		output += `<div class="col-md-6 mb-3">
-					<div class="card p-3">
-						<a href="#">
-							<h4> ${arr[i].title}</h4>
-						</a>
-						<p> ${arr[i].summary} </p>
-					</div>
-				</div>`;
+
+	if(e_src.value == "Reuters"){
+
+		for (let i = 0; i <= num; i++) {
+			output += `<div class="col-md-6 mt-3">
+						<div class="card p-3">
+							<a href="#">
+								<h4> ${arr[i].title}</h4>
+							</a>
+							<p> ${arr[i].summary} </p>
+	
+							<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-news">Read more</button>
+						</div>
+					</div>`;
+		}
 	}
+
+	else if(e_src.value === "Wikimedia") {
+		
+		console.log(arr);
+
+		for(let i = 0; i <= num; i++){
+			output += 
+			`<div class="col-md-6 mt-3">
+				<div class="card p-3">
+					<a href="#">
+						<h4> ${arr[1].title}</h4>
+					</a>
+
+					<p>${arr[1].content[0].title}</p>
+					<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-wiki">Read more
+					</button>
+				</div>
+			</div>`
+
+			//print entries in pop-up, just for testing 
+
+			let entryContent = "";
+			if(arr[1].content.length >= 1){
+				let length = arr[1].content.length;
+				for( let j = 0; j<= length ; j++){
+					entryContent += 
+						`<div class="article-content-entry">
+							<h2 class="article-entry-title">${arr[1].content[j].title}</h2>
+							<h7 class="article-entry-url">${arr[1].content[j].url}</h7>
+							<p class="article-entry-summary">${arr[1].content[j].content}</p>
+							<hr>
+						</div>`
+				}
+			}
+		}
+	}
+
+	
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
 }
+
+
+
+
 
 /* ------------- Construct ---------- */
 function constructApiConfigs(source = e_src.value, key = e_api.value) {
@@ -333,8 +387,8 @@ function parseReutersData(data) {
 			summary: entry.articlesShortDescription,
 			content: entry.articlesDescription,
 
-			imgUrl: entry.files[0].urlCdn,
-			imgDesc: entry.files[0].fileDescription,
+			//imgUrl: entry.files[0].urlCdn,
+			//imgDesc: entry.files[0].fileDescription,
 
 			type: "news",
 			authors: entry.authors,
