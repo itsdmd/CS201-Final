@@ -47,27 +47,37 @@
 				<div class="col-md-12">
 					<h2>Parameters</h2>
 					<form action="homepage.html" method="post" enctype="multipart/form-data">
-						<div class="selector-container">
+						<div class="selector-container param-date-container">
 							<label for="date">Date</label>
-							<div class="param-date-container col-md-6">
+							<div class="param-param-date-container col-md-6">
 								<select name="day" id="day" class="param-date-day form-control"></select>
 
 								<select name="month" id="month" class="param-date-month form-control"></select>
 
-								<select name="month" id="month" class="param-date-year form-control"></select>
+								<select name="year" id="year" class="param-date-year form-control"></select>
+
+								<button class="btn btn-success ml-5 text-center param-date-rand" type="button">Random</button>
 							</div>
+						</div>
+						<small id="dateHelp" class="form-text text-danger text-right param-date-error">Please enter a valid date!</small>
+
+						<div class="selector-container">
+							<label for="source">Source</label>
+							<select name="source" id="" class="param-src form-control col-md-6">
+								<option value="Reuters" selected>Reuters</option>
+							</select>
 						</div>
 
 						<div class="selector-container">
 							<label for="category">Category</label>
 							<select name="category" id="" class="param-ctg form-control col-md-6">
-								<option value="" selected>Select</option>
+								<option value="" selected>All</option>
 							</select>
 						</div>
 
 						<div class="selector-container">
 							<label for="keyword">Keyword</label>
-							<input type="text" name="keyword" id="keyword" class="param-keyword form-control col-md-6" placeholder="Optional" />
+							<input type="text" name="keyword" id="keyword" class="param-keyword form-control col-md-6" placeholder="Keyword to search for" />
 						</div>
 
 						<div class="selector-container">
@@ -77,11 +87,12 @@
 
 						<div class="selector-container">
 							<label for="api">API Key</label>
-							<input type="password" name="api" id="api" class="param-api form-control col-md-6" />
+							<input type="password" name="api" id="api" class="param-api required form-control col-md-6" />
 						</div>
+						<small id="apiHelp" class="form-text text-danger text-right param-api-error">Test</small>
 
 						<div class="col mt-4 text-center">
-							<button class="btn btn-success param-submit" type="submit"><i class="fas fa-search"></i> Submit</button>
+							<button class="btn btn-success param-submit shadow" type="submit" disabled><i class="fas fa-search"></i> Submit</button>
 						</div>
 					</form>
 				</div>
@@ -93,68 +104,7 @@
 		<!-- ------------------------------- -->
 		<!--             result              -->
 		<!-- ------------------------------- -->
-		<div class="result">
-			<div class="row">
-				<div class="col-md-12">
-			<div class="result-container">
-				<h1>RESULTS</h1>
-				<div class="result-spinner" role="status">
-					<span class="sr-only">Loading...</span>
-				</div>
-				<div class="result-alert alert-success mt-3" role="alert">
-					Content
-				</div>
-				<div class="result-card-container">
-					<div class="result-card col-md-12 offset-md-6">
-						<div class="result-card-title">
-							<h1>Title of first article</h1>
-						</div>
-						<div class="result-card-subtitle">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aenean vel elit scelerisque mauris. 
-			Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. At risus viverra adipiscing at in tellus integer.  
-								</p>
-						</div>
-						<div class="result-card-button">
-							<button>Read more ></button>
-						</div>
-					</div>
-					<div class="result-card col-md-12 offset-md-6">
-						<div class="result-card-title">
-							<h1>Title of second article</h1>
-						</div>
-						<div class="result-card-subtitle">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aenean vel elit scelerisque mauris. 
-								Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. At risus viverra adipiscing at in tellus integer.</p>
-						</div>
-						<div class="result-card-button">
-							<button>Read more ></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		</div>
-		<div class="result-pagination">
-			<nav aria-label="Page navigation">
-				<ul class="pagination">
-				  <li class="page-item">
-					<a class="page-link" href="#" aria-label="Previous">
-					  <span aria-hidden="true">&laquo;</span>
-					</a>
-				  </li>
-				  <li class="page-item-active" aria-current="page"><a class="page-link" href="#">1</a></li>
-				  <li class="page-item"><a class="page-link" href="#">2</a></li>
-				  <li class="page-item"><a class="page-link" href="#">3</a></li>
-				  <li class="page-item">
-					<a class="page-link" href="#" aria-label="Next">
-					  <span aria-hidden="true">&raquo;</span>
-					</a>
-				  </li>
-				</ul>
-			  </nav>
-		</div>
-		</div>
-		
+		<div class="param-card-container"></div>
 		<!-- ... -->
 
 		<!-- ------------------------------- -->
@@ -195,7 +145,10 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 
+		<!-- Date validator -->
+		<script src="assets/js/moment.js"></script>
+
 		<!-- Behavior -->
-		<script src="assets/js/homepage.js"></script>
+		<script src="assets/js/homepage.js" type="module"></script>
 	</body>
 </html>
