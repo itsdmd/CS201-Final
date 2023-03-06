@@ -124,21 +124,20 @@ ul {
 	margin-right: 10px;
 }
 
-
 .modal-header {
-    flex-direction: column;
-    margin-top: 10px;
+	flex-direction: column;
+	margin-top: 10px;
 }
 
 .modal-close {
-    position: fixed;
-    opacity: 0.8;
-    margin-left: 465px;
-    z-index: 1000;
+	position: fixed;
+	opacity: 0.8;
+	margin-left: 465px;
+	z-index: 1000;
 }
 
 img.article-image {
-    width: 100%;
-    object-fit: cover;
-    margin-top: 18px;
+	width: 100%;
+	object-fit: cover;
+	margin-top: 18px;
 }
