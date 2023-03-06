@@ -127,9 +127,11 @@ e_submitBtn.addEventListener("click", async (e) => {
 	console.log("Fetch data:", query);
 
 	let parsedQuery = FETCH_SOURCES[e_src.value].parsingFn(query);
-	populateResultCards(e_rpp.value, parsedQuery);
 	console.log("Parsed data:", parsedQuery);
-	console.log("Filtered data:", filterData(parsedQuery, e_keywords.value));
+
+	let filteredQuery = filterData(parsedQuery, e_keywords.value);
+	console.log("Filtered data:", filteredQuery);
+	populateResultCards(e_rpp.value, filteredQuery);
 });
 
 /* ---------------------------------- */
