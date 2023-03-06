@@ -62,6 +62,8 @@ let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
+let e_cardContainer = document.querySelector(".param-card-container");
+let e_readMoreBtn = document.querySelector(".readMoreButton");
 
 /* ---------- EventListener --------- */
 e_submitBtn.addEventListener("click", async (e) => {
@@ -77,9 +79,10 @@ e_submitBtn.addEventListener("click", async (e) => {
 		constructApiConfigs(e_src.value, e_api.value)
 	);
 
+	populateResultCards(e_rpp.value, FETCH_SOURCES[e_src.value].parsingFn(query));
+
 	console.log("Fetch result:", query);
 	console.log("Parsed result:", FETCH_SOURCES[e_src.value].parsingFn(query));
-
 	storeParams();
 });
 
@@ -124,6 +127,7 @@ e_api.addEventListener("focusout", () => {
 
 	validateParams();
 });
+
 
 /* ---------------------------------- */
 /*              Functions             */
@@ -228,6 +232,7 @@ function populateRandomDate() {
 
 function populateResultCards(num, arr) {
 	let output = "";
+
 	for (let i = 0; i <= num; i++) {
 		output += `<div class="col-md-6 mb-3">
 					<div class="card p-3">
@@ -235,11 +240,14 @@ function populateResultCards(num, arr) {
 							<h4> ${arr[i].title}</h4>
 						</a>
 						<p> ${arr[i].summary} </p>
+						<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-${arr[i].type}">Read more</button>
 					</div>
 				</div>`;
 	}
+	console.log(arr[0].type);
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
+	
 }
 
 /* ------------- Construct ---------- */
@@ -333,8 +341,8 @@ function parseReutersData(data) {
 			summary: entry.articlesShortDescription,
 			content: entry.articlesDescription,
 
-			imgUrl: entry.files[0].urlCdn,
-			imgDesc: entry.files[0].fileDescription,
+			//imgUrl: entry.files[0].urlCdn,
+			//imgDesc: entry.files[0].fileDescription,
 
 			type: "news",
 			authors: entry.authors,
