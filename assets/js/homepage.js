@@ -82,6 +82,7 @@ e_dateContainer.addEventListener("focusout", () => {
 	let year = e_dateYear.value;
 
 	dateInvalidErrMsg(day, month, year);
+	storeParams();
 	validateParams();
 });
 
@@ -91,6 +92,7 @@ e_randomDateBtn.addEventListener("click", () => {
 	populateRandomDate();
 	dateInvalidErrMsg(e_dateDay.value, e_dateMonth.value, e_dateYear.value); // Avoid dangling error message
 
+	storeParams();
 	validateParams();
 });
 
@@ -115,6 +117,7 @@ e_api.addEventListener("focusout", () => {
 		apiInvalidErrMsg(false);
 	}
 
+	storeParams();
 	validateParams();
 });
 
@@ -621,8 +624,6 @@ function disableSubmitBtn(state = true) {
 
 function validateParams() {
 	console.log("validateParams() called");
-
-	storeParams();
 
 	let valid = true;
 
