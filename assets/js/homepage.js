@@ -127,9 +127,11 @@ e_submitBtn.addEventListener("click", async (e) => {
 	console.log("Fetch data:", query);
 
 	let parsedQuery = FETCH_SOURCES[e_src.value].parsingFn(query);
-	populateResultCards(e_rpp.value, parsedQuery);
 	console.log("Parsed data:", parsedQuery);
-	console.log("Filtered data:", filterData(parsedQuery, e_keywords.value));
+
+	let filteredQuery = filterData(parsedQuery, e_keywords.value);
+	console.log("Filtered data:", filteredQuery);
+	populateResultCards(e_rpp.value, filteredQuery);
 });
 
 /* ---------------------------------- */
@@ -448,12 +450,24 @@ function dateInvalidErrMsg(day, month, year) {
 	let stringifiedDate = String(day + "-" + month + "-" + year);
 
 	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
+		// Check if date is in the future
+		//! Note: Must use ISO format for calculation and comparison
+		let today = moment().format();
+		let target = moment(stringifiedDate, "DD-MM-YYYY").format();
+
+		if (moment(target).isAfter(today)) {
+			e_dateError.classList.add("error");
+			// console.log("Date is in the future:", stringifiedDate);
+			return;
+		}
+
 		e_dateError.classList.remove("error");
 		// console.log("Valid date:", stringifiedDate);
-	} else {
-		e_dateError.classList.add("error");
-		// console.log("Invalid date:", stringifiedDate);
+		return;
 	}
+
+	e_dateError.classList.add("error");
+	// console.log("Invalid date:", stringifiedDate);
 }
 
 function apiInvalidErrMsg(show = true, msg = "") {
