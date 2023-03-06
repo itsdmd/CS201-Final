@@ -24,6 +24,7 @@ const FETCH_SOURCES = {
 		parsingFn: parseReutersData,
 		categories: REUTERS_CTG,
 		startYear: 2014,
+		yearRequired: true,
 	},
 	Wikimedia: {
 		headersEntries: [
@@ -41,6 +42,7 @@ const FETCH_SOURCES = {
 		parsingFn: parseWikimediaData,
 		categories: WIKIMEDIA_CTG,
 		startYear: 0,
+		yearRequired: false,
 	},
 };
 const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
@@ -207,6 +209,14 @@ function populateDateYear() {
 	let currentYear = new Date().getFullYear();
 	let output = "";
 
+	if (FETCH_SOURCES[e_src.value].yearRequired === false) {
+		if (g_year === "any") {
+			output += `<option name="year" value="any" selected>Any</option>`;
+		} else {
+			output += `<option name="year" value="any">Any</option>`;
+		}
+	}
+
 	for (let i = currentYear; i >= FETCH_SOURCES[e_src.value].startYear; i--) {
 		if (i === parseInt(g_year)) {
 			output += `<option name="year" value="${i}" selected>${i}</option>`;
@@ -251,8 +261,9 @@ function populateRandomDate() {
 function populateResultCards(data, numOfCards = e_rpp.value) {
 	console.log("populateResultCards() called");
 	let output = "";
+	e_cardContainer.innerHTML = "";
 
-	console.log("data.length", data.length);
+	// console.log("data.length", data.length);
 
 	if (data === null || data === undefined || data.length === 0) {
 		console.log("No data to populate");
@@ -435,6 +446,7 @@ function parseWikimediaData(data) {
 
 			type: "wiki",
 			authors: ["Wikimedia"],
+			year: value[0].year,
 		};
 
 		parsedArray.push(parsedEvent);
@@ -495,26 +507,43 @@ function retrieveParams() {
 function filterData(data, keyword) {
 	console.log("filterData() called");
 
-	let filteredData = [];
+	let keywordProvided = true;
 
-	if (keyword === "" || keyword === null) {
-		return data;
+	if (keyword === "" || keyword === null || keyword === undefined) {
+		console.log("No keyword provided");
+
+		if (FETCH_SOURCES[e_src.value].yearRequired) {
+			return data;
+		} else {
+			keywordProvided = false;
+		}
 	}
 
+	let filteredData = [];
+
 	data.forEach((entry) => {
-		if (entry.title.toLowerCase().includes(keyword.toLowerCase())) {
-			filteredData.push(entry);
-		} else {
-			if (entry.type === "news") {
-				if (entry.content.toLowerCase().includes(keyword.toLowerCase())) {
+		if (entry.type === "news") {
+			if (entry.title.toLowerCase().includes(keyword.toLowerCase()) || entry.content.toLowerCase().includes(keyword.toLowerCase())) {
+				filteredData.push(entry);
+			}
+		} else if (entry.type === "wiki") {
+			// Year filtering
+			if (e_dateYear.value === "any" || parseInt(entry.year) === parseInt(e_dateYear.value)) {
+				// Keyword filtering
+				if (keywordProvided === false) {
 					filteredData.push(entry);
-				}
-			} else if (entry.type === "wiki") {
-				entry.content.forEach((related) => {
-					if (related.content.toLowerCase().includes(keyword.toLowerCase())) {
+				} else if (entry.title.toLowerCase().includes(keyword.toLowerCase())) {
+					filteredData.push(entry);
+				} else {
+					// Related articles filtering
+					entry.content.forEach((related) => {
+						if (keywordProvided && related.content.toLowerCase().includes(keyword.toLowerCase()) === false) {
+							return;
+						}
+
 						filteredData.push(entry);
-					}
-				});
+					});
+				}
 			}
 		}
 	});
@@ -537,6 +566,10 @@ function processFetchedData(data) {
 /* ------------ Validate ------------ */
 function dateInvalidErrMsg(day, month, year) {
 	console.log("dateInvalidErrMsg() called");
+
+	if (year === "any") {
+		year = new Date().getFullYear() - 1;
+	}
 
 	let stringifiedDate = String(day + "-" + month + "-" + year);
 
