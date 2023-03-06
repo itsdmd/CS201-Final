@@ -63,6 +63,7 @@ let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
 let e_cardContainer = document.querySelector(".param-card-container");
+let e_readMoreBtn = document.querySelector(".readMoreButton");
 let e_wikiPopUp = document.querySelector(".article-content");
 
 /* ---------- EventListener --------- */
@@ -129,6 +130,32 @@ e_api.addEventListener("focusout", () => {
 	}
 
 	validateParams();
+});
+
+e_submitBtn.addEventListener("click", async (e) => {
+	e.preventDefault();
+	console.log("param-submit clicked");
+
+	console.log("API Key: ", e_api.value);
+
+	console.log("Fetching...");
+
+	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(e_api.value)); // Test
+	let query = await fetchData(
+		FETCH_SOURCES[e_src.value].fetchingUrlFn(e_ctg.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value),
+		constructApiConfigs(e_src.value, e_api.value)
+	);
+
+	storeParams();
+
+	console.log("Fetch data:", query);
+
+	let parsedQuery = FETCH_SOURCES[e_src.value].parsingFn(query);
+	console.log("Parsed data:", parsedQuery);
+
+	let filteredQuery = filterData(parsedQuery, e_keywords.value);
+	console.log("Filtered data:", filteredQuery);
+	populateResultCards(e_rpp.value, filteredQuery);
 });
 
 /* ---------------------------------- */
@@ -287,7 +314,6 @@ function populateResultCards(num, arr) {
 		}
 	}
 
-	
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
 }
@@ -370,14 +396,14 @@ function constructWikimediaFetchUrl(ctgID, day, month, year) {
 function parseReutersData(data) {
 	console.log("parseReutersData() called");
 
-	let parsedArray = [];
-
 	// console.log("Data:", data);
 
-	if (data.length === 0) {
+	if (data.length === 0 || data === null || data === undefined) {
 		alert("No article found!");
 		return;
 	}
+
+	let parsedArray = [];
 
 	// Template data structure: /{root}/docs/api_reuters_response.json
 	data.forEach((entry) => {
@@ -405,14 +431,14 @@ function parseReutersData(data) {
 function parseWikimediaData(data) {
 	console.log("parseWikimediaData() called");
 
-	let parsedArray = [];
-
 	// console.log("Data:", data);
 
-	if (data.length === 0) {
+	if (data.length === 0 || data === null || data === undefined) {
 		alert("No event found!");
 		return;
 	}
+
+	let parsedArray = [];
 
 	// Template data structure: /{root}/docs/api_wikimedia_response.json
 	for (const [, value] of Object.entries(data)) {
@@ -455,6 +481,36 @@ function storeParams() {
 	console.log("store success");
 }
 
+function filterData(data, keyword) {
+	console.log("filterData() called");
+
+	let filteredData = [];
+
+	if (keyword === "" || keyword === null) {
+		return data;
+	}
+
+	data.forEach((entry) => {
+		if (entry.title.toLowerCase().includes(keyword.toLowerCase())) {
+			filteredData.push(entry);
+		} else {
+			if (entry.type === "news") {
+				if (entry.content.toLowerCase().includes(keyword.toLowerCase())) {
+					filteredData.push(entry);
+				}
+			} else if (entry.type === "wiki") {
+				entry.content.forEach((related) => {
+					if (related.content.toLowerCase().includes(keyword.toLowerCase())) {
+						filteredData.push(entry);
+					}
+				});
+			}
+		}
+	});
+
+	return filteredData;
+}
+
 /* ------------ Behavior ------------ */
 function dateInvalidErrMsg(day, month, year) {
 	console.log("dateInvalidErrMsg() called");
@@ -462,12 +518,24 @@ function dateInvalidErrMsg(day, month, year) {
 	let stringifiedDate = String(day + "-" + month + "-" + year);
 
 	if (moment(stringifiedDate, "DD-MM-YYYY", false).isValid()) {
+		// Check if date is in the future
+		//! Note: Must use ISO format for calculation and comparison
+		let today = moment().format();
+		let target = moment(stringifiedDate, "DD-MM-YYYY").format();
+
+		if (moment(target).isAfter(today)) {
+			e_dateError.classList.add("error");
+			// console.log("Date is in the future:", stringifiedDate);
+			return;
+		}
+
 		e_dateError.classList.remove("error");
 		// console.log("Valid date:", stringifiedDate);
-	} else {
-		e_dateError.classList.add("error");
-		// console.log("Invalid date:", stringifiedDate);
+		return;
 	}
+
+	e_dateError.classList.add("error");
+	// console.log("Invalid date:", stringifiedDate);
 }
 
 function apiInvalidErrMsg(show = true, msg = "") {
