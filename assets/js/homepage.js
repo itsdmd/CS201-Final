@@ -120,8 +120,6 @@ e_submitBtn.addEventListener("click", async (e) => {
 	e.preventDefault();
 	console.log("param-submit clicked");
 
-	console.log("API Key: ", e_api.value);
-
 	console.log("Fetching...");
 
 	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(e_api.value)); // Test
@@ -132,14 +130,10 @@ e_submitBtn.addEventListener("click", async (e) => {
 
 	storeParams();
 
-	console.log("Fetch data:", query);
+	console.log("Fetched data:", query);
 
-	let parsedQuery = FETCH_SOURCES[e_src.value].parsingFn(query);
-	console.log("Parsed data:", parsedQuery);
-
-	let filteredQuery = filterData(parsedQuery, e_keywords.value);
-	console.log("Filtered data:", filteredQuery);
-	populateResultCards(e_rpp.value, filteredQuery);
+	let processedQuery = processFetchedData(query);
+	populateResultCards(processedQuery);
 });
 
 /* ---------------------------------- */
@@ -254,29 +248,38 @@ function populateRandomDate() {
 	e_dateYear.value = year;
 }
 
-function populateResultCards(num, arr) {
+function populateResultCards(data, numOfCards = e_rpp.value) {
 	console.log("populateResultCards() called");
 	let output = "";
 
+	console.log("data.length", data.length);
+
+	if (data === null || data === undefined || data.length === 0) {
+		console.log("No data to populate");
+		return;
+	} else if (data.length < numOfCards) {
+		numOfCards = data.length;
+	}
+
 	if (e_src.value === "Reuters") {
-		for (let i = 0; i <= num; i++) {
+		for (let i = 0; i < numOfCards; i++) {
 			output += `<div class="col-md-6 mt-3">
 						<div class="card p-3">
 							<a href="#">
-								<h4> ${arr[i].title}</h4>
+								<h4> ${data[i].title}</h4>
 							</a>
-							<p> ${arr[i].summary} </p>
+							<p> ${data[i].summary} </p>
 	
 							<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-news">Read more</button>
 						</div>
 					</div>`;
 		}
 	} else if (e_src.value === "Wikimedia") {
-		console.log(arr);
+		for (let i = 0; i < numOfCards; i++) {
+			console.log("Card #" + i + ":", data[i]);
 
-		for (let i = 0; i <= num; i++) {
-			let title = arr[i].title;
-			let contentTitle = arr[i].content[0].title;
+			let title = data[i].title;
+			let contentTitle = data[i].content[0].title;
 
 			output += `<div class="col-md-6 mt-3">
 				<div class="card p-3">
@@ -289,21 +292,6 @@ function populateResultCards(num, arr) {
 					</button>
 				</div>
 			</div>`;
-
-			//print entries in pop-up, just for testing
-
-			let entryContent = "";
-			if (arr[1].content.length >= 1) {
-				let length = arr[1].content.length;
-				for (let j = 0; j <= length; j++) {
-					entryContent += `<div class="article-content-entry">
-							<h2 class="article-entry-title">${arr[1].content[j].title}</h2>
-							<h7 class="article-entry-url">${arr[1].content[j].url}</h7>
-							<p class="article-entry-summary">${arr[1].content[j].content}</p>
-							<hr>
-						</div>`;
-				}
-			}
 		}
 	}
 
@@ -532,6 +520,18 @@ function filterData(data, keyword) {
 	});
 
 	return filteredData;
+}
+
+function processFetchedData(data) {
+	console.log("processFetchedData() called");
+
+	let parsedQuery = FETCH_SOURCES[e_src.value].parsingFn(data);
+	console.log("Parsed data:", parsedQuery);
+
+	let filteredQuery = filterData(parsedQuery, e_keywords.value);
+	console.log("Filtered data:", filteredQuery);
+
+	return filteredQuery;
 }
 
 /* ------------ Validate ------------ */
