@@ -139,7 +139,7 @@ e_submitBtn.addEventListener("click", async (e) => {
 	console.log("Fetched data:", query);
 
 	let processedQuery = processFetchedData(query);
-	populateResultCards(processedQuery);
+	generateResultCards(processedQuery);
 });
 
 /* ---------------------------------- */
@@ -150,6 +150,61 @@ e_submitBtn.addEventListener("click", async (e) => {
 retrieveParams();
 populateDropdownSelectors();
 disableSubmitBtn(true);
+
+/* ------------ Generate ------------ */
+function generateResultCards(data, numOfCards = e_rpp.value) {
+	console.log("generateResultCards() called");
+	let output = "";
+	e_cardContainer.innerHTML = "";
+
+	// console.log("data.length", data.length);
+
+	if (data === null || data === undefined || data.length === 0) {
+		console.log("No data to populate");
+		return;
+	} else if (data.length < numOfCards) {
+		numOfCards = data.length;
+	}
+
+	if (e_src.value === "Reuters") {
+		for (let i = 0; i < numOfCards; i++) {
+			console.log("Card #" + i + ":", data[i]);
+
+			output += `<div class="col-md-6 mt-3">
+						<div class="card p-3">
+							<a href="#">
+								<h4> ${data[i].title}</h4>
+							</a>
+							<p> ${data[i].summary} </p>
+	
+							<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">
+								Read more
+							</button>
+						</div>
+					</div>`;
+		}
+	} else if (e_src.value === "Wikimedia") {
+		for (let i = 0; i < numOfCards; i++) {
+			console.log("Card #" + i + ":", data[i]);
+
+			output += `<div class="col-md-6 mt-3">
+				<div class="card p-3">
+					<a href="#">
+						<h4> ${data[i].title}</h4>
+					</a>
+
+					<p>${data[i].content[0].title}</p>
+					<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-wiki">
+						Read more
+					</button>
+				</div>
+			</div>`;
+		}
+	}
+
+	console.log("Cards printed");
+	e_cardContainer.innerHTML = output;
+}
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
@@ -260,58 +315,6 @@ function populateRandomDate() {
 	e_dateDay.value = day;
 	e_dateMonth.value = month;
 	e_dateYear.value = year;
-}
-
-function populateResultCards(data, numOfCards = e_rpp.value) {
-	console.log("populateResultCards() called");
-	let output = "";
-	e_cardContainer.innerHTML = "";
-
-	// console.log("data.length", data.length);
-
-	if (data === null || data === undefined || data.length === 0) {
-		console.log("No data to populate");
-		return;
-	} else if (data.length < numOfCards) {
-		numOfCards = data.length;
-	}
-
-	if (e_src.value === "Reuters") {
-		for (let i = 0; i < numOfCards; i++) {
-			output += `<div class="col-md-6 mt-3">
-						<div class="card p-3">
-							<a href="#">
-								<h4> ${data[i].title}</h4>
-							</a>
-							<p> ${data[i].summary} </p>
-	
-							<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">Read more</button>
-						</div>
-					</div>`;
-		}
-	} else if (e_src.value === "Wikimedia") {
-		for (let i = 0; i < numOfCards; i++) {
-			console.log("Card #" + i + ":", data[i]);
-
-			let title = data[i].title;
-			let contentTitle = data[i].content[0].title;
-
-			output += `<div class="col-md-6 mt-3">
-				<div class="card p-3">
-					<a href="#">
-						<h4> ${title}</h4>
-					</a>
-
-					<p>${contentTitle}</p>
-					<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-wiki">Read more
-					</button>
-				</div>
-			</div>`;
-		}
-	}
-
-	console.log("Cards printed");
-	e_cardContainer.innerHTML = output;
 }
 
 /* ------------- Construct ---------- */
