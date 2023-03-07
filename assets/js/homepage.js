@@ -71,8 +71,11 @@ let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
 
 let e_cardContainer = document.querySelector(".result-card-container");
-let e_resultCardBtn = [];
+let e_resultCardBtns = [];
 let e_articleContent = document.querySelector(".article-content");
+
+let e_newsModal = document.querySelector("#article-news");
+let e_wikiModal = document.querySelector("#article-wiki");
 
 /* ---------- EventListener --------- */
 e_dateContainer.addEventListener("focusout", () => {
@@ -140,6 +143,41 @@ e_submitBtn.addEventListener("click", async (e) => {
 
 	let processedQuery = processFetchedData(query);
 	generateResultCards(processedQuery);
+
+	e_cardContainer.scrollIntoView({ behavior: "smooth" });
+
+	// Check if any button within e_cardContainer is clicked
+	e_cardContainer.addEventListener("click", (e) => {
+		console.log("e_cardContainer clicked");
+		if (e.target.classList.contains("result-card-button")) {
+			console.log("result-card-button clicked");
+
+			// Get the index of the card that the button is in
+			let cardIndex = parseInt(e.target.parentElement.getAttribute("index"));
+			console.log("cardIndex", cardIndex);
+
+			// Generate the modal innerHTML
+			let modalInner = generateModalInnerHTML(
+				processedQuery,
+				cardIndex,
+				e.target.getAttribute("data-target") === "#article-news" ? "Reuters" : "Wikimedia"
+			);
+			// console.log("modalInner", modalInner);
+
+			console.log('e.target.getAttribute("data-target")', e.target.getAttribute("data-target"));
+
+			// Copy it to the modal
+			if (e.target.getAttribute("data-target") === "#article-news") {
+				console.log("article-news:", e_newsModal);
+				e_newsModal.innerHTML = modalInner;
+			} else if (e.target.getAttribute("data-target") === "#article-wiki") {
+				console.log("article-wiki:", e_wikiModal);
+				e_wikiModal.innerHTML = modalInner;
+			} else {
+				console.log("No modal found");
+			}
+		}
+	});
 });
 
 /* ---------------------------------- */
@@ -170,27 +208,27 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 		for (let i = 0; i < numOfCards; i++) {
 			console.log("Card #" + i + ":", data[i]);
 
-			output += `<div class="col-md-6 mt-3">
-						<div class="card p-3">
-							<a href="#">
-								<h4> ${data[i].title}</h4>
-							</a>
-							<p> ${data[i].summary} </p>
-	
-							<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">
-								Read more
-							</button>
-							
-							<div display="none">`;
-			output += generateModalInnerHTML(data, i, "Reuters");
-			output += `</div> </div> </div>`;
+			output += `
+				<div class="col-md-6 mt-3">
+					<div class="card p-3" index="${i}">
+						<a href="#">
+							<h4> ${data[i].title}</h4>
+						</a>
+						<p> ${data[i].summary} </p>
+
+						<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">
+							Read more
+						</button>
+					</div>
+				</div>`;
 		}
 	} else if (e_src.value === "Wikimedia") {
 		for (let i = 0; i < numOfCards; i++) {
 			console.log("Card #" + i + ":", data[i]);
 
-			output += `<div class="col-md-6 mt-3">
-				<div class="card p-3">
+			output += `
+			<div class="col-md-6 mt-3">
+				<div class="card p-3" index="${i}">
 					<a href="#">
 						<h4> ${data[i].title}</h4>
 					</a>
@@ -199,10 +237,8 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 					<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-wiki">
 						Read more
 					</button>
-					
-					<div display="none">`;
-			output += generateModalInnerHTML(data, i, "Wikimedia");
-			output += `</div> </div> </div>`;
+				</div>
+			</div>`;
 		}
 	}
 
@@ -211,6 +247,10 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 }
 
 function generateModalInnerHTML(data, index, type) {
+	console.log("generateModalInnerHTML() called");
+
+	console.log("data:", data);
+
 	let result = "";
 
 	if (type === "Reuters") {
@@ -224,34 +264,32 @@ function generateModalInnerHTML(data, index, type) {
 		});
 
 		result = `
-			<div class="modal-news modal fade" id="article-news" tabindex="-1" role="dialog" aria-labelledby="article-title" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-close">
-							<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
-						</div>
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-close">
+						<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
+					</div>
 
-						<div class="modal-header">
-							<h1 class="modal-title" id="article-title">${data[index].title}</h1>
-							<h7 class="article-url"><a href="${data[index].url}">Original post</a></h7>
-							<hr />
-							<h7 class="article-authors">${authors}</h7>
-						</div>
-						<div class="modal-body">
-							<h4 class="article-summary">
-								${data[index].summary}
-							</h4>
-							<img
-								src=""
-								class="article-image"
-								alt=""
-							/>
-							<small class="article-image-desc">dior 30 montaigne, Paris </small>
-							<hr />
-							<p class="article-content">
-								${data[index].content}
-							</p>
-						</div>
+					<div class="modal-header">
+						<h1 class="modal-title" id="article-title">${data[index].title}</h1>
+						<h7 class="article-url"><a href="${data[index].url}">Original post</a></h7>
+						<hr />
+						<h7 class="article-authors">${authors}</h7>
+					</div>
+					<div class="modal-body">
+						<h4 class="article-summary">
+							${data[index].summary}
+						</h4>
+						<img
+							src=""
+							class="article-image"
+							alt=""
+						/>
+						<small class="article-image-desc">dior 30 montaigne, Paris </small>
+						<hr />
+						<p class="article-content">
+							${data[index].content}
+						</p>
 					</div>
 				</div>
 			</div>`;
@@ -259,39 +297,40 @@ function generateModalInnerHTML(data, index, type) {
 		let contentSize = data[index].content.length;
 
 		result = `
-			<div class="modal fade" id="article-wiki" tabindex="-1" role="dialog" aria-labelledby="article-title" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-close">
-							<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
-						</div>`;
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-close">
+						<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
+					</div>`;
 
 		for (let i = 0; i < contentSize; i++) {
 			result += `
-				<div class="modal-header">
-					<h1 class="modal-title" id="article-title">
-						${data[index].content[i].title}
-					</h1>
-				</div>
-
-				<div class="modal-body">
-					<div class="article-content">
-						<div class="article-content-entry">
-							<h2 class="article-entry-title">
-								${data[index].title}
-							</h2>
-							<h7 class="article-entry-url">
-								${data[index].content[i].url}
-							</h7>
-							<p class="article-entry-summary">
-								${data[index].content[i].summary}
-							</p>
-						</div>
+					<div class="modal-header">
+						<h1 class="modal-title" id="article-title">
+							${data[index].content[i].title}
+						</h1>
 					</div>
-				</div>`;
+
+					<div class="modal-body">
+						<div class="article-content">
+							<div class="article-content-entry">
+								<h2 class="article-entry-title">
+									${data[index].title}
+								</h2>
+								<h7 class="article-entry-url">
+									${data[index].content[i].url}
+								</h7>
+								<p class="article-entry-summary">
+									${data[index].content[i].summary}
+								</p>
+							</div>
+						</div>
+					</div>`;
 		}
 
-		result += `</div> </div> </div>`;
+		result += `
+				</div>
+			</div>`;
 	}
 
 	return result;
@@ -406,6 +445,16 @@ function populateRandomDate() {
 	e_dateDay.value = day;
 	e_dateMonth.value = month;
 	e_dateYear.value = year;
+}
+
+function populateModal(innerHTML) {
+	console.log("populateModal() called");
+
+	if (e_src.value === "Reuters") {
+		e_newsModal.innerHTML = innerHTML;
+	} else {
+		e_newsModal.innerHTML = innerHTML;
+	}
 }
 
 /* ------------- Construct ---------- */
