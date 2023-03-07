@@ -69,9 +69,13 @@ let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
-let e_cardContainer = document.querySelector(".param-card-container");
-let e_readMoreBtn = document.querySelector(".readMoreButton");
-let e_wikiPopUp = document.querySelector(".article-content");
+
+let e_cardContainer = document.querySelector(".result-card-container");
+let e_resultCardBtns = [];
+let e_articleContent = document.querySelector(".article-content");
+
+let e_newsModal = document.querySelector("#article-news");
+let e_wikiModal = document.querySelector("#article-wiki");
 
 /* ---------- EventListener --------- */
 e_dateContainer.addEventListener("focusout", () => {
@@ -138,7 +142,50 @@ e_submitBtn.addEventListener("click", async (e) => {
 	console.log("Fetched data:", query);
 
 	let processedQuery = processFetchedData(query);
-	populateResultCards(processedQuery);
+	generateResultCards(processedQuery);
+
+	e_cardContainer.scrollIntoView({ behavior: "smooth" });
+
+	// Check if any button within e_cardContainer is clicked
+	e_cardContainer.addEventListener("click", (e) => {
+		console.log("e_cardContainer clicked");
+		if (e.target.classList.contains("result-card-button")) {
+			console.log("result-card-button clicked");
+
+			// Get the index of the card that the button is in
+			let cardIndex = parseInt(e.target.parentElement.getAttribute("index"));
+			console.log("cardIndex", cardIndex);
+
+			let type = null;
+			switch (e.target.getAttribute("data-target")) {
+				case "#article-news":
+					type = "Reuters";
+					break;
+				case "#article-wiki":
+					type = "Wikimedia";
+					break;
+				default:
+					console.log("No matching type");
+			}
+
+			// Generate the modal innerHTML
+			let modalInner = generateModalInnerHTML(processedQuery, cardIndex, type);
+			// console.log("modalInner", modalInner);
+
+			console.log('e.target.getAttribute("data-target")', e.target.getAttribute("data-target"));
+
+			// Copy it to the modal
+			if (type === "Reuters") {
+				console.log("article-news:", e_newsModal);
+				e_newsModal.innerHTML = modalInner;
+			} else if (type === "Wikimedia") {
+				console.log("article-wiki:", e_wikiModal);
+				e_wikiModal.innerHTML = modalInner;
+			} else {
+				console.log("No matching modal");
+			}
+		}
+	});
 });
 
 /* ---------------------------------- */
@@ -149,6 +196,161 @@ e_submitBtn.addEventListener("click", async (e) => {
 retrieveParams();
 populateDropdownSelectors();
 disableSubmitBtn(true);
+
+/* ------------ Generate ------------ */
+function generateResultCards(data, numOfCards = e_rpp.value) {
+	console.log("generateResultCards() called");
+	let output = "";
+	e_cardContainer.innerHTML = "";
+
+	// console.log("data.length", data.length);
+
+	if (data === null || data === undefined || data.length === 0) {
+		console.log("No data to populate");
+		return;
+	} else if (data.length < numOfCards) {
+		numOfCards = data.length;
+	}
+
+	if (e_src.value === "Reuters") {
+		for (let i = 0; i < numOfCards; i++) {
+			console.log("Card #" + i + ":", data[i]);
+
+			output += `
+				<div class="col-md-6 mt-3">
+					<div class="card p-3" index="${i}">
+						<a href="#">
+							<h4> ${data[i].title}</h4>
+						</a>
+						<p> ${data[i].summary} </p>
+
+						<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">
+							Read more
+						</button>
+					</div>
+				</div>`;
+		}
+	} else if (e_src.value === "Wikimedia") {
+		for (let i = 0; i < numOfCards; i++) {
+			console.log("Card #" + i + ":", data[i]);
+
+			let relatedTitles = "";
+			data[i].content.forEach((item) => {
+				relatedTitles += item.title;
+
+				if (item !== data[i].content[data[i].content.length - 1]) {
+					relatedTitles += ", ";
+				}
+			});
+
+			output += `
+			<div class="col-md-6 mt-3">
+				<div class="card p-3" index="${i}">
+					<a href="#">
+						<h4> ${data[i].title}</h4>
+					</a>
+
+					<p>${relatedTitles}</p>
+					<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-wiki">
+						Read more
+					</button>
+				</div>
+			</div>`;
+		}
+	}
+
+	console.log("Cards printed");
+	e_cardContainer.innerHTML = output;
+}
+
+function generateModalInnerHTML(data, index, type) {
+	console.log("generateModalInnerHTML() called");
+
+	console.log("data:", data);
+
+	let result = "";
+
+	if (type === "Reuters") {
+		let authors = "";
+		data[index].authors.forEach((author) => {
+			authors += author.authorName;
+
+			if (data[index].authors.indexOf(author) !== data[index].authors.length - 1) {
+				authors += ", ";
+			}
+		});
+
+		result = `
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-close">
+						<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
+					</div>
+
+					<div class="modal-header">
+						<h1 class="modal-title" id="article-title">${data[index].title}</h1>
+						<h7 class="article-url"><a href="${data[index].url}">Original post</a></h7>
+						<hr />
+						<h7 class="article-authors">${authors}</h7>
+					</div>
+					<div class="modal-body">
+						<h4 class="article-summary">
+							${data[index].summary}
+						</h4>
+						<img
+							src=""
+							class="article-image"
+							alt=""
+						/>
+						<small class="article-image-desc"></small>
+						<hr />
+						<p class="article-content">
+							${data[index].content}
+						</p>
+					</div>
+				</div>
+			</div>`;
+	} else if (type === "Wikimedia") {
+		let contentSize = data[index].content.length;
+
+		result = `
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-close">
+						<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
+					</div>`;
+
+		for (let i = 0; i < contentSize; i++) {
+			result += `
+					<div class="modal-header">
+						<h1 class="modal-title" id="article-title">
+							${data[index].content[i].title}
+						</h1>
+					</div>
+
+					<div class="modal-body">
+						<div class="article-content">
+							<div class="article-content-entry">
+								<h7 class="article-entry-url">
+									<a href="${data[index].content[i].url}">
+										URL
+									</a>
+								</h7>
+								<p class="article-entry-summary">
+									${data[index].content[i].summary}
+								</p>
+							</div>
+						</div>
+					</div>`;
+		}
+
+		result += `
+				</div>
+			</div>`;
+	}
+
+	return result;
+}
 
 /* ------------ Populate ------------ */
 function populateDropdownSelectors() {
@@ -261,56 +463,14 @@ function populateRandomDate() {
 	e_dateYear.value = year;
 }
 
-function populateResultCards(data, numOfCards = e_rpp.value) {
-	console.log("populateResultCards() called");
-	let output = "";
-	e_cardContainer.innerHTML = "";
-
-	// console.log("data.length", data.length);
-
-	if (data === null || data === undefined || data.length === 0) {
-		console.log("No data to populate");
-		return;
-	} else if (data.length < numOfCards) {
-		numOfCards = data.length;
-	}
+function populateModal(innerHTML) {
+	console.log("populateModal() called");
 
 	if (e_src.value === "Reuters") {
-		for (let i = 0; i < numOfCards; i++) {
-			output += `<div class="col-md-6 mt-3">
-						<div class="card p-3">
-							<a href="#">
-								<h4> ${data[i].title}</h4>
-							</a>
-							<p> ${data[i].summary} </p>
-	
-							<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-news">Read more</button>
-						</div>
-					</div>`;
-		}
-	} else if (e_src.value === "Wikimedia") {
-		for (let i = 0; i < numOfCards; i++) {
-			console.log("Card #" + i + ":", data[i]);
-
-			let title = data[i].title;
-			let contentTitle = data[i].content[0].title;
-
-			output += `<div class="col-md-6 mt-3">
-				<div class="card p-3">
-					<a href="#">
-						<h4> ${title}</h4>
-					</a>
-
-					<p>${contentTitle}</p>
-					<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-wiki">Read more
-					</button>
-				</div>
-			</div>`;
-		}
+		e_newsModal.innerHTML = innerHTML;
+	} else {
+		e_newsModal.innerHTML = innerHTML;
 	}
-
-	console.log("Cards printed");
-	e_cardContainer.innerHTML = output;
 }
 
 /* ------------- Construct ---------- */
@@ -439,7 +599,7 @@ function parseWikimediaData(data) {
 			related.push({
 				title: page.normalizedtitle,
 				url: page.content_urls.desktop.page,
-				content: page.extract,
+				summary: page.extract,
 			});
 		});
 
