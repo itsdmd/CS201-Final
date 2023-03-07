@@ -8,10 +8,10 @@ A website that fetches a list of news and events based on **date, category and k
 - [:technologist: Development](#technologist-development)
 	- [:card\_index\_dividers: Folder Structure](#card_index_dividers-folder-structure)
 	- [:handshake: Contribute](#handshake-contribute)
-	- [:triangular\_ruler: Convention](#triangular_ruler-convention)
+	- [:scroll: Convention](#scroll-convention)
 		- [HTML](#html)
 			- [Homepage](#homepage)
-			- [Article page](#article-page)
+			- [Article](#article)
 				- [News article](#news-article)
 				- [Historical event](#historical-event)
 		- [Source code](#source-code)
@@ -60,7 +60,7 @@ A website that fetches a list of news and events based on **date, category and k
 4. :postbox: After you are done, **create a pull request** (PR) to the `main` branch.
 	- If the issue wasn't solved completely, additional notes should be provided in the PR's description.
 
-### :triangular_ruler: Convention
+### :scroll: Convention
 
 #### HTML
 
@@ -68,7 +68,7 @@ A website that fetches a list of news and events based on **date, category and k
 
 ![homepage convention](docs/img/homepage.png).
 
-##### Article page
+##### Article
 
 ###### News article
 
