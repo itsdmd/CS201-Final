@@ -71,8 +71,6 @@ let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
 
 let e_cardContainer = document.querySelector(".result-card-container");
-let e_resultCardBtns = [];
-let e_articleContent = document.querySelector(".article-content");
 
 let e_newsModal = document.querySelector("#article-news");
 let e_wikiModal = document.querySelector("#article-wiki");
@@ -461,16 +459,6 @@ function populateRandomDate() {
 	e_dateDay.value = day;
 	e_dateMonth.value = month;
 	e_dateYear.value = year;
-}
-
-function populateModal(innerHTML) {
-	console.log("populateModal() called");
-
-	if (e_src.value === "Reuters") {
-		e_newsModal.innerHTML = innerHTML;
-	} else {
-		e_newsModal.innerHTML = innerHTML;
-	}
 }
 
 /* ------------- Construct ---------- */
