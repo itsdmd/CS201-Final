@@ -69,9 +69,10 @@ let e_rpp = document.querySelector(".param-rpp");
 let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
-let e_cardContainer = document.querySelector(".param-card-container");
-let e_readMoreBtn = document.querySelector(".readMoreButton");
-let e_wikiPopUp = document.querySelector(".article-content");
+
+let e_cardContainer = document.querySelector(".result-card-container");
+let e_resultCardBtn = [];
+let e_articleContent = document.querySelector(".article-content");
 
 /* ---------- EventListener --------- */
 e_dateContainer.addEventListener("focusout", () => {
@@ -284,7 +285,7 @@ function populateResultCards(data, numOfCards = e_rpp.value) {
 							</a>
 							<p> ${data[i].summary} </p>
 	
-							<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-news">Read more</button>
+							<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">Read more</button>
 						</div>
 					</div>`;
 		}
@@ -302,7 +303,7 @@ function populateResultCards(data, numOfCards = e_rpp.value) {
 					</a>
 
 					<p>${contentTitle}</p>
-					<button type="button" class="btn btn-primary mt-3 readMoreButton" data-toggle="modal"  data-target="#article-wiki">Read more
+					<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-wiki">Read more
 					</button>
 				</div>
 			</div>`;
