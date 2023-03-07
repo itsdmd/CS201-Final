@@ -180,8 +180,10 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 							<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">
 								Read more
 							</button>
-						</div>
-					</div>`;
+							
+							<div display="none">`;
+			output += generateModalInnerHTML(data, i, "Reuters");
+			output += `</div> </div> </div>`;
 		}
 	} else if (e_src.value === "Wikimedia") {
 		for (let i = 0; i < numOfCards; i++) {
@@ -197,13 +199,102 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 					<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-wiki">
 						Read more
 					</button>
-				</div>
-			</div>`;
+					
+					<div display="none">`;
+			output += generateModalInnerHTML(data, i, "Wikimedia");
+			output += `</div> </div> </div>`;
 		}
 	}
 
 	console.log("Cards printed");
 	e_cardContainer.innerHTML = output;
+}
+
+function generateModalInnerHTML(data, index, type) {
+	let result = "";
+
+	if (type === "Reuters") {
+		let authors = "";
+		data[index].authors.forEach((author) => {
+			authors += author.authorName;
+
+			if (data[index].authors.indexOf(author) !== data[index].authors.length - 1) {
+				authors += ", ";
+			}
+		});
+
+		result = `
+			<div class="modal-news modal fade" id="article-news" tabindex="-1" role="dialog" aria-labelledby="article-title" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-close">
+							<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
+						</div>
+
+						<div class="modal-header">
+							<h1 class="modal-title" id="article-title">${data[index].title}</h1>
+							<h7 class="article-url"><a href="${data[index].url}">Original post</a></h7>
+							<hr />
+							<h7 class="article-authors">${authors}</h7>
+						</div>
+						<div class="modal-body">
+							<h4 class="article-summary">
+								${data[index].summary}
+							</h4>
+							<img
+								src=""
+								class="article-image"
+								alt=""
+							/>
+							<small class="article-image-desc">dior 30 montaigne, Paris </small>
+							<hr />
+							<p class="article-content">
+								${data[index].content}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>`;
+	} else if (type === "Wikimedia") {
+		let contentSize = data[index].content.length;
+
+		result = `
+			<div class="modal fade" id="article-wiki" tabindex="-1" role="dialog" aria-labelledby="article-title" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-close">
+							<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
+						</div>`;
+
+		for (let i = 0; i < contentSize; i++) {
+			result += `
+				<div class="modal-header">
+					<h1 class="modal-title" id="article-title">
+						${data[index].content[i].title}
+					</h1>
+				</div>
+
+				<div class="modal-body">
+					<div class="article-content">
+						<div class="article-content-entry">
+							<h2 class="article-entry-title">
+								${data[index].title}
+							</h2>
+							<h7 class="article-entry-url">
+								${data[index].content[i].url}
+							</h7>
+							<p class="article-entry-summary">
+								${data[index].content[i].summary}
+							</p>
+						</div>
+					</div>
+				</div>`;
+		}
+
+		result += `</div> </div> </div>`;
+	}
+
+	return result;
 }
 
 /* ------------ Populate ------------ */
@@ -443,7 +534,7 @@ function parseWikimediaData(data) {
 			related.push({
 				title: page.normalizedtitle,
 				url: page.content_urls.desktop.page,
-				content: page.extract,
+				summary: page.extract,
 			});
 		});
 
