@@ -368,6 +368,9 @@ function populateModal(type, data, index) {
 	let result = "";
 
 	if (type === "Reuters") {
+		let contentList = JSON.parse(data[index].content);
+		// console.log("contentList:", contentList);
+
 		let authors = "";
 		data[index].authors.forEach((author) => {
 			authors += author.authorName;
@@ -376,6 +379,12 @@ function populateModal(type, data, index) {
 				authors += ", ";
 			}
 		});
+
+		let content = "";
+		contentList.forEach((item) => {
+			content += "<p>" + item.content + "</p>";
+		});
+		// console.log("content:", content);
 
 		result = `
 			<div class="modal-dialog" role="document">
@@ -402,7 +411,7 @@ function populateModal(type, data, index) {
 						<small class="article-image-desc"></small>
 						<hr />
 						<p class="article-content">
-							${data[index].content}
+							${content}
 						</p>
 					</div>
 				</div>
