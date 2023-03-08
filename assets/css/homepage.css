@@ -148,3 +148,146 @@ ul {
 	margin-left: 465px;
 	z-index: 1000;
 }
+
+.body{
+	margin: 0;
+}
+
+.result-container h2 {
+    text-align: center;
+    left: 22px;
+}
+
+
+.result-spinner{
+	border: 5px solid white;
+	border-left: 4px solid rgb(25, 56, 25);
+	border-right: 4px solid rgb(25, 56, 25);
+	border-bottom: 4px solid  rgb(25, 56, 25);
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	animation: spin 2s linear infinite;
+	float: right;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	right: 21px;
+	margin: -48px 3px 38px 234px;
+	left: 257px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .result-alert {
+    opacity: 0;
+    transition: opacity 400ms;
+}
+
+.alert{
+	opacity: 1 !important;
+}
+
+.result-card-container {
+    padding: 0 10px;
+    position: relative;
+	justify-content: center;
+}
+
+.result-card.col-md-12.offset-md-6 {
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    padding: 0 10px;
+    top: 10px;
+    left: auto;
+    right: 23px;
+    margin: -12px 403px 55px 376px;
+    position: relative;
+}
+
+
+.result-card-button {
+    align-items: flex-end;
+    display: flex;
+    justify-content: flex-end;
+}
+
+button {
+    color: white;
+    background-color: rgb(25, 56, 25);
+    border-radius: 5%;
+    padding: 5px 10px;
+    margin: 0 0 10px 10px;
+}
+.result-pagination {
+	position: relative;
+	margin: 0px 231px -334px 191px;
+	top: 239px;
+	right: 295px;
+	padding: 0px 4px;
+	width: 35%;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+}
+a.page-link {
+    border: 2px solid rgb(25,56,25);
+    color: rgb(25, 40, 25);
+	outline-width: thin;
+	border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+ul.pagination {
+    color: rgb(25,56,25);
+}
+
+li.page-item {
+    color: rgb(25,56,25);
+}
+
+li.page-item-active {
+    color: white;
+    background-color: rgb(25,56,25);
+}
+
+.pagination a {
+    padding: 8px 16px;
+}
+.pagination a.active {
+    background-color: rgb(25,56,25);
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: rgb(25,56,25);
+    color: white;
+}
+
+
+li.page-item-active {
+    color: white;
+    background-color: rgb(25,56,25);
+}
+
+li.page-item:first-child {
+    width: 61px;
+    text-align: center;
+	border:  darkgreen;
+	margin-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+li.page-item:last-child {
+    width: 61px;
+    text-align: center;
+    border: darkgreen;
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+}
