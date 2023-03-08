@@ -237,9 +237,7 @@ button {
 a.page-link {
     border: 2px solid rgb(25,56,25);
     color: rgb(25, 40, 25);
-	outline-width: thin;
-	border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+	outline-width: 20px;
 }
 
 ul.pagination {
