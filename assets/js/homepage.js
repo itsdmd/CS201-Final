@@ -48,11 +48,13 @@ const FETCH_SOURCES = {
 const RPP_OPTIONS = [5, 10, 15, 20, 50, 100];
 
 /* -------------- Value ------------- */
-let g_day = localStorage.getItem("day");
-let g_month = localStorage.getItem("month");
-let g_year = localStorage.getItem("year");
-let g_src = localStorage.getItem("source");
-let g_rpp = localStorage.getItem("rpp");
+let g_filteredData = null;
+
+let gls_day = localStorage.getItem("day");
+let gls_month = localStorage.getItem("month");
+let gls_year = localStorage.getItem("year");
+let gls_src = localStorage.getItem("source");
+let gls_rpp = localStorage.getItem("rpp");
 
 /* ------------- Element ------------ */
 let e_paramContainer = document.querySelector(".param-container");
@@ -61,7 +63,7 @@ let e_dateDay = document.querySelector(".param-date-day");
 let e_dateMonth = document.querySelector(".param-date-month");
 let e_dateYear = document.querySelector(".param-date-year");
 let e_dateError = document.querySelector(".param-date-error");
-let e_randomDateBtn = document.querySelector(".param-date-rand");
+let e_randDateBtn = document.querySelector(".param-date-rand");
 let e_src = document.querySelector(".param-src");
 let e_ctg = document.querySelector(".param-ctg");
 let e_keywords = document.querySelector(".param-keyword");
@@ -88,7 +90,7 @@ e_dateContainer.addEventListener("focusout", () => {
 	validateParams();
 });
 
-e_randomDateBtn.addEventListener("click", () => {
+e_randDateBtn.addEventListener("click", () => {
 	console.log("param-date-rand clicked");
 
 	populateRandomDate();
@@ -130,60 +132,46 @@ e_submitBtn.addEventListener("click", async (e) => {
 	console.log("Fetching...");
 
 	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(e_api.value)); // Test
-	let query = await fetchData(
+	let fetchedData = await fetchData(
 		FETCH_SOURCES[e_src.value].fetchingUrlFn(e_ctg.value, e_dateDay.value, e_dateMonth.value, e_dateYear.value),
 		constructApiConfigs(e_src.value, e_api.value)
 	);
 
 	storeParams();
 
-	console.log("Fetched data:", query);
+	console.log("Fetched data:", fetchedData);
 
-	let processedQuery = processFetchedData(query);
-	generateResultCards(processedQuery);
+	g_filteredData = processFetchedData(fetchedData);
+	generateResultCards(g_filteredData);
 
 	e_cardContainer.scrollIntoView({ behavior: "smooth" });
+});
 
-	// Check if any button within e_cardContainer is clicked
-	e_cardContainer.addEventListener("click", (e) => {
-		console.log("e_cardContainer clicked");
-		if (e.target.classList.contains("result-card-button")) {
-			console.log("result-card-button clicked");
+e_cardContainer.addEventListener("click", (e) => {
+	console.log("e_cardContainer clicked");
+	if (e.target.classList.contains("result-card-button")) {
+		console.log("result-card-button clicked");
 
-			// Get the index of the card that the button is in
-			let cardIndex = parseInt(e.target.parentElement.getAttribute("index"));
-			console.log("cardIndex", cardIndex);
+		// Get the index of the card that the button is in
+		let cardIndex = parseInt(e.target.parentElement.getAttribute("index")); // TODO: Take pagination into account
+		console.log("cardIndex:", cardIndex);
+		console.log("data-target:", e.target.getAttribute("data-target"));
 
-			let type = null;
-			switch (e.target.getAttribute("data-target")) {
-				case "#article-news":
-					type = "Reuters";
-					break;
-				case "#article-wiki":
-					type = "Wikimedia";
-					break;
-				default:
-					console.log("No matching type");
-			}
-
-			// Generate the modal innerHTML
-			let modalInner = generateModalInnerHTML(processedQuery, cardIndex, type);
-			// console.log("modalInner", modalInner);
-
-			console.log('e.target.getAttribute("data-target")', e.target.getAttribute("data-target"));
-
-			// Copy it to the modal
-			if (type === "Reuters") {
+		switch (e.target.getAttribute("data-target")) {
+			case "#article-news": {
 				console.log("article-news:", e_newsModal);
-				e_newsModal.innerHTML = modalInner;
-			} else if (type === "Wikimedia") {
-				console.log("article-wiki:", e_wikiModal);
-				e_wikiModal.innerHTML = modalInner;
-			} else {
-				console.log("No matching modal");
+				e_newsModal.innerHTML = populateModal("Reuters", g_filteredData, cardIndex);
+				break;
 			}
+			case "#article-wiki": {
+				console.log("article-wiki:", e_wikiModal);
+				e_wikiModal.innerHTML = populateModal("Wikimedia", g_filteredData, cardIndex);
+				break;
+			}
+			default:
+				console.log("No matching type");
 		}
-	});
+	}
 });
 
 /* ---------------------------------- */
@@ -261,7 +249,118 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 	e_cardContainer.innerHTML = output;
 }
 
-function generateModalInnerHTML(data, index, type) {
+/* ------------ Populate ------------ */
+function populateDropdownSelectors() {
+	console.log("populateDropdownSelectors() called");
+
+	// Day
+	let output = "";
+	for (let i = 1; i <= 31; i++) {
+		if (i === parseInt(gls_day)) {
+			output += `<option name="day" value="${i}" selected>${i}</option>`;
+		} else {
+			output += `<option name="day" value="${i}">${i}</option>`;
+		}
+	}
+	e_dateDay.innerHTML = output;
+
+	// Month
+	output = "";
+	for (let i = 1; i <= 12; i++) {
+		if (i === parseInt(gls_month)) {
+			output += `<option name="month" value="${i}" selected>${i}</option>`;
+		} else {
+			output += `<option name="month" value="${i}">${i}</option>`;
+		}
+	}
+	e_dateMonth.innerHTML = output;
+
+	// Source
+	output = "";
+	for (const key in FETCH_SOURCES) {
+		if (key === gls_src) {
+			console.log("key", key);
+			output += `<option name="source" value="${key}" selected>${key}</option>`;
+		} else {
+			output += `<option name="source" value="${key}">${key}</option>`;
+		}
+	}
+	e_src.innerHTML = output;
+
+	// Year
+	populateDateYear();
+
+	// Category
+	populateCategorySelector();
+
+	// Results per page
+	output = "";
+	RPP_OPTIONS.forEach((value) => {
+		if (value === gls_rpp) {
+			output += `<option name="rpp" value="${value}" selected>${value}</option>`;
+		} else {
+			output += `<option name="rpp" value="${value}">${value}</option>`;
+		}
+	});
+	e_rpp.innerHTML = output;
+}
+
+function populateDateYear() {
+	console.log("populateDateYear() called");
+
+	let currentYear = new Date().getFullYear();
+	let output = "";
+
+	if (FETCH_SOURCES[e_src.value].yearRequired === false) {
+		if (gls_year === "any") {
+			output += `<option name="year" value="any" selected>Any</option>`;
+		} else {
+			output += `<option name="year" value="any">Any</option>`;
+		}
+	}
+
+	for (let i = currentYear; i >= FETCH_SOURCES[e_src.value].startYear; i--) {
+		if (i === parseInt(gls_year)) {
+			output += `<option name="year" value="${i}" selected>${i}</option>`;
+		} else {
+			output += `<option name="year" value="${i}">${i}</option>`;
+		}
+	}
+	e_dateYear.innerHTML = output;
+}
+
+function populateCategorySelector() {
+	console.log("populateCategorySelector() called");
+
+	let output = "";
+
+	FETCH_SOURCES[e_src.value].categories.forEach((entry) => {
+		output += `<option name="ctg" value="${entry.id}">${entry.name}</option>`;
+	});
+
+	e_ctg.innerHTML = output;
+}
+
+function populateRandomDate() {
+	console.log("populateRandomDate() called");
+
+	let date = new Date();
+	let currentYear = date.getFullYear();
+
+	do {
+		var day = RNG(1, 31);
+		var month = RNG(1, 12);
+		var year = RNG(FETCH_SOURCES[e_src.value].startYear, currentYear);
+
+		var stringifiedDate = String(day + "-" + month + "-" + year);
+	} while (!moment(stringifiedDate, "DD-MM-YYYY", false).isValid());
+
+	e_dateDay.value = day;
+	e_dateMonth.value = month;
+	e_dateYear.value = year;
+}
+
+function populateModal(type, data, index) {
 	console.log("generateModalInnerHTML() called");
 
 	console.log("data:", data);
@@ -348,117 +447,6 @@ function generateModalInnerHTML(data, index, type) {
 	}
 
 	return result;
-}
-
-/* ------------ Populate ------------ */
-function populateDropdownSelectors() {
-	console.log("populateDropdownSelectors() called");
-
-	// Day
-	let output = "";
-	for (let i = 1; i <= 31; i++) {
-		if (i === parseInt(g_day)) {
-			output += `<option name="day" value="${i}" selected>${i}</option>`;
-		} else {
-			output += `<option name="day" value="${i}">${i}</option>`;
-		}
-	}
-	e_dateDay.innerHTML = output;
-
-	// Month
-	output = "";
-	for (let i = 1; i <= 12; i++) {
-		if (i === parseInt(g_month)) {
-			output += `<option name="month" value="${i}" selected>${i}</option>`;
-		} else {
-			output += `<option name="month" value="${i}">${i}</option>`;
-		}
-	}
-	e_dateMonth.innerHTML = output;
-
-	// Source
-	output = "";
-	for (const key in FETCH_SOURCES) {
-		if (key === g_src) {
-			console.log("key", key);
-			output += `<option name="source" value="${key}" selected>${key}</option>`;
-		} else {
-			output += `<option name="source" value="${key}">${key}</option>`;
-		}
-	}
-	e_src.innerHTML = output;
-
-	// Year
-	populateDateYear();
-
-	// Category
-	populateCategorySelector();
-
-	// Results per page
-	output = "";
-	RPP_OPTIONS.forEach((value) => {
-		if (value === g_rpp) {
-			output += `<option name="rpp" value="${value}" selected>${value}</option>`;
-		} else {
-			output += `<option name="rpp" value="${value}">${value}</option>`;
-		}
-	});
-	e_rpp.innerHTML = output;
-}
-
-function populateDateYear() {
-	console.log("populateDateYear() called");
-
-	let currentYear = new Date().getFullYear();
-	let output = "";
-
-	if (FETCH_SOURCES[e_src.value].yearRequired === false) {
-		if (g_year === "any") {
-			output += `<option name="year" value="any" selected>Any</option>`;
-		} else {
-			output += `<option name="year" value="any">Any</option>`;
-		}
-	}
-
-	for (let i = currentYear; i >= FETCH_SOURCES[e_src.value].startYear; i--) {
-		if (i === parseInt(g_year)) {
-			output += `<option name="year" value="${i}" selected>${i}</option>`;
-		} else {
-			output += `<option name="year" value="${i}">${i}</option>`;
-		}
-	}
-	e_dateYear.innerHTML = output;
-}
-
-function populateCategorySelector() {
-	console.log("populateCategorySelector() called");
-
-	let output = "";
-
-	FETCH_SOURCES[e_src.value].categories.forEach((entry) => {
-		output += `<option name="ctg" value="${entry.id}">${entry.name}</option>`;
-	});
-
-	e_ctg.innerHTML = output;
-}
-
-function populateRandomDate() {
-	console.log("populateRandomDate() called");
-
-	let date = new Date();
-	let currentYear = date.getFullYear();
-
-	do {
-		var day = RNG(1, 31);
-		var month = RNG(1, 12);
-		var year = RNG(FETCH_SOURCES[e_src.value].startYear, currentYear);
-
-		var stringifiedDate = String(day + "-" + month + "-" + year);
-	} while (!moment(stringifiedDate, "DD-MM-YYYY", false).isValid());
-
-	e_dateDay.value = day;
-	e_dateMonth.value = month;
-	e_dateYear.value = year;
 }
 
 /* ------------- Construct ---------- */
