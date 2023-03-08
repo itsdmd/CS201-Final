@@ -203,7 +203,7 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 			console.log("Card #" + i + ":", data[i]);
 
 			output += `
-				<div class="col-md-6 mt-3">
+				<div class="col-md-12 mt-3">
 					<div class="card p-3" index="${i}">
 						<a href="#">
 							<h4> ${data[i].title}</h4>
@@ -230,7 +230,7 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 			});
 
 			output += `
-			<div class="col-md-6 mt-3">
+			<div class="col-md-12 mt-3">
 				<div class="card p-3" index="${i}">
 					<a href="#">
 						<h4> ${data[i].title}</h4>

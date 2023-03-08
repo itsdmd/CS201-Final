@@ -58,6 +58,12 @@ header .container {
 	justify-content: space-between;
 }
 
+img.article-image {
+	width: 100%;
+	object-fit: cover;
+	margin-top: 18px;
+}
+
 img.footer-logo {
 	width: 200px;
 }
@@ -109,6 +115,13 @@ ul {
 	margin-left: 8px;
 }
 
+.result-container {
+	display: flex;
+	justify-content: center;
+	margin-top: calc(var(--header-height) + 20px);
+	text-align: left;
+}
+
 .row {
 	width: 50%;
 }
@@ -134,10 +147,4 @@ ul {
 	opacity: 0.8;
 	margin-left: 465px;
 	z-index: 1000;
-}
-
-img.article-image {
-	width: 100%;
-	object-fit: cover;
-	margin-top: 18px;
 }
