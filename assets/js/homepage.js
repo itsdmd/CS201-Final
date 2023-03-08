@@ -362,15 +362,14 @@ function populateRandomDate() {
 
 function populateModal(type, data, index) {
 	console.log("generateModalInnerHTML() called");
-	
+
 	console.log("data:", data);
 
 	let result = "";
 
-
 	if (type === "Reuters") {
-
 		let contentList = JSON.parse(data[index].content);
+		// console.log("contentList:", contentList);
 
 		let authors = "";
 		data[index].authors.forEach((author) => {
@@ -383,8 +382,9 @@ function populateModal(type, data, index) {
 
 		let content = "";
 		contentList.forEach((item) => {
-			content += item.content;
+			content += "<p>" + item.content + "</p>";
 		});
+		// console.log("content:", content);
 
 		result = `
 			<div class="modal-dialog" role="document">
@@ -457,8 +457,6 @@ function populateModal(type, data, index) {
 
 	return result;
 }
-
-
 
 /* ------------- Construct ---------- */
 function constructApiConfigs(source = e_src.value, key = e_api.value) {
