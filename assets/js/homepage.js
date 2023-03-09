@@ -387,14 +387,15 @@ function populateModal(type, data, index) {
 		// console.log("content:", content);
 
 		result = `
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog modal-xl" role="document">
 				<div class="modal-content">
-					<div class="modal-close">
-						<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
-					</div>
-
+					<button type="button" class="close"
+						data-dismiss="modal">
+						×
+					</button>
 					<div class="modal-header">
 						<h1 class="modal-title" id="article-title">${data[index].title}</h1>
+						
 						<h7 class="article-url"><a href="${data[index].url}">Original post</a></h7>
 						<hr />
 						<h7 class="article-authors">${authors}</h7>
@@ -420,11 +421,11 @@ function populateModal(type, data, index) {
 		let contentSize = data[index].content.length;
 
 		result = `
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog modal-xl" role="document">
 				<div class="modal-content">
-					<div class="modal-close">
-						<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
-					</div>`;
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>`;
 
 		for (let i = 0; i < contentSize; i++) {
 			result += `

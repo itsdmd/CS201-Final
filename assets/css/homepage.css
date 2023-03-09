@@ -142,9 +142,7 @@ ul {
 	margin-top: 10px;
 }
 
-.modal-close {
-	position: fixed;
-	opacity: 0.8;
-	margin-left: 465px;
-	z-index: 1000;
+button.close {
+    position: absolute;
+    right: 9px;
 }
