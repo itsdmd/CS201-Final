@@ -283,7 +283,7 @@ li.page-item:first-child {
 	margin-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-	outline-width: medium;
+	outline-width: thick;
 }
 
 li.page-item:last-child {
@@ -292,5 +292,5 @@ li.page-item:last-child {
     border: #01393a;
 	border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-	outline-width: medium;
+	outline-width: thick;
 }
