@@ -72,7 +72,11 @@ let e_api = document.querySelector(".param-api");
 let e_apiError = document.querySelector(".param-api-error");
 let e_submitBtn = document.querySelector(".param-submit");
 
-let e_cardContainer = document.querySelector(".result-card-container");
+let e_resultTitle = document.querySelector(".result-title");
+let e_resultSpinner = document.querySelector(".result-spinner");
+let e_resultAlert = document.querySelector(".result-alert");
+let e_resultCardContainer = document.querySelector(".result-card-container");
+let e_resultPagination = document.querySelector(".result-pagination");
 
 let e_newsModal = document.querySelector("#article-news");
 let e_wikiModal = document.querySelector("#article-wiki");
@@ -129,6 +133,7 @@ e_submitBtn.addEventListener("click", async (e) => {
 	e.preventDefault();
 	console.log("param-submit clicked");
 
+	e_resultSpinner.classList.remove("d-none");
 	console.log("Fetching...");
 
 	// let query = await fetchArticles(constructFetchUrl("8", "01", "01", "2020"), constructApiConfigs(e_api.value)); // Test
@@ -139,15 +144,19 @@ e_submitBtn.addEventListener("click", async (e) => {
 
 	storeParams();
 
+	e_resultSpinner.classList.add("d-none");
 	console.log("Fetched data:", fetchedData);
 
 	g_filteredData = processFetchedData(fetchedData);
 	generateResultCards(g_filteredData);
 
-	e_cardContainer.scrollIntoView({ behavior: "smooth" });
+	populateResultAlert(g_filteredData);
+	populateResultPagination(g_filteredData);
+
+	e_resultTitle.scrollIntoView({ behavior: "smooth" });
 });
 
-e_cardContainer.addEventListener("click", (e) => {
+e_resultCardContainer.addEventListener("click", (e) => {
 	console.log("e_cardContainer clicked");
 	if (e.target.classList.contains("result-card-button")) {
 		console.log("result-card-button clicked");
@@ -174,6 +183,37 @@ e_cardContainer.addEventListener("click", (e) => {
 	}
 });
 
+e_resultPagination.addEventListener("click", (e) => {
+	console.log("e_resultPagination clicked");
+
+	if (e.target.classList.contains("page-link") && !e.target.parentElement.classList.contains("active") && e.target.getAttribute("id") !== "jump-to-page") {
+		let pageId = e.target.getAttribute("id");
+		console.log("page-link", pageId, "clicked");
+
+		generateResultCards(g_filteredData, pageId * e_rpp.value);
+
+		document.querySelector(".page-item.active").classList.remove("active");
+		e.target.parentElement.classList.add("active");
+
+		e_resultTitle.scrollIntoView({ behavior: "smooth" });
+	}
+});
+
+e_resultPagination.addEventListener("focusout", (e) => {
+	console.log("e_resultPagination focusout");
+
+	if (e.target.id === "jump-to-page") {
+		console.log("jump-to-page focusout");
+
+		generateResultCards(g_filteredData, e.target.value * e_rpp.value);
+
+		document.querySelector(".page-item.active").classList.remove("active");
+		e.target.parentElement.classList.add("active");
+
+		e_resultTitle.scrollIntoView({ behavior: "smooth" });
+	}
+});
+
 /* ---------------------------------- */
 /*              Functions             */
 /* ---------------------------------- */
@@ -184,30 +224,32 @@ populateDropdownSelectors();
 disableSubmitBtn(true);
 
 /* ------------ Generate ------------ */
-function generateResultCards(data, numOfCards = e_rpp.value) {
+function generateResultCards(data, offset = 0, numOfCards = e_rpp.value) {
 	console.log("generateResultCards() called");
+
+	offset = parseInt(offset);
+	numOfCards = parseInt(numOfCards);
+
 	let output = "";
-	e_cardContainer.innerHTML = "";
+	e_resultCardContainer.innerHTML = "";
 
 	// console.log("data.length", data.length);
 
 	if (data === null || data === undefined || data.length === 0) {
 		console.log("No data to populate");
 		return;
-	} else if (data.length < numOfCards) {
-		numOfCards = data.length;
+	} else if (data.length < offset + numOfCards) {
+		numOfCards = data.length - offset;
 	}
 
 	if (e_src.value === "Reuters") {
-		for (let i = 0; i < numOfCards; i++) {
+		for (let i = offset; i < offset + numOfCards; i++) {
 			console.log("Card #" + i + ":", data[i]);
 
 			output += `
 				<div class="col-md-12 mt-3">
 					<div class="card p-3" index="${i}">
-						<a href="#">
-							<h4> ${data[i].title}</h4>
-						</a>
+						<h4> ${data[i].title}</h4>
 						<p> ${data[i].summary} </p>
 
 						<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">
@@ -217,7 +259,7 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 				</div>`;
 		}
 	} else if (e_src.value === "Wikimedia") {
-		for (let i = 0; i < numOfCards; i++) {
+		for (let i = offset; i < offset + numOfCards; i++) {
 			console.log("Card #" + i + ":", data[i]);
 
 			let relatedTitles = "";
@@ -232,9 +274,7 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 			output += `
 			<div class="col-md-12 mt-3">
 				<div class="card p-3" index="${i}">
-					<a href="#">
-						<h4> ${data[i].title}</h4>
-					</a>
+					<h4> ${data[i].title}</h4>
 
 					<p>${relatedTitles}</p>
 					<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-wiki">
@@ -246,7 +286,7 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 	}
 
 	console.log("Cards printed");
-	e_cardContainer.innerHTML = output;
+	e_resultCardContainer.innerHTML = output;
 }
 
 /* ------------ Populate ------------ */
@@ -360,6 +400,98 @@ function populateRandomDate() {
 	e_dateYear.value = year;
 }
 
+function populateResultAlert(data) {
+	console.log("populateResultAlert() called");
+
+	if (data === null || data === undefined) {
+		e_resultAlert.classList.remove("d-none");
+		e_resultAlert.classList.add("d-flex");
+		e_resultAlert.classList.remove("alert-success");
+		e_resultAlert.classList.remove("alert-warning");
+		e_resultAlert.classList.add("alert-danger");
+
+		return;
+	}
+
+	e_resultAlert.classList.remove("d-none");
+	e_resultAlert.classList.add("d-flex");
+
+	let numOfResults = data.length;
+	e_resultAlert.innerHTML = `Found ${numOfResults} results`;
+
+	if (numOfResults) {
+		e_resultAlert.classList.remove("alert-warning");
+		e_resultAlert.classList.add("alert-success");
+	} else {
+		e_resultAlert.classList.remove("alert-success");
+		e_resultAlert.classList.add("alert-warning");
+	}
+}
+
+function populateResultPagination(data) {
+	console.log("populateResultPagination() called");
+
+	if (data === null || data === undefined) {
+		e_resultPagination.classList.add("d-none");
+		return;
+	}
+
+	let numOfResults = data.length;
+
+	if (numOfResults <= e_rpp.value) {
+		e_resultPagination.classList.add("d-none");
+		return;
+	} else {
+		e_resultPagination.classList.remove("d-none");
+
+		let numOfPages = Math.ceil(numOfResults / e_rpp.value) - 1;
+
+		let output = `
+			<li class="page-item">
+				<button class="page-link" id="0" aria-label="Previous">
+					&lt;
+				</button>
+			</li>`;
+
+		// The maximum number of pages to display is 5. If the number of pages is greater than 5, then the first, second, before last and last page will always be displayed.
+		if (numOfPages > 5) {
+			for (let i = 1; i <= numOfPages; i++) {
+				if (i === 1 || i === 2 || i === numOfPages - 1 || i === numOfPages) {
+					output += `<li class="page-item`;
+
+					if (i === 1) {
+						output += ` active`;
+					}
+
+					output += `"><button class="page-link" id="${i}">${i}</button></li>`;
+				} else if (i === 3) {
+					// Create a text input field to allow the user to jump to a specific page.
+					output += `<li class="page-item"><input type="text" class="page-link" id="jump-to-page" placeholder="Page" style="width: 100px;"></li>`;
+				}
+			}
+		} else {
+			for (let i = 1; i <= numOfPages; i++) {
+				output += `<li class="page-item`;
+
+				if (i === 1) {
+					output += ` active"`;
+				}
+
+				output += `><button class="page-link" id="${i}">${i}</button></li>`;
+			}
+		}
+
+		output += `
+			<li class="page-item">
+				<button class="page-link" id="-1" aria-label="Previous">
+					&gt;
+				</button>
+			</li>`;
+
+		e_resultPagination.innerHTML = output;
+	}
+}
+
 function populateModal(type, data, index) {
 	console.log("generateModalInnerHTML() called");
 
@@ -387,14 +519,15 @@ function populateModal(type, data, index) {
 		// console.log("content:", content);
 
 		result = `
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-close">
-						<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
-					</div>
-
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content"></div>
+					<button type="button" class="close"
+						data-dismiss="modal">
+						×
+					</button>
 					<div class="modal-header">
 						<h1 class="modal-title" id="article-title">${data[index].title}</h1>
+						
 						<h7 class="article-url"><a href="${data[index].url}">Original post</a></h7>
 						<hr />
 						<h7 class="article-authors">${authors}</h7>
@@ -420,11 +553,11 @@ function populateModal(type, data, index) {
 		let contentSize = data[index].content.length;
 
 		result = `
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog modal-xl" role="document">
 				<div class="modal-content">
-					<div class="modal-close">
-						<button type="button" class="article-close btn btn-secondary" data-dismiss="modal">X</button>
-					</div>`;
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>`;
 
 		for (let i = 0; i < contentSize; i++) {
 			result += `
@@ -596,27 +729,29 @@ function parseWikimediaData(data) {
 	let parsedArray = [];
 
 	// Template data structure: /{root}/docs/api_wikimedia_response.json
-	for (const [, value] of Object.entries(data)) {
-		let related = [];
+	for (const [, category] of Object.entries(data)) {
+		category.forEach((entry) => {
+			let related = [];
 
-		value[0].pages.forEach((page) => {
-			related.push({
-				title: page.normalizedtitle,
-				url: page.content_urls.desktop.page,
-				summary: page.extract,
+			entry.pages.forEach((page) => {
+				related.push({
+					title: page.normalizedtitle,
+					url: page.content_urls.desktop.page,
+					summary: page.extract,
+				});
 			});
+
+			let parsedEvent = {
+				title: entry.text,
+				content: related,
+
+				type: "wiki",
+				authors: ["Wikimedia"],
+				year: entry.year,
+			};
+
+			parsedArray.push(parsedEvent);
 		});
-
-		let parsedEvent = {
-			title: value[0].text,
-			content: related,
-
-			type: "wiki",
-			authors: ["Wikimedia"],
-			year: value[0].year,
-		};
-
-		parsedArray.push(parsedEvent);
 	}
 
 	return parsedArray;
@@ -747,17 +882,17 @@ function dateInvalidErrMsg(day, month, year) {
 		let target = moment(stringifiedDate, "DD-MM-YYYY").format();
 
 		if (moment(target).isAfter(today)) {
-			e_dateError.classList.add("error");
+			e_dateError.classList.add("opacity-1");
 			// console.log("Date is in the future:", stringifiedDate);
 			return;
 		}
 
-		e_dateError.classList.remove("error");
+		e_dateError.classList.remove("opacity-1");
 		// console.log("Valid date:", stringifiedDate);
 		return;
 	}
 
-	e_dateError.classList.add("error");
+	e_dateError.classList.add("opacity-1");
 	// console.log("Invalid date:", stringifiedDate);
 }
 
@@ -766,10 +901,10 @@ function apiInvalidErrMsg(show = true, msg = "") {
 
 	if (show) {
 		e_apiError.innerHTML = msg;
-		e_apiError.classList.add("error");
+		e_apiError.classList.add("opacity-1");
 		console.log("API error:", msg);
 	} else {
-		e_apiError.classList.remove("error");
+		e_apiError.classList.remove("opacity-1");
 		console.log("API error cleared");
 	}
 }
@@ -792,7 +927,7 @@ function validateParams() {
 	let valid = true;
 
 	e_paramContainer.querySelectorAll("small").forEach((small) => {
-		if (small.classList.contains("error")) {
+		if (small.classList.contains("opacity-1")) {
 			valid = false;
 		}
 	});
