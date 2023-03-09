@@ -161,9 +161,9 @@ ul {
 
 .result-spinner{
 	border: 5px solid white;
-	border-left: 4px solid rgb(25, 56, 25);
-	border-right: 4px solid rgb(25, 56, 25);
-	border-bottom: 4px solid  rgb(25, 56, 25);
+	border-left: 4px solid #01393a;
+	border-right: 4px solid #01393a;
+	border-bottom: 4px solid  #01393a;
 	border-radius: 50%;
 	width: 30px;
 	height: 30px;
@@ -219,7 +219,7 @@ ul {
 
 button {
     color: white;
-    background-color: rgb(25, 56, 25);
+    background-color: #01393a;
     border-radius: 5%;
     padding: 5px 10px;
     margin: 0 0 10px 10px;
@@ -237,49 +237,49 @@ button {
 }
 
 a.page-link {
-    border: 2px solid rgb(8, 12, 11);
-    color: rgb(8, 12, 11);
+    border: 2px solid #01393a;
+    color: #01393a;
 }
 
 ul.pagination {
-    color: rgb(8, 12, 11);
+    color: #01393a;
 }
 
 li.page-item {
-    color: rgb(8, 12, 11);
+    color: #01393a;
 }
 
 li.page-item-active {
     color: white;
-    background-color: rgb(8, 12, 11);
+    background-color:#01393a;
 }
 
 .pagination a {
     padding: 8px 16px;
-	border: 4px solid rgb(8, 12, 11);
+	border: 4px solid #01393a;
 	outline-width: medium;
 }
 
 .pagination a.active {
-    background-color: rgb(8, 12, 11);
+    background-color: #01393a;
     color: white;
 }
 
 .pagination a:hover:not(.active) {
-    background-color: rgb(8, 12, 11);
+    background-color: #01393a;
     color: white;
 }
 
 
 li.page-item-active {
     color: white;
-    background-color:rgb(8, 12, 11);
+    background-color:#01393a;
 }
 
 li.page-item:first-child {
     width: 70px;
     text-align: center;
-	border:  rgb(8, 12, 11);
+	border:  #01393a;
 	margin-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -289,7 +289,7 @@ li.page-item:first-child {
 li.page-item:last-child {
 	width: 70px;
     text-align: center;
-    border: rgb(8, 12, 11);
+    border: #01393a;
 	border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 	outline-width: medium;
