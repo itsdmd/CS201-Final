@@ -543,19 +543,15 @@ function parseReutersData(data) {
 
 	// Template data structure: /{root}/docs/api_reuters_response.json
 	data.forEach((entry) => {
-
-		if(entry.files.length > 0){
-
+		if (entry.files.length > 0) {
 			let parsedArticle = {
 				url: entry.urlSupplier,
 				title: entry.articlesName,
 				summary: entry.articlesShortDescription,
 				content: entry.articlesDescription,
 
-				
 				imgUrl: entry.files[0].urlCdn,
-				imgDesc: entry.files[0].fileDescription,
-				
+				imgDesc: entry.files[0].filesDescription,
 
 				type: "news",
 				authors: entry.authors,
@@ -564,20 +560,16 @@ function parseReutersData(data) {
 			};
 			console.log("entry length > 0");
 			parsedArray.push(parsedArticle);
-		}
-
-		else{
-
+		} else {
 			let parsedArticle = {
 				url: entry.urlSupplier,
 				title: entry.articlesName,
 				summary: entry.articlesShortDescription,
 				content: entry.articlesDescription,
 
-				
-				imgUrl: "assets/img/logo.png",
-				imgDesc: "whotd",
-				
+				imgUrl: "",
+				imgDesc: "",
+
 				type: "news",
 				authors: entry.authors,
 				pubDate: entry.publishedAt,
@@ -586,8 +578,6 @@ function parseReutersData(data) {
 			console.log("entry length > 0");
 			parsedArray.push(parsedArticle);
 		}
-
-		
 	});
 
 	return parsedArray;

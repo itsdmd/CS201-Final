@@ -35,7 +35,7 @@ footer .container {
 	padding: 20px 0px 20px;
 }
 
-small {
+small.form-text {
 	margin-right: 18px;
 	opacity: 0;
 	transition: opacity 300ms;
