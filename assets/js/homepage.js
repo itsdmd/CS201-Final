@@ -404,11 +404,11 @@ function populateModal(type, data, index) {
 							${data[index].summary}
 						</h4>
 						<img
-							src=""
+							src="${data[index].imgUrl}"
 							class="article-image"
 							alt=""
 						/>
-						<small class="article-image-desc"></small>
+						<small class="article-image-desc">${data[index].imgDesc}</small>
 						<hr />
 						<p class="article-content">
 							${content}
@@ -543,22 +543,41 @@ function parseReutersData(data) {
 
 	// Template data structure: /{root}/docs/api_reuters_response.json
 	data.forEach((entry) => {
-		let parsedArticle = {
-			url: entry.urlSupplier,
-			title: entry.articlesName,
-			summary: entry.articlesShortDescription,
-			content: entry.articlesDescription,
+		if (entry.files.length > 0) {
+			let parsedArticle = {
+				url: entry.urlSupplier,
+				title: entry.articlesName,
+				summary: entry.articlesShortDescription,
+				content: entry.articlesDescription,
 
-			//imgUrl: entry.files[0].urlCdn,
-			//imgDesc: entry.files[0].fileDescription,
+				imgUrl: entry.files[0].urlCdn,
+				imgDesc: entry.files[0].filesDescription,
 
-			type: "news",
-			authors: entry.authors,
-			pubDate: entry.publishedAt,
-			minutesToRead: entry.minutesToRead,
-		};
+				type: "news",
+				authors: entry.authors,
+				pubDate: entry.publishedAt,
+				minutesToRead: entry.minutesToRead,
+			};
+			console.log("entry length > 0");
+			parsedArray.push(parsedArticle);
+		} else {
+			let parsedArticle = {
+				url: entry.urlSupplier,
+				title: entry.articlesName,
+				summary: entry.articlesShortDescription,
+				content: entry.articlesDescription,
 
-		parsedArray.push(parsedArticle);
+				imgUrl: "",
+				imgDesc: "",
+
+				type: "news",
+				authors: entry.authors,
+				pubDate: entry.publishedAt,
+				minutesToRead: entry.minutesToRead,
+			};
+			console.log("entry length > 0");
+			parsedArray.push(parsedArticle);
+		}
 	});
 
 	return parsedArray;
