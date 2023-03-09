@@ -14,7 +14,7 @@
 
 		<!-- stylesheet -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
 		<link rel="stylesheet" href="assets/css/homepage.css" />
 
 		<!-- title -->
@@ -41,52 +41,60 @@
 		<!-- ------------------------------- -->
 		<!--              param              -->
 		<!-- ------------------------------- -->
-		<div class="param-container">
-			<div class="row">
-				<div class="col-md-12 col-sm-12">
+		<div class="param-container container">
+			<div class="col-lg-10 col-md-12">
+				<div class="row">
 					<h2>Parameters</h2>
-					<form action="homepage.html" method="post" enctype="multipart/form-data">
+				</div>
+				<div class="row">
+					<form action="homepage.html" method="post" enctype="multipart/form-data" class="col-12">
 						<div class="selector-container param-date-container">
 							<label for="date">Date</label>
-							<div class="param-date-container col-md-6">
+							<div class="param-date-container col-md-6 col-sm-10">
 								<select name="day" id="day" class="param-date-day form-control"></select>
 
 								<select name="month" id="month" class="param-date-month form-control"></select>
 
 								<select name="year" id="year" class="param-date-year form-control"></select>
 
-								<button class="btn btn-success ml-5 text-center param-date-rand" type="button">Random</button>
+								<button class="btn btn-success ml-2 text-center param-date-rand col-sm-4" type="button">Random</button>
 							</div>
 						</div>
 						<small id="dateHelp" class="form-text text-danger text-right param-date-error">Please enter a valid date!</small>
 
 						<div class="selector-container">
 							<label for="source">Source</label>
-							<select name="source" id="" class="param-src form-control col-md-6">
+							<select name="source" id="" class="param-src form-control col-md-6 col-sm-8 col-6">
 								<option value="Reuters" selected>Reuters</option>
 							</select>
 						</div>
 
 						<div class="selector-container">
 							<label for="category">Category</label>
-							<select name="category" id="" class="param-ctg form-control col-md-6">
+							<select name="category" id="" class="param-ctg form-control col-md-6 col-sm-8 col-6">
 								<option value="" selected>All</option>
 							</select>
 						</div>
 
 						<div class="selector-container">
 							<label for="keyword">Keyword</label>
-							<input type="text" name="keyword" id="keyword" class="param-keyword form-control col-md-6" placeholder="Keyword to search for" />
+							<input
+								type="text"
+								name="keyword"
+								id="keyword"
+								class="param-keyword form-control col-md-6 col-sm-8 col-6"
+								placeholder="Keyword to search for"
+							/>
 						</div>
 
 						<div class="selector-container">
 							<label for="rpp">Results per page</label>
-							<select name="rpp" id="rpp" class="param-rpp form-control col-md-2"></select>
+							<select name="rpp" id="rpp" class="param-rpp form-control col-md-2 col-sm-8 col-6"></select>
 						</div>
 
 						<div class="selector-container">
 							<label for="api">API Key</label>
-							<input type="password" name="api" id="api" class="param-api required form-control col-md-6" />
+							<input type="password" name="api" id="api" class="param-api required form-control col-md-6 col-sm-8 col-6" />
 						</div>
 						<small id="apiHelp" class="form-text text-danger text-right param-api-error">Test</small>
 
@@ -101,11 +109,38 @@
 		<!-- ------------------------------- -->
 		<!--             result              -->
 		<!-- ------------------------------- -->
-		<div class="result-container">
-			<div class="row">
-				<div class="col-md-12 col-sm-12">
+		<div class="result-container container">
+			<div class="col-lg-10 col-md-12">
+				<div class="result-title row col-12">
 					<h2>Results</h2>
-					<div class="result-card-container"></div>
+					<h2 class="result-spinner spin d-none"><i class="fas fa-spinner"></i></h2>
+				</div>
+				<div class="row col-6 justify-content-center result-alert alert alert-success d-none shadow text-center">Alert</div>
+				<div class="row col-12">
+					<div class="result-card-container container"></div>
+				</div>
+
+				<!-- pagination -->
+				<div class="row col-12 justify-content-center">
+					<nav>
+						<ul class="result-pagination d-none">
+							<li class="page-item">
+								<a class="page-link" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">&lt;</span>
+								</a>
+							</li>
+							<li class="page-item active"><button class="page-link">1</button></li>
+							<li class="page-item"><input type="text" class="page-link" id="jump-to-page" placeholder="Page" style="width: 100px" /></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item">
+								<a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+									<span class="sr-only">&gt;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>
