@@ -20,6 +20,13 @@ a.nav-item.nav-link:hover {
 	font-weight: bold;
 }
 
+button.close {
+	height: 40px;
+	position: absolute;
+	right: 10px;
+	width: 40px;
+}
+
 footer {
 	background: var(--color-primary);
 	bottom: 0;
@@ -33,12 +40,6 @@ footer .container {
 	display: flex;
 	justify-content: space-between;
 	padding: 20px 0px 20px;
-}
-
-small.form-text {
-	margin-right: 18px;
-	opacity: 0;
-	transition: opacity 300ms;
 }
 
 header {
@@ -77,6 +78,12 @@ label {
 	font-weight: bold;
 }
 
+small.form-text {
+	margin-right: 18px;
+	opacity: 0;
+	transition: opacity 300ms;
+}
+
 ul {
 	display: flex;
 	list-style: none;
@@ -98,6 +105,11 @@ ul {
 
 .error {
 	opacity: 1 !important;
+}
+
+.modal-header {
+	flex-direction: column;
+	margin-top: 10px;
 }
 
 .param-container {
@@ -135,14 +147,4 @@ ul {
 
 .selector-container label {
 	margin-right: 10px;
-}
-
-.modal-header {
-	flex-direction: column;
-	margin-top: 10px;
-}
-
-button.close {
-    position: absolute;
-    right: 9px;
 }
