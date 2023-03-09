@@ -103,10 +103,71 @@
 		<!-- ------------------------------- -->
 		<div class="result-container">
 			<div class="row">
-				<div class="col-md-12 col-sm-12"">
+				<div class="col-md-12 col-sm-12">
 					<h2>Results</h2>
-					<div class="result-card-container"></div>
+					<div class="result-spinner" role="status">
+						<span class="sr-only">Loading...</span>
+					</div>
+					<div class="result-alert">
+						<div class="jumbotron pb-1">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-6 offset-md-3 text-center">
+										<div class="alert result-alert alert-success mt-3" role="alert">
+											Content
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="result-card-container">
+						<div class="result-card col-md-12 col-sm-12 offset-md-6">
+							<div class="result-card-title">
+								<h1>Title of first article</h1>
+							</div>
+							<div class="result-card-subtitle">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aenean vel elit scelerisque mauris.
+				Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. At risus viverra adipiscing at in tellus integer.
+									</p>
+							</div>
+							<div class="result-card-button">
+								<button>Read more ></button>
+							</div>
+						</div>
+						<div class="result-card col-md-12 col-sm-12 offset-md-6">
+							<div class="result-card-title">
+								<h1>Title of second article</h1>
+							</div>
+							<div class="result-card-subtitle">
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aenean vel elit scelerisque mauris.
+									Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. At risus viverra adipiscing at in tellus integer.</p>
+							</div>
+							<div class="result-card-button">
+								<button>Read more ></button>
+							</div>
+						</div>
+					</div>
 				</div>
+			</div>
+			<div class="result-pagination">
+				<nav aria-label="Page navigation">
+					<ul class="pagination">
+					  <li class="page-item">
+						<a class="page-link" href="#" aria-label="Previous">
+						  <span aria-hidden="true">&laquo;</span>
+						</a>
+					  </li>
+					  <li class="page-item-active" aria-current="page"><a class="page-link" href="#">1</a></li>
+					  <li class="page-item"><a class="page-link" href="#">2</a></li>
+					  <li class="page-item"><a class="page-link" href="#">3</a></li>
+					  <li class="page-item">
+						<a class="page-link" href="#" aria-label="Next">
+						  <span aria-hidden="true">&raquo;</span>
+						</a>
+					  </li>
+					</ul>
+				  </nav>
 			</div>
 		</div>
 
