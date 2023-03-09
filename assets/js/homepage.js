@@ -205,9 +205,7 @@ function generateResultCards(data, numOfCards = e_rpp.value) {
 			output += `
 				<div class="col-md-12 mt-3">
 					<div class="card p-3" index="${i}">
-						<a href="#">
-							<h4> ${data[i].title}</h4>
-						</a>
+						<h4> ${data[i].title}</h4>
 						<p> ${data[i].summary} </p>
 
 						<button type="button" class="btn btn-primary mt-3 result-card-button" data-toggle="modal"  data-target="#article-news">
@@ -388,7 +386,7 @@ function populateModal(type, data, index) {
 
 		result = `
 			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content">
+				<div class="modal-content"></div>
 					<button type="button" class="close"
 						data-dismiss="modal">
 						×
