@@ -234,48 +234,50 @@ button {
 	display: flex;
 	align-items: center;
 }
+
 a.page-link {
-    border: 2px solid rgb(25,56,25);
-    color: rgb(25, 40, 25);
+    border: 2px solid rgb(8, 12, 11);
+    color: rgb(8, 12, 11);
 	outline-width: medium;
 }
 
 ul.pagination {
-    color: rgb(25,56,25);
+    color: rgb(8, 12, 11);
 }
 
 li.page-item {
-    color: rgb(25,56,25);
+    color: rgb(8, 12, 11);
 }
 
 li.page-item-active {
     color: white;
-    background-color: rgb(25,56,25);
+    background-color: rgb(8, 12, 11);
 }
 
 .pagination a {
     padding: 8px 16px;
 }
+
 .pagination a.active {
-    background-color: rgb(25,56,25);
+    background-color: rgb(8, 12, 11);
     color: white;
 }
 
 .pagination a:hover:not(.active) {
-    background-color: rgb(25,56,25);
+    background-color: rgb(8, 12, 11);
     color: white;
 }
 
 
 li.page-item-active {
     color: white;
-    background-color: rgb(25,56,25);
+    background-color:rgb(8, 12, 11);
 }
 
 li.page-item:first-child {
     width: 61px;
     text-align: center;
-	border:  rgba(26, 138, 80, 0.162);
+	border:  rgb(8, 12, 11);
 	margin-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -285,7 +287,7 @@ li.page-item:first-child {
 li.page-item:last-child {
     width: 61px;
     text-align: center;
-    border: rgba(26, 138, 80, 0.162);
+    border: rgb(8, 12, 11);
 	border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 	outline-width: medium;
