@@ -237,7 +237,7 @@ button {
 a.page-link {
     border: 2px solid rgb(25,56,25);
     color: rgb(25, 40, 25);
-	outline-width: 20px;
+	outline-width: medium;
 }
 
 ul.pagination {
@@ -275,17 +275,18 @@ li.page-item-active {
 li.page-item:first-child {
     width: 61px;
     text-align: center;
-	border:  darkgreen;
+	border:  rgba(26, 138, 80, 0.162);
 	margin-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+	outline-width: medium;
 }
 
 li.page-item:last-child {
     width: 61px;
     text-align: center;
-    border: darkgreen;
+    border: rgba(26, 138, 80, 0.162);
 	border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-
+	outline-width: medium;
 }
