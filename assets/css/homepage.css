@@ -143,6 +143,11 @@ small.form-text {
 	text-align: left;
 }
 
+.result-pagination {
+	list-style: none;
+	display: flex;
+}
+
 .result-spinner {
 	animation: spin 1.5s linear infinite;
 }

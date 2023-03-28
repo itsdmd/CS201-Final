@@ -12,7 +12,7 @@ const FETCH_SOURCES = {
 		headersEntries: [
 			{
 				name: "X-RapidAPI-Key",
-				value: "",
+				value: "f4a7f032dbmsh9db848a4599dc39p198fd7jsnfd642cf2ab90",
 			},
 			{
 				name: "X-RapidAPI-Host",
@@ -162,7 +162,7 @@ e_resultCardContainer.addEventListener("click", (e) => {
 		console.log("result-card-button clicked");
 
 		// Get the index of the card that the button is in
-		let cardIndex = parseInt(e.target.parentElement.getAttribute("index")); // TODO: Take pagination into account
+		let cardIndex = parseInt(e.target.parentElement.getAttribute("index"));
 		console.log("cardIndex:", cardIndex);
 		console.log("data-target:", e.target.getAttribute("data-target"));
 
@@ -520,7 +520,7 @@ function populateModal(type, data, index) {
 
 		result = `
 			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content"></div>
+				<div class="modal-content">
 					<button type="button" class="close"
 						data-dismiss="modal">
 						×
